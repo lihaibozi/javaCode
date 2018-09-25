@@ -80,7 +80,7 @@
 		    <if test="isInUse != null and isInUse != ''">
 		    isInUse					= #{isInUse},
 		    </if>
-		    id = #{id}
+		    modifyDate = #{modifyDate}
 		where 
 			id = #{id}		
 		</update>
