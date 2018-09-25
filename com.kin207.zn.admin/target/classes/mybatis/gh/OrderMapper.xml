@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		t_gh_order
+	</sql>
+	
+	
+	<!-- 订单列表 -->
+	<select id="orderlistPage" parameterType="page" resultType="pd"><!-- LEFT JOIN t_booklovers_talkypen t ON o.penCode = t.talkyPenCode  -->
+	   SELECT u.nickName,o.orderNo,o.id,o.createTime,o.remark,o.price,o.`status`,o.type,h.goodNames,o.addressId,a.address,a.detailedAddress,
+	   a.phone,o.userId,a.recipients  FROM t_gh_user u ,(SELECT GROUP_CONCAT(g.name) AS goodNames, GROUP_CONCAT(d.orderNo) AS orderIds FROM 
+	   t_gh_order_detail d, t_gh_goods g WHERE  d.goodsId = g.id) h ,t_gh_order o LEFT JOIN t_gh_address a ON o.addressId = a.id 
+	   WHERE  FIND_IN_SET(o.id,h.orderIds) AND o.userId = u.id 
+		<if test="pd.keywords != null and pd.keywords != ''"><!-- 关键词检索 -->
+			and (
+				o.orderNo = #{pd.keywords}
+				or
+				a.recipients  = #{pd.keywords}
+				or
+				a.phone = #{pd.keywords}				
+				)
+		</if>
+		<if test="pd.keywords3 != null and pd.keywords3 != ''"><!-- 关键词检索 -->
+			and o.status = #{pd.keywords3}
+		</if>
+		<if test="pd.keywords1 != null and pd.keywords1 != ''"><!-- 关键词检索 -->
+			and o.type = #{pd.keywords1}
+		</if>
+	</select><!-- GROUP_CONCAT(b.bookName) pt.name ptName,LEFT JOIN t_booklovers_packagetype pt ON p.typeId = pt.id  -->
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		SELECT * FROM <include refid="tableName"></include> WHERE id = #{id}
+	</select>
+	
+	<!-- 修改订单 -->
+	<update id="editById" parameterType="pd">
+		update <include refid="tableName"></include>
+		set status = 2
+				where id = #{id}
+	</update>
+	
+	<!-- 修改订单地址ID -->
+	<update id="editOrderAddId" parameterType="pd">
+		update <include refid="tableName"></include>
+		set addressId = #{addressId} where id = #{id}
+	</update>
+	
+	
+</mapper>

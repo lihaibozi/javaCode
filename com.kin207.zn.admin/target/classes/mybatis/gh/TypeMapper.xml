@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TypeMapper">
+	
+	<!--表名 -->
+
+	<sql id="table">
+		t_gh_type
+	</sql>
+	
+	<sql id="Field">
+		code,
+		name,
+		createTime
+	</sql>
+	<!-- 字段值 -->
+ 	<sql id="FieldValue">
+ 		#{code},
+		#{name}, 
+		#{createTime}
+	</sql> 
+	
+	
+	<!-- 列表 -->
+	<select id="typelistPage" parameterType="page" resultType="pd">
+		select  *
+		from  <include refid="table"></include>a
+		where 1=1 
+		<if test="pd.keyword != null and pd.keyword != ''"><!-- 关键词检索 -->
+			and (
+				a.code = #{pd.keyword}
+				or
+				a.name LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
+				)
+		</if>
+	</select>
+	
+	<!-- 列出所有分类 -->
+	<select id="listType"  parameterType="pd" resultType="pd" >
+		select *  from 
+		<include refid="table"></include>
+	</select>
+		
+	<!-- 删除用户 -->
+ 	<delete id="delete" parameterType="pd">
+		delete from <include refid="table"></include> 
+		where 
+			id = #{id}
+	</delete> 
+	
+ 	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  <include refid="table"></include>
+		set 
+		    <if test="name != null and name!= ''">
+		    name					= #{name},
+		    </if>
+			code 					= #{code}
+		where 
+			id = #{id}		
+		</update>
+		
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select id,
+		<include refid="Field"></include>
+		from 
+		<include refid="table"></include>
+		where 
+		id = #{id}		
+	</select>
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="table"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 通过名称获取数据 -->
+	<select id="findByName" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="table"></include>
+		where 
+			name = #{name} LIMIT 1
+	</select>
+	
+		
+	<!-- 通过编码称获取数据 -->
+	<select id="findByCode" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="table"></include>
+		where 
+			code = #{code} LIMIT 1
+	</select>
+		
+</mapper>

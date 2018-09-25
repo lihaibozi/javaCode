@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		mvc_member
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		id,
+		username,
+		nickname,
+		tel,
+		email,
+		headImg,
+		balance
+	</sql>
+	<sql id="FieldEdit">
+		username	,		
+		nickname ,		
+		fullname,		
+		tel, 			
+		country, 		
+		city,	 		
+		postcode, 		
+		headImg,			
+		email 			
+	</sql>	
+	<!-- 字段值 -->
+ 	<sql id="FieldValue">
+		#{USER_ID},
+		#{USERNAME},
+		#{TEL},
+		#{EMAIL}
+	</sql> 
+	
+	
+	<!-- 会员列表 -->
+	<select id="userlistPage" parameterType="page" resultType="pd">
+		select  
+          <include refid="Field"></include>
+		from <include refid="tableName"></include> 
+		where 1=1 
+		<if test="pd.keywords != null and pd.keywords!= ''"><!-- 关键词检索 -->
+			and (
+				username = #{pd.keywords}
+				or
+				tel = #{pd.keywords}
+				or
+				email = #{pd.keywords}
+				)
+		</if>
+		
+	</select>
+	
+	<!-- 会员信息-->
+	<select id="findByKeywords" parameterType="pd" resultType="pd">
+		select  
+			<include refid="Field"></include>
+		from <include refid="tableName"></include> u
+		 where 1=1 and (
+				username = #{keywords}
+				or
+				tel = #{keywords}
+				or
+				email = #{keywords}
+				)
+	</select>
+	
+	
+	
+	<!-- 新增会员 -->
+<!-- 	<insert id="saveU" parameterType="pd">
+		insert into <include refid="tableName"></include> (
+			<include refid="Field"></include>
+		) values (
+			<include refid="FieldValue"></include>
+		)
+	</insert> -->
+	
+	<!-- 删除用户 -->
+	<delete id="deleteU" parameterType="pd">
+		delete from <include refid="tableName"></include> 
+		where 
+			USER_ID = #{USER_ID}
+	</delete>
+	
+ 	<!-- 修改 -->
+	<update id="editU" parameterType="pd">
+		update  <include refid="tableName"></include>
+		set username				= #{username},
+			nickname 				= #{nickname},
+			tel 					= #{tel},
+			email 					= #{email}
+			<!-- fullname				= #{fullname},
+			country 				= #{country},
+			city	 				= #{city},
+			postcode 				= #{postcode},
+			headImg					= #{headImg} -->
+			
+		<if test="PASSWORD != null and PASSWORD != ''">
+			,PASSWORD				= #{PASSWORD}
+		</if>
+		where 
+			id = #{id}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
+		where 
+			id = #{id}
+	</select>
+	
+	<!-- 通过昵称获取数据 -->
+	<select id="findByNickname" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
+		where 
+			nickname = #{nickname}
+	</select>
+	
+	<!-- 通过邮箱获取数据 -->
+	<select id="findByME" parameterType="pd" resultType="pd" >
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
+		where 
+			email = #{email}
+		<if test="id != null and id != ''">
+			and id != #{id} 
+		</if>
+	</select>
+	
+	<!-- 通过手机号获取数据 -->
+	<select id="findByMT" parameterType="pd" resultType="pd" >
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
+		where 
+			tel = #{tel}
+		<if test="id != null and id != ''">
+			and id != #{id} 
+		</if>
+	</select>
+	
+	
+	<!-- 批量删除用户 -->
+	<delete id="deleteAllU" parameterType="String">
+		delete from <include refid="tableName"></include>
+		where 
+			id in
+  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+	</delete>
+	
+	<!-- 获取总数 -->
+	<select id="getAppUserCount" parameterType="String" resultType="pd">
+		select 
+			count(USER_ID) appUserCount
+		from 
+		<include refid="tableName"></include>
+	</select>
+	
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AddressMapper">
+	
+	<!--表名 -->
+
+	<sql id="table">
+		t_gh_address
+	</sql>
+	
+	<sql id="Field">
+		id,
+		userId,
+		recipients,
+		phone,
+		address,
+		detailedAddress,
+		createTime
+	</sql>
+	
+	
+	<!-- 会员列表 -->
+	<select id="addresslistPage" parameterType="page" resultType="pd">
+		SELECT  <include refid="Field"></include> 
+		 from <include refid="table"></include> a 
+		<if test="pd.keywords != null and pd.keywords!= ''"><!-- 关键词检索 -->
+			and (
+				a.userId  id = #{pd.userId}	
+				or
+				a.phone  id = #{pd.phone}	
+				or
+				a.address LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				)
+		</if>
+	</select>
+	
+		<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		SELECT * FROM <include refid="table"></include> where id = #{id}
+	</select>
+		
+	
+</mapper>

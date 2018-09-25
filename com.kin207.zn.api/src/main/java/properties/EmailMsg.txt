@@ -1,0 +1,26 @@
+# 邮件－重置密码
+email_reset_pass_from=USENSE Team<www.Ikin207.com>
+email_reset_pass_from_En=USENSE Team<www.Ikin207.com>
+email_reset_pass_from_Kor=USENSE Team<www.Ikin207.com>
+
+email_reset_pass_subject=Ikin207密码
+email_reset_pass_subject_En=Ikin207 Password
+email_reset_pass_subject_Kor=Ikin207 계정 암호 변경
+
+email_reset_pass_content=classpath:properties/emailTmpl/reset_pass.html
+email_reset_pass_content_En=classpath:properties/emailTmpl/reset_pass_En.html
+email_reset_pass_content_Kor=classpath:properties/emailTmpl/reset_pass_Kor.html
+
+
+# 邮件－注册
+email_reset_pass_from=Ikin207 Team<www.Ikin207.com>
+email_reset_pass_from_En=Ikin207 Team<www.Ikin207.com>
+email_reset_pass_from_Kor=Ikin207 Team<www.Ikin207.com>
+
+email_regist_subject=Ikin207动态验证码
+email_regist_subject_En=Ikin207 Security Code
+email_regist_subject_Kor=Ikin207 계정 암호 변경
+
+email_regist_content=classpath:properties/emailTmpl/reset_pass.html
+email_regist_content_En=classpath:properties/emailTmpl/reset_pass_En.html
+email_regist_content_Kor=classpath:properties/emailTmpl/reset_pass_Kor.html

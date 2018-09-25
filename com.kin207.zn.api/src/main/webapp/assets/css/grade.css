@@ -1,0 +1,80 @@
+*{padding:0px; margin: 0px; box-sizing: border-box;}
+
+body{
+    background: -webkit-linear-gradient(top, #534976 , #2E2748); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(bottom, #FDCA11 , #5DD657, #278FBD); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(bottom,  #FDCA11 , #5DD657, #278FBD); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to bottom, #534976 , #2E2748); /* 标准的语法（必须放在最后） */
+}
+div.container{width: 100%; font-size: 0.11rem; padding-bottom: 0.2rem; color: white; font-family: '微软雅黑';}
+
+.tip {height:0.6rem; background-color:#675D86;}
+.tip .tip_main{height: 0.6rem; padding: 0.1rem 0.15rem; text-align: center;}
+.tip .tip_main div{display: inline-block; vertical-align: middle;}
+.tip .tip_main div.logo{
+    height: 0.4rem;
+    width: 0.4rem;
+    overflow: hidden;
+}
+.tip .tip_main .logo img{width: 100%; height: 100%;}
+
+.tip .tip_main p{text-align: left;}
+
+.tip .tip_main .download{position: relative; width: 0.8rem; height: 0.3rem;}
+.tip .tip_main .download img{width: 100%; height: 100%;}
+.tip .tip_main .download span{position: absolute; top:0.08rem; left:0.15rem; font-size: 0.125rem;}
+
+.personInfo{text-align: center;height: 0.8rem; margin-top: 0.15rem; position:relative;}
+.personInfo span{display: inline-block;}
+.personInfo .per_img{width: 0.8rem; height: 0.8rem;}
+.personInfo .per_img img{width: 0.8rem; height: 0.8rem; border-radius:50%;    border: 5px solid#675D86; border-radius: 50%;}
+
+.personInfo .per_name_con{position: absolute; top:80%; width: 100%;}
+.personInfo .per_name{width:auto; height:auto;}
+.personInfo .per_name img{width:0.95rem; height:0.25rem;}
+.personInfo .per_name span{position: absolute;left:0; top:25%; width:100%;}
+
+
+.graph{padding: 0.1rem 0.15rem; position: relative; margin-top: 0.25rem;height:2.5rem; text-align: center;}
+.graph .graph_con{width:100%;height:2.3rem; border:1px solid #A49FB4; border-radius:3px; position: relative;}
+.graph .graph_main{width:100%;height:2rem; padding-top: 0.2rem; }
+.graph .graph_detail{height:0.3rem; background: #fff; padding: 0.06rem 0.2rem;
+    border-radius:3px; border-top-left-radius: 0; border-top-right-radius: 0;}
+.graph .graph_detail p{display: inline-block; font-size: 0.12rem;}
+.graph .graph_detail p:first-child{color: #FD5658; float: left;}
+.graph .graph_detail p:last-child{color: #000; float: right;}
+
+
+
+.graph_pai{margin-top: 0;}
+.graph_pai .graph_main{padding-top: 0rem; height:2.2rem; margin-top: -0.25rem;}
+.graph_pai .grade_main{ position: absolute; top:1.4rem; width: 100%;}
+.graph_pai .graph_detail{position: absolute; bottom: 0; width: 100%;}
+
+.grade_main{padding: 0.075rem 0.1rem 0.1rem 0.1rem;}
+.grade_main p{display: inline-block; text-align: center;}
+
+
+.cheng_detail{position: relative; margin-top: 0.15rem; text-align: left; padding: 0 0.18rem;}
+.cheng_detail .bar{height: 0.1rem; background: white; margin-bottom: 0.035rem;
+    border-radius: 0.05rem / 50%;  }
+.cheng_detail .bar_active{
+    position: absolute; top:0;
+    width:80%;
+    background: -webkit-linear-gradient(left, #FDCA11 , #5DD657, #278FBD); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #FDCA11 , #5DD657, #278FBD); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right,  #FDCA11 , #5DD657, #278FBD); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #FDCA11 , #5DD657, #278FBD); /* 鏍囧噯鐨勮娉曪紙蹇呴』鏀惧湪鏈�悗锛�*/
+}
+
+.cheng_detail p{display: inline-block;text-align: left;margin-right: 0.4rem; }
+.cheng_detail .second-child-p{margin-right: 0.6rem;}
+
+.cheng_detail span{display: inline-block; width: 0.03rem;
+    height: 0.1rem; background-color:#675D86;  position: absolute; top:0;}
+.cheng_detail span.sperator1{left:35%}
+.cheng_detail span.sperator2{left:67%;}
+
+
+.graph_gui .graph_main{margin-top: -0.2rem;}
+.graph_gui .graph_detail{position: absolute; bottom: 0; width: 100%;}

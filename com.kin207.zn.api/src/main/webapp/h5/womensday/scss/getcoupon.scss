@@ -1,0 +1,228 @@
+
+// @import "coupon.scss";
+
+@function rem($px) {
+    @return $px/(800/16)*1rem;
+}
+
+button, a {
+    outline: none;
+}
+
+html,body {
+    width: 100%;
+    height: 100%;
+}
+
+body{
+	max-width: 1080px;
+
+    background: url("../imgs/bg.png") no-repeat center;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+}
+
+
+#main {
+    &:before {
+        content: " ";
+        display: block;
+        height: rem(.001);
+    }
+
+    .logo {
+        width: rem(105);
+        height: rem(119);
+        margin: rem(140) auto 0;
+
+        background: url("../imgs/LOGO-2.png") no-repeat center;
+        background-size: 100% 100%;
+    }
+
+    .ticket {
+        width: rem(580);
+        height: rem(700 - 44);
+        margin: rem(32) auto 0;
+        padding-top: rem(44);
+
+        background: url("../imgs/ticket-bg-2.png") no-repeat center;
+        background-size: 100% 100%;
+
+        .ok {
+            display: block;
+
+            width: rem(65);
+            height: rem(50);
+            margin: 0 auto;
+        }
+
+        span{
+            display: block;
+
+            margin-top: rem(17);
+
+            text-align: center;
+            font-size: rem(28);
+            color: #ed3a50;
+        }
+
+        .erweima {
+            display: block;
+
+            width: rem(339);
+            height: rem(339);
+            margin: rem(47) auto 0;
+        }
+
+        b {
+            display: block;
+
+            margin-top: rem(8);
+
+            font-size: rem(28);
+            color: #000;
+            text-align: center;
+            font-weight: 400;
+        }
+
+        strong {
+            display: block;
+
+            margin-top: rem(52);
+
+            font-size: rem(32);
+            color: #5F1985;
+            text-align: center;
+
+        }
+    }
+
+    .to-intro {
+        display: block;
+        float: right;
+
+        margin: rem(13) rem(85) 0;
+
+        font-size: rem(24);
+        color: #fff;
+
+    }
+
+}
+
+.intro-wrapper {
+    display: none;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,.6);
+
+    .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        width: rem(660);
+        height: rem(1100);
+
+        background: #fff;
+
+        border-radius: rem(10);
+
+        .closebtn {
+            position: absolute;
+            top: rem(24);
+            right: rem(22);
+
+            width: rem(23);
+            height: rem(23);
+            padding: 0;
+            border: 0;
+
+            background: url("../imgs/close.svg") no-repeat center;
+            background-size: 100% 100%;
+        }
+
+        img {
+            width: rem(571);
+            height: rem(334);
+            margin: rem(69) 0 0 rem(48);
+        }
+
+        .intro-text {
+            width: rem(568);
+            height: rem(586);
+            margin: rem(54) 0 0 rem(48);
+
+            background: url("../imgs/text.svg") no-repeat center;
+            background-size: 100% 100%;
+        }
+    }
+}
+
+@mixin animation($dura: .5s, $delay: 0s, $fm:  forwards, $ic: inherit) {
+    animation-duration: $dura;
+    animation-delay: $delay;
+    animation-fill-mode: $fm;
+    animation-iteration-count: $ic;
+}
+
+.animation {
+    @include animation();
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
+}

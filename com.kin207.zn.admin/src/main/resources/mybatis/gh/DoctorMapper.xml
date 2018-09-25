@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DoctorMapper">
+	
+	<!--表名 -->
+
+	<sql id="table">
+		t_doctor_info
+	</sql>
+	
+	<sql id="Field">
+		name,
+		linkMan,
+		phone,
+		address,
+		detailedAddress,
+		createTime,
+		image
+	</sql>
+
+	<sql id="FieldValue">
+		#{name},
+		#{linkMan},
+		#{phone},
+		#{address},
+		#{detailedAddress},
+		#{createTime},
+		#{image}
+	</sql> 
+	
+	
+	<!-- 列表 -->
+	<select id="doctorListPage" parameterType="page" resultType="pd">
+		select  *
+		from  <include refid="table"></include>a
+		where 1=1 
+		<if test="pd.keyword != null and pd.keyword != ''"><!-- 关键词检索 -->
+			and (
+				a.doctorNickName = #{pd.keyword}
+				or
+				a.doctorNickName LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
+				)
+		</if>
+		order by a.createTime desc
+	</select>
+	
+	<!-- 列出所有分类 -->
+	<select id="listShop"  parameterType="pd" resultType="pd" >
+		select *  from 
+		<include refid="table"></include>
+	</select>
+		
+	<!-- 删除用户 -->
+ 	<delete id="delete" parameterType="pd">
+		delete from <include refid="table"></include> 
+		where 
+			id = #{id}
+	</delete> 
+	
+ 	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  <include refid="table"></include>
+		set 
+		    <if test="doctorNickName != null and doctorNickName != ''">
+		    doctorNickName					= #{doctorNickName},
+		    </if>
+		    <if test="doctorName != null and doctorName != ''">
+		    doctorName					= #{doctorName},
+		    </if>
+		    <if test="doctorWxId != null and doctorWxId != ''">
+		    doctorWxId					= #{doctorWxId},
+		    </if>	
+		    <if test="dotorHos != null and dotorHos != ''">
+		    dotorHos					= #{dotorHos},
+		    </if>
+		     <if test="doctorArea != null and doctorArea != ''">
+		    doctorArea					= #{doctorArea},
+		    </if>
+		    <if test="isInUse != null and isInUse != ''">
+		    isInUse					= #{isInUse},
+		    </if>
+		    id = #{id}
+		where 
+			id = #{id}		
+		</update>
+		
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select *
+		from 
+		<include refid="table"></include>
+		where 
+		id = #{id}		
+	</select>
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="table"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 通过名称获取数据 -->
+	<select id="findByName" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="table"></include>
+		where 
+			name = #{name} LIMIT 1
+	</select>
+	
+		
+		
+</mapper>

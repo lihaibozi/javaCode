@@ -1,0 +1,556 @@
+
+@function rem($px) {
+  @return $px/(800/16)*1rem;
+}
+
+@function percent($px) {
+  @return percentage($px/800);
+}
+
+@mixin animation($dura: 1s, $delay: 0s, $fm: forwards, $ic: inherit) {
+    -webkit-animation-duration: $dura;
+            animation-duration: $dura;
+    -webkit-animation-delay: $delay;
+            animation-delay: $delay;
+    -webkit-animation-fill-mode: $fm;
+            animation-fill-mode: $fm;
+    -webkit-animation-iteration-count: $ic;
+            animation-iteration-count: $ic;
+}
+
+@mixin cou-animation($durat: .5s, $dela: 0s, $fillmode:  forwards, $ict: inherit) {
+    @include animation($dura: $durat, $delay: $dela, $fm:  $fillmode, $ic: $ict);
+}
+
+button, a {
+    outline: none;
+}
+
+.fp-tableCell {
+    vertical-align: baseline;
+
+}
+
+.rel {
+    position: relative
+}
+
+.pabos {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#main {
+    .section {
+        background: url("../imgs/bg.png") no-repeat center;
+        background-size:  100% 100%;
+    }
+
+    .logo {
+
+        width: percent(339);
+        padding-top: percent(339);
+        margin: percent(135) auto 0;
+
+        opacity: 0;
+        @include animation($delay: .5s);
+    }
+
+    .title {
+        width: percent(405);
+        padding-top: percent(194);
+        margin: percent(22) auto 0;
+
+        opacity: 0;
+        @include animation($delay: 1s);
+    }
+
+    .sale {
+        width: percent(439);
+        padding-top: percent(223);
+        margin: percent(26) auto 0;
+
+        opacity: 0;
+        @include animation($delay: 1.5s);
+    }
+
+    .next {
+        opacity: 0;
+        @include animation($delay: 2s);
+
+        a {
+            display: block;
+
+            margin: percent(40) 0 0 22%;
+
+            font-size: rem(27);
+            color: #f8e81c;
+            letter-spacing: rem(1.9);
+        }
+    }
+}
+
+.arrow {
+    position: fixed;
+    left: 50%;
+    bottom: rem(20);
+
+    width: rem(40);
+    height: rem(24);
+    margin-left: rem(-20);
+
+    opacity: 0;
+
+    @include cou-animation($durat: 1.5s, $ict: infinite);
+
+    img {
+        width: 100%;
+    }
+}
+
+#main {
+    .cou-logo {
+        width: percent(105);
+        padding-top: percent(119);
+        margin: percent(140) auto 0;
+
+    }
+
+    .ticket {
+        width: rem(580);
+        height: rem(700 - 18);
+        margin: rem(32) auto 0;
+        padding-top: rem(18);
+
+        background: url("../imgs/ticket-bg.png") no-repeat center;
+        background-size: 100% 100%;
+
+        .money {
+            width: rem(359);
+            height: rem(89);
+            margin: rem(10) auto 0;
+
+
+            background: url("../imgs/money.svg") no-repeat center;
+            background-size: 100% 100%;
+
+        }
+
+        .phonebox {
+            position: relative;
+
+            width: rem(460);
+            height: rem(80);
+            margin: rem(35) auto 0;
+
+            border: 1px solid #999;
+            border-radius: rem(6);
+
+            overflow: hidden;
+
+            .phone-input {
+                width: 100%;
+                height: 100%;
+                padding: 0 0 0 rem(10);
+
+                border: 0;
+
+                background: rgba(255,255,255, .8);
+
+                outline: none;
+
+                font-size: rem(30);
+                line-height: rem(80);
+
+                &::-webkit-input-placeholder{
+                    text-align: center;
+                    font-style: italic;
+                }
+            }
+
+            .placeholder {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+
+                -webkit-transform: translate(-50%, -50%);
+
+                        transform: translate(-50%, -50%);
+
+                font-size: rem(26);
+                font-style: italic;
+                color: #999;
+            }
+
+        }
+
+        .error-text {
+            display: block;
+
+            margin-left: rem(60);
+
+            font-size: rem(20);
+            color: #ff001f;
+
+            &.hide {
+                visibility: hidden;
+            }
+
+            &.show {
+                visibility: visible;
+            }
+        }
+
+        .btn-box {
+            width: rem(460);
+            height: rem(80);
+            margin: rem(17) auto 0;
+
+            border-radius: rem(6);
+
+            overflow: hidden;
+            .get-btn{
+                display: block;
+
+                width: 100%;
+                height: 100%;
+                padding: 0;
+
+                border: 0;
+
+                background: url("../imgs/botton.svg") no-repeat center;
+                background-size: cover;
+            }
+        }
+
+        .dashed {
+            display: block;
+
+            width: rem(540);
+            margin: rem(36) auto 0;
+
+            border-top: 1px dashed #666;
+        }
+
+        .rule-wrapper {
+            height: auto;
+            margin: rem(28) auto rem(0);
+            padding-left: rem(28);
+
+            font-size: rem(20);
+            -webkit-transform-origin: left top;
+                    transform-origin: left top;
+
+            p {
+                margin-top: rem(12);
+
+                color: #666;
+                line-height: 1;
+
+                white-space: nowrap;
+                &.rule-title {
+                    font-size: rem(24);
+                    color: #333;
+                }
+
+                .phone-num {
+                    color: blue;
+                }
+            }
+        }
+
+    }
+
+    .to-intro {
+        display: block;
+        float: right;
+
+        margin: rem(13) rem(85) 0;
+
+        font-size: rem(24);
+        color: #fff;
+
+    }
+}
+
+.intro-wrapper {
+    display: none;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,.6);
+
+    .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        width: rem(660);
+        height: rem(1100);
+
+        background: #fff;
+
+        border-radius: rem(10);
+
+        .closebtn {
+            position: absolute;
+            top: rem(24);
+            right: rem(22);
+
+            width: rem(23);
+            height: rem(23);
+            padding: 0;
+            border: 0;
+
+            background: url("../imgs/close.svg") no-repeat center;
+            background-size: 100% 100%;
+        }
+
+        img {
+            width: rem(571);
+            height: rem(334);
+            margin: rem(69) 0 0 rem(48);
+        }
+
+        .intro-text {
+            width: rem(568);
+            height: rem(586);
+            margin: rem(54) 0 0 rem(48);
+
+            background: url("../imgs/text.svg") no-repeat center;
+            background-size: 100% 100%;
+        }
+    }
+}
+
+/* animation */
+.animation {
+    @include animation();
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
+}
+
+@-webkit-keyframes bounceIn {
+  from, 20%, 40%, 60%, 80%, to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(.3, .3, .3);
+    transform: scale3d(.3, .3, .3);
+  }
+
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(.9, .9, .9);
+    transform: scale3d(.9, .9, .9);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    -webkit-transform: scale3d(.97, .97, .97);
+    transform: scale3d(.97, .97, .97);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes bounceIn {
+  from, 20%, 40%, 60%, 80%, to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(.3, .3, .3);
+    transform: scale3d(.3, .3, .3);
+  }
+
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(.9, .9, .9);
+    transform: scale3d(.9, .9, .9);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    -webkit-transform: scale3d(.97, .97, .97);
+    transform: scale3d(.97, .97, .97);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.bounceIn {
+  -webkit-animation-name: bounceIn;
+  animation-name: bounceIn;
+}
+
+
+.animation {
+    @include cou-animation();
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
+}
+
+@-webkit-keyframes arrowMove {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate3d(0, rem(15), 0);
+    }
+}
+
+@keyframes arrowMove {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate3d(0, rem(15), 0);
+    }
+}
+
+.arrowMove {
+
+    -webkit-animation-name: arrowMove;
+    animation-name: arrowMove;
+}
