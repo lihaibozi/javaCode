@@ -21,7 +21,11 @@
 					<a class="navbar-brand">
 						<small> 
 						<img src="static/login/wbzy.png" /> 
+<<<<<<< Updated upstream
 						<span class="yt-stroke">人力资源管理系统</span> </small><!-- ${pd.SYSNAME} -->
+=======
+						<span class="yt-stroke"></span> </small><!-- ${pd.SYSNAME} -->
+>>>>>>> Stashed changes
 					</a>
 
 					<!-- /section:basics/navbar.layout.brand -->
