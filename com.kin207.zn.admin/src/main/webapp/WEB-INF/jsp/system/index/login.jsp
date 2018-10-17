@@ -119,7 +119,7 @@
 			</form>
 			<div class="controls">
 				<div class="main_input_box">
-					<font color="white" size ="4px" ><span id="nameerr">Yoututour 管理工具</span></font>
+					<font color="white" size ="4px" ><span id="nameerr"></span></font>
 				</div>
 			</div>
 		</div>

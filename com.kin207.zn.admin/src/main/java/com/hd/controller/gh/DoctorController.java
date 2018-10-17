@@ -1,19 +1,16 @@
 package com.hd.controller.gh;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.hd.controller.base.BaseController;
 import com.hd.entity.Page;
 import com.hd.service.gh.DoctorManager;
-import com.hd.util.FileUtil;
 import com.hd.util.Jurisdiction;
 import com.hd.util.PageData;
 
@@ -27,11 +24,11 @@ import com.hd.util.PageData;
 @RequestMapping(value="/doctor")
 public class DoctorController extends BaseController {
 	
-	String menuUrl = "doctor/doctorList.do"; //菜单地址(权限用)
+	String menuUrl = "doctor/doctorList.do"; //医生地址(权限用)
 	@Resource(name="doctorService")
 	private DoctorManager doctorService;
 	
-	/**显示菜品列表
+	/**显示医生列表
 	 * @param page
 	 * @return
 	 */
@@ -48,7 +45,6 @@ public class DoctorController extends BaseController {
 			}
 			page.setPd(pd);
 			List<PageData>	doctorList = doctorService.doctorList(page);		//列出医生信息列表
-			
 			mv.setViewName("gh/doctor/doctor_list");
 			mv.addObject("doctorList", doctorList);
 			mv.addObject("pd", pd);
@@ -115,6 +111,23 @@ public class DoctorController extends BaseController {
 		}
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
+		return mv;
+	}
+	
+	/**显示医生列表
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value="/firstPage")
+	public ModelAndView firstPage(Page page){
+
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		try{
+			mv.setViewName("gh/doctor/firstPage");
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
 		return mv;
 	}
 }

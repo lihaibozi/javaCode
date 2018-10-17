@@ -98,4 +98,12 @@ public class Menu {
 	public void setMENU_STATE(String mENU_STATE) {
 		MENU_STATE = mENU_STATE;
 	}
+	@Override
+	public String toString() {
+		return "Menu [MENU_ID=" + MENU_ID + ", MENU_NAME=" + MENU_NAME + ", MENU_URL=" + MENU_URL + ", PARENT_ID="
+				+ PARENT_ID + ", MENU_ORDER=" + MENU_ORDER + ", MENU_ICON=" + MENU_ICON + ", MENU_TYPE=" + MENU_TYPE
+				+ ", MENU_STATE=" + MENU_STATE + ", target=" + target + ", parentMenu=" + parentMenu + ", subMenu="
+				+ subMenu + ", hasMenu=" + hasMenu + "]";
+	}
+	
 }

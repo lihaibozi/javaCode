@@ -1,9 +1,7 @@
 package com.kin207.zn.gh.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,12 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.kin207.zn.AppConst;
 import com.kin207.zn.gh.model.DoctorEntity;
-import com.kin207.zn.gh.model.PatientEntity;
 import com.kin207.zn.gh.util.AesCbcUtil;
 import com.kin207.zn.gh.util.HttpRequest;
 import com.kin207.zn.support.MobileParam;
 
-import common.plugin.mybatis.Db;
 
 
 @Controller
@@ -80,14 +76,16 @@ public class LoginController {
 					
 					map.put("userInfo", userInfo);	
 					if("".equals(doctor.get("doctorName"))||doctor.get("doctorName")==null){
-						map.put("result", 2);
+//						map.put("result", 2);
+						map.put("result", 1);
 						map.put("msg", "资料尚未维护");
 					}else{
 						if(Integer.parseInt(String.valueOf(doctor.get("isInUse")))==0){
 							map.put("result", 1);
 							map.put("msg", "登录成功");
 						}else{
-							map.put("result", 3);
+//							map.put("result", 3);
+							map.put("result", 1);
 							map.put("msg", "被禁用");
 						}
 					}
@@ -97,7 +95,8 @@ public class LoginController {
 					d.set("doctorNickName", userInfoJSON.get("nickName"));
 					d.set("createTime", new Date());
 					d.save();
-					map.put("result", 2);	
+//					map.put("result", 2);	
+					map.put("result", 1);
 					map.put("userInfo", userInfo);
 				}
 			} else {

@@ -1,8 +1,12 @@
 package com.kin207.zn.gh.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
@@ -27,11 +31,12 @@ public class PatientInfoController {
 	 */
     @RequestMapping("/save")
     @ResponseBody
-	public String regist(HttpServletRequest request, HttpServletResponse response) {
+	public String save(HttpServletRequest request, HttpServletResponse response) {
     	MobileParam mobileParam = (MobileParam) request.getAttribute(AppConst.MOBILE_KEY_PARAM);
     	Map<String, Object> map = new HashMap<String, Object>();
     	PatientEntity patient = new PatientEntity();
-    	patient.set("transferId", 123);
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+    	patient.set("transferId", sdf.format(new Date())+new Random().nextInt(10));
     	patient.set("openId", mobileParam.getPara("openId"));
     	patient.set("patientName",mobileParam.getPara("patientName"));
     	patient.set("patientSex",  mobileParam.getPara("patientSex"));
@@ -47,6 +52,28 @@ public class PatientInfoController {
 			map.put("result", 0);
 			e.printStackTrace();
 		}
+		return new Gson().toJson(map);
+	}
+
+    /**
+	 * 查询某一段时间内患者及转诊医生信息
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+    @RequestMapping("/getPatients")
+    @ResponseBody
+	public String getPatients(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(value="startTime",required=false)  String startTime ,
+			@RequestParam(value="endTime",required=false) String endTime) {
+    	MobileParam mobileParam = (MobileParam) request.getAttribute(AppConst.MOBILE_KEY_PARAM);
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	String begin = mobileParam.getPara("startTime")+" 00:00:01";
+    	String end = mobileParam.getPara("endTime")+" 23:59:59";
+    	List<Map<String,Object>> list = PatientEntity.findByTime(begin, end);
+    	if(list!=null){
+    		map.put("patientList", list);
+    	}
 		return new Gson().toJson(map);
 	}
     

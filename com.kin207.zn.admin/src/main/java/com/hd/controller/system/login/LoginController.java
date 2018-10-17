@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.hd.controller.base.BaseController;
 import com.hd.entity.Page;
 import com.hd.entity.system.Menu;
@@ -218,6 +219,7 @@ public class LoginController extends BaseController {
 				mv.setViewName("system/index/main");
 				mv.addObject("user", user);
 				mv.addObject("menuList", menuList);
+				System.out.println(new Gson().toJson(menuList));
 			}else {
 				mv.setViewName("system/index/login");//session失效后跳转登录页面
 			}

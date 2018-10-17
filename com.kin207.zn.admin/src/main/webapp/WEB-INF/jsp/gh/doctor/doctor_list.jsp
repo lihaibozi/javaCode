@@ -51,6 +51,8 @@
 								<th class="center" >医生微信号</th>
 								<th class="center" >医生所属医院</th>
 								<th class="center" >医生区域</th>
+								<th class="center" >登陆时间</th>
+								<th class="center" >修改时间</th>
 								<th class="center" >是否禁用</th>
 								<th class="center">操作</th>
 							</tr>
@@ -77,6 +79,8 @@
 										<td class="center">${var.doctorWxId}</td>
 										<td class="center">${var.dotorHos}</td>
 										<td class="center">${var.doctorArea}</td>
+										<td class="center"><fmt:formatDate value="${var.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+										<td class="center"><fmt:formatDate value="${var.modifyDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 										<c:if test="${var.isInUse == 0 }">
 											<td class="center">否</td>
 										</c:if>
@@ -205,7 +209,7 @@
 			 diag.Height = 480;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 location.reload();
+					 nextPage(1);
 				}
 				diag.close();
 			 };

@@ -51,11 +51,11 @@
 					<div class="page-content">
 						<div class="row">	
 						<div id="jzts" style="display:none; width:100%; position:fixed; z-index:99999999;">
-						<div class="commitopacity" id="bkbgjz"></div>
-						<div style="padding-left: 70%;padding-top: 1px;">
+						<!-- <div class="commitopacity" id="bkbgjz"></div> -->
+						<!-- <div style="padding-left: 70%;padding-top: 1px;">
 							<div style="float: left;margin-top: 3px;"><img src="static/images/loadingi.gif" /> </div>
 							<div style="margin-top: 6px;"><h4 class="lighter block red">&nbsp;加载中 ...</h4></div>
-						</div>
+						</div> -->
 						</div>
 						<div>
 							<iframe name="mainFrame" id="mainFrame" frameborder="0" src="tab.do" style="margin:0 auto;width:100%;height:100%;"></iframe>

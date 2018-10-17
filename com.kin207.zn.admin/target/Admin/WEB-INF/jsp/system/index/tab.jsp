@@ -49,8 +49,8 @@ $( function() {
 	});
 	tab.add( {
 		id :'z62',
-		title :"进行中订单",
-		url :"<%=basePath%>order/unlist.do",
+		title :"首页",
+		url :"<%=basePath%>doctor/firstPage.do",
 		isClosed :false
 	});
 	<%-- tab.add( {

@@ -30,7 +30,7 @@ public class DoctorService implements DoctorManager{
 	 */
 	@SuppressWarnings("unchecked")
 	public List<PageData> doctorList(Page page)throws Exception{
-		return (List<PageData>) dao.findForList("DoctorMapper.doctorListPage", page);
+		return (List<PageData>) dao.findForList("DoctorMapper.doctorlistPage", page);
 	}
 
 	/**通过id获取数据

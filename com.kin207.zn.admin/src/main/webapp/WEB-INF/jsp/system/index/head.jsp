@@ -20,12 +20,11 @@
 					<!-- #section:basics/navbar.layout.brand -->
 					<a class="navbar-brand">
 						<small> 
-						<!-- <img src="static/login/logo2.png" />  -->
-						<span class="yt-stroke">GHSJD ADMIN</span> </small><!-- ${pd.SYSNAME} -->
+						<img src="static/login/wbzy.png" /> 
+						<span class="yt-stroke">人力资源管理系统</span> </small><!-- ${pd.SYSNAME} -->
 					</a>
 
 					<!-- /section:basics/navbar.layout.brand -->
-
 					<!-- #section:basics/navbar.toggle -->
 
 					<!-- /section:basics/navbar.toggle -->
@@ -78,7 +77,7 @@
 						<!-- #section:basics/navbar.user_menu -->
 						<li class="light-blue">
 							<a data-toggle="dropdown"  class="dropdown-toggle" href="#">
-								<img class="nav-user-photo" src="static/ace/avatars/user.jpg" alt="Jason's Photo" />
+								<img class="nav-user-photo" src="static/ace/avatars/user1.png" alt="Jason's Photo" />
 								<span class="user-info" id="user_info">
 								</span>
 								<i class="ace-icon fa fa-caret-down"></i>
