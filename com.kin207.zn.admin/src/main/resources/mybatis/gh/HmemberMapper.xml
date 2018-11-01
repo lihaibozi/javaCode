@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="HmemberMapper">
+	
+	<!--表名 -->
+
+	<sql id="table">
+		t_member_info
+	</sql>
+	
+	<sql id="Field">
+		name,
+ 		telePhone,
+ 		depId
+	</sql>
+
+	<sql id="FieldValue">
+		#{name},
+		#{telePhone},
+		#{depId}
+	</sql> 
+	
+	
+	<!-- 列表 -->
+	<select id="memberlistPage" parameterType="page" resultType="pd">
+		select   a.id,a.depId,a.name,a.telePhone,t.depName
+		from  <include refid="table"></include>a
+		join t_department_info t
+		on a.depId = t.id 
+		<if test="pd.keyword != null and pd.keyword != ''"><!-- 关键词检索 -->
+			and (
+				a.name = #{pd.keyword}
+				or
+				a.name LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
+				)
+		</if>
+	</select>
+		
+	<!-- 列表 -->
+	<select id="getOrders" parameterType="pd" resultType="pd">
+		select * from t_member_info t where t.flag=1;
+	</select>
+		
+	<!-- 删除-->
+ 	<delete id="deleteById" parameterType="pd">
+		delete from <include refid="table"></include> 
+		where 
+			id = #{id}
+	</delete> 
+	
+	<!-- 批量删除 -->
+ 	<delete id="deleteAll" parameterType="String">
+		delete from <include refid="table"></include>
+		where 
+			id in
+  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+	</delete>
+	
+ 	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  <include refid="table"></include>
+		set 
+		    <if test="name != null and name != ''">
+		    name					= #{name},
+		    </if>
+		    <if test="telePhone != null and telePhone != ''">
+		    telePhone					= #{telePhone},
+		    </if>
+		     <if test="depId != null and depId != ''">
+		    depId					= #{depId},
+		    </if>
+		    id = #{id}
+		where 
+			id = #{id}		
+		</update>
+		
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select a.id,a.depId,a.name,a.telePhone,t.depName
+		from 
+		<include refid="table"></include> a
+		join t_department_info t
+		on a.depId = t.id 
+		and 
+		a.id = #{id}		
+	</select>
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="table"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 通过名称获取数据 -->
+	<select id="findByName" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="table"></include>
+		where 
+			name = #{name} LIMIT 1
+	</select>
+	
+		
+		
+</mapper>

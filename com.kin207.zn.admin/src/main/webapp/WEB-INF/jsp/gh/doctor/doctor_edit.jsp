@@ -58,8 +58,8 @@
 								<tr>
 									<td style="width:79px;text-align: right;padding-top: 13px;">是否禁用:</td>
 									<td>
-									<label style="float:left;padding-left: 32px;"><input name="isInUse" id="isInUse" <c:if test="${pd.isInUse == '1' }">checked="checked"</c:if>   type="radio" class="ace" value="1"><span class="lbl">是</span></label>
-									<label style="float:left;padding-left: 5px;"><input name="isInUse" id="isInUse"  <c:if test="${pd.isInUse == '0' }">checked="checked"</c:if>   type="radio" class="ace" value="0"><span class="lbl">否</span></label>
+									<label style="float:left;padding-left: 2px;"><input name="isInUse" id="isInUse" <c:if test="${pd.isInUse == '1' }">checked="checked"</c:if>   type="radio" class="ace" value="1"><span class="lbl">是</span></label>
+									<label style="float:left;padding-left: 8px;"><input name="isInUse" id="isInUse"  <c:if test="${pd.isInUse == '0' }">checked="checked"</c:if>   type="radio" class="ace" value="0"><span class="lbl">否</span></label>
 									</td>	
 								</tr>
 								<tr>

@@ -87,7 +87,7 @@
 			if($("#excel").val()=="" || document.getElementById("excel").files[0] =='请选择xls格式的文件'){
 				
 				$("#excel").tips({
-					side:3,
+					side:2,
 		            msg:'请选择文件',
 		            bg:'#AE81FF',
 		            time:3
@@ -102,7 +102,7 @@
 			var fileType=obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();//获得文件后缀名
 		    if(fileType != '.xls'){
 		    	$("#excel").tips({
-					side:3,
+					side:2,
 		            msg:'请上传xls格式的文件',
 		            bg:'#AE81FF',
 		            time:3

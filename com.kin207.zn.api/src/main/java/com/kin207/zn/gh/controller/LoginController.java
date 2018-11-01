@@ -76,16 +76,16 @@ public class LoginController {
 					
 					map.put("userInfo", userInfo);	
 					if("".equals(doctor.get("doctorName"))||doctor.get("doctorName")==null){
-//						map.put("result", 2);
-						map.put("result", 1);
+						map.put("result", 2);
+//						map.put("result", 1);
 						map.put("msg", "资料尚未维护");
 					}else{
 						if(Integer.parseInt(String.valueOf(doctor.get("isInUse")))==0){
 							map.put("result", 1);
 							map.put("msg", "登录成功");
 						}else{
-//							map.put("result", 3);
-							map.put("result", 1);
+							map.put("result", 3);
+//							map.put("result", 1);
 							map.put("msg", "被禁用");
 						}
 					}
@@ -95,8 +95,8 @@ public class LoginController {
 					d.set("doctorNickName", userInfoJSON.get("nickName"));
 					d.set("createTime", new Date());
 					d.save();
-//					map.put("result", 2);	
-					map.put("result", 1);
+					map.put("result", 2);	
+//					map.put("result", 1);
 					map.put("userInfo", userInfo);
 				}
 			} else {

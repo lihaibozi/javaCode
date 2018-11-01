@@ -37,13 +37,13 @@ public class PatientInfoController {
     	PatientEntity patient = new PatientEntity();
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
     	patient.set("transferId", sdf.format(new Date())+new Random().nextInt(10));
-    	patient.set("openId", mobileParam.getPara("openId"));
-    	patient.set("patientName",mobileParam.getPara("patientName"));
-    	patient.set("patientSex",  mobileParam.getPara("patientSex"));
-    	patient.set("patientAge",  mobileParam.getPara("patientAge"));
-    	patient.set("patientCardNo",  mobileParam.getPara("patientCardNo"));
-    	patient.set("patientPhoneNumber",  mobileParam.getPara("patientPhoneNumber"));
-    	patient.set("patientAddress",  mobileParam.getPara("patientAddress"));
+    	patient.set("openId", mobileParam.getPara("openId").trim());
+    	patient.set("patientName",mobileParam.getPara("patientName").trim());
+    	patient.set("patientSex",  mobileParam.getPara("patientSex").trim());
+    	patient.set("patientAge",  mobileParam.getPara("patientAge").trim());
+    	patient.set("patientCardNo",  mobileParam.getPara("patientCardNo").trim());
+    	patient.set("patientPhoneNumber",  mobileParam.getPara("patientPhoneNumber").trim());
+    	patient.set("patientAddress",  mobileParam.getPara("patientAddress").trim());
     	patient.set("createTime", new Date());
     	try {
 			int result = Db.save(patient);

@@ -75,6 +75,7 @@
 									<th class="center">姓名</th>
 									<th class="center">角色</th>
 									<th class="center"><i class="ace-icon fa fa-envelope-o"></i>邮箱</th>
+									<th class="center">科室</th>
 									<th class="center"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>最近登录</th>
 									<th class="center">上次登录IP</th>
 									<th class="center">操作</th>
@@ -100,6 +101,7 @@
 											<td class="center">${user.NAME }</td>
 											<td class="center">${user.ROLE_NAME }</td>
 											<td class="center"><a title="发送电子邮件" style="text-decoration:none;cursor:pointer;" <c:if test="${QX.email == 1 }">onclick="sendEmail('${user.EMAIL }');"</c:if>>${user.EMAIL }&nbsp;<i class="ace-icon fa fa-envelope-o"></i></a></td>
+											<td class="center">${user.depName }</td>
 											<td class="center">${user.LAST_LOGIN}</td>
 											<td class="center">${user.IP}</td>
 											<td class="center">
@@ -262,7 +264,7 @@ function delUser(userId,msg){
 			top.jzts();
 			var url = "<%=basePath%>user/deleteU.do?USER_ID="+userId+"&tm="+new Date().getTime();
 			$.get(url,function(data){
-				nextPage(${page.currentPage});
+				nextPage('${page.currentPage}');
 			});
 		};
 	});
@@ -283,7 +285,7 @@ function add(){
 				 top.jzts();
 				 setTimeout("self.location=self.location",100);
 			 }else{
-				 nextPage(${page.currentPage});
+				 nextPage('${page.currentPage}');
 			 }
 		}
 		diag.close();
@@ -302,7 +304,7 @@ function editUser(user_id){
 	 diag.Height = 510;
 	 diag.CancelEvent = function(){ //关闭事件
 		 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-			nextPage(${page.currentPage});
+			nextPage('${page.currentPage}');
 		}
 		diag.close();
 	 };
@@ -359,7 +361,7 @@ function makeAll(msg){
 						cache: false,
 						success: function(data){
 							 $.each(data.list, function(i, list){
-									nextPage(${page.currentPage});
+									nextPage('${page.currentPage}');
 							 });
 						}
 					});
@@ -487,7 +489,7 @@ function fromExcel(){
 				 top.jzts();
 				 setTimeout("self.location.reload()",100);
 			 }else{
-				 nextPage(${page.currentPage});
+				 nextPage('${page.currentPage}');
 			 }
 		}
 		diag.close();

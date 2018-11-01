@@ -12,12 +12,12 @@
 	<sql id="Field">
 		hosNumber,
  		patientName,
-  		patientSex,
-  		patientBirth,
-  		patientCardNo,
-  		patientPhoneNumber,
-  		lastYDate,
-  		createTime
+ 		patientSex,
+ 		patientBirth,
+ 		patientCardNo,
+ 		patientPhoneNumber,
+ 		lastYDate,
+ 		createTime
 	</sql>
 
 	<sql id="FieldValue">

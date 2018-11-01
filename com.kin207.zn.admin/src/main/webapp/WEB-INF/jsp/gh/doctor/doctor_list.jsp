@@ -28,7 +28,7 @@
 							<td>
 								<div class="nav-search">
 								<span class="input-icon">
-									<input autocomplete="off" class="nav-search-input"  id="nav-search-input" type="text" name="keyword"  value="${pd.keyword}" placeholder="这里输入分类名称或者菜名" />
+									<input autocomplete="off" class="nav-search-input"  id="nav-search-input" type="text" name="keyword"  value="${pd.keyword}" placeholder="这里输入医生昵称" />
 								</span>
 								</div>
 							</td>

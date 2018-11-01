@@ -188,7 +188,7 @@ public class OnlineChatServer extends WebSocketServer{
 		int port = 8887; //端口
 		OnlineChatServer s = new OnlineChatServer(port);
 		s.start();
-		//System.out.println( "服务器的端口" + s.getPort() );
+		System.out.println( "服务器的端口" + s.getPort() );
 	}
 }
 

@@ -99,13 +99,13 @@ public class DoctorController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "edit")){
-			pd.put("id", id);
-			pd.put("doctorNickName", doctorNickName);								
-			pd.put("doctorName", doctorName);						   
-			pd.put("doctorWxId", doctorWxId);					
-			pd.put("dotorHos", dotorHos);						   
-			pd.put("doctorArea", doctorArea);	
-			pd.put("isInUse", isInUse);	
+			pd.put("id", id.trim());
+			pd.put("doctorNickName", doctorNickName.trim());								
+			pd.put("doctorName", doctorName.trim());						   
+			pd.put("doctorWxId", doctorWxId.trim());					
+			pd.put("dotorHos", dotorHos.trim());						   
+			pd.put("doctorArea", doctorArea.trim());	
+			pd.put("isInUse", isInUse.trim());	
 			pd.put("modifyDate", new Date());				
 			doctorService.edit(pd);				//执行修改数据库
 		}
@@ -114,7 +114,7 @@ public class DoctorController extends BaseController {
 		return mv;
 	}
 	
-	/**显示医生列表
+	/**
 	 * @param page
 	 * @return
 	 */

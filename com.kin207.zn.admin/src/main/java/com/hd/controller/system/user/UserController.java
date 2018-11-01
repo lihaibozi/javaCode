@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hd.controller.base.BaseController;
 import com.hd.entity.Page;
 import com.hd.entity.system.Role;
+import com.hd.service.gh.HdepartmentManager;
 import com.hd.service.system.menu.MenuManager;
 import com.hd.service.system.role.RoleManager;
 import com.hd.service.system.user.UserManager;
@@ -58,6 +59,8 @@ public class UserController extends BaseController {
 	private RoleManager roleService;
 	@Resource(name="menuService")
 	private MenuManager menuService;
+	@Resource(name="hDepartmentService")
+	private HdepartmentManager hDepartmentService;
 	
 	/**显示用户列表
 	 * @param page
@@ -120,7 +123,9 @@ public class UserController extends BaseController {
 		pd = this.getPageData();
 		pd.put("ROLE_ID", "1");
 		List<Role> roleList = roleService.listAllRolesByPId(pd);//列出所有系统用户角色
+		List<PageData> listDepartments = hDepartmentService.departments(pd);
 		mv.setViewName("system/user/user_edit");
+		mv.addObject("listDepartments", listDepartments);
 		mv.addObject("msg", "saveU");
 		mv.addObject("pd", pd);
 		mv.addObject("roleList", roleList);
@@ -233,6 +238,8 @@ public class UserController extends BaseController {
 		List<Role> roleList = roleService.listAllRolesByPId(pd);	//列出所有系统用户角色
 		mv.addObject("fx", "user");
 		pd = userService.findById(pd);								//根据ID读取
+		List<PageData> listDepartments = hDepartmentService.departments(pd);
+		mv.addObject("listDepartments",listDepartments);
 		mv.setViewName("system/user/user_edit");
 		mv.addObject("msg", "editU");
 		mv.addObject("pd", pd);
@@ -465,7 +472,7 @@ public class UserController extends BaseController {
 			for(int i=0;i<listPd.size();i++){		
 				pd.put("USER_ID", this.get32UUID());										//ID
 				pd.put("NAME", listPd.get(i).getString("var1"));							//姓名
-				
+				pd.put("department", listPd.get(i).getString("var5"));
 				String USERNAME = GetPinyin.getPingYin(listPd.get(i).getString("var1"));	//根据姓名汉字生成全拼
 				pd.put("USERNAME", USERNAME);	
 				if(userService.findByUsername(pd) != null){									//判断用户名是否重复

@@ -50,13 +50,13 @@ public class startFilter extends BaseController implements Filter{
 		try {
 			String strWEBSOCKET = Tools.readTxtFile(Const.WEBSOCKET);//读取WEBSOCKET配置,获取端口配置
 			if(null != strWEBSOCKET && !"".equals(strWEBSOCKET)){
-				String strIW[] = strWEBSOCKET.split(",yt,");
+				String strIW[] = strWEBSOCKET.split(",fh,");
 				if(strIW.length == 5){
 					s = new ChatServer(Integer.parseInt(strIW[1]));
 					s.start();
+					System.out.println( "websocket服务器启动,端口" + s.getPort() );
 				}
 			}
-			//System.out.println( "websocket服务器启动,端口" + s.getPort() );
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -71,13 +71,13 @@ public class startFilter extends BaseController implements Filter{
 		try {
 			String strWEBSOCKET = Tools.readTxtFile(Const.WEBSOCKET);//读取WEBSOCKET配置,获取端口配置
 			if(null != strWEBSOCKET && !"".equals(strWEBSOCKET)){
-				String strIW[] = strWEBSOCKET.split(",yt,");
+				String strIW[] = strWEBSOCKET.split(",fh,");
 				if(strIW.length == 5){
 					s = new OnlineChatServer(Integer.parseInt(strIW[3]));
 					s.start();
+					System.out.println( "websocket服务器启动,端口" + s.getPort() );
 				}
 			}
-			//System.out.println( "websocket服务器启动,端口" + s.getPort() );
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}

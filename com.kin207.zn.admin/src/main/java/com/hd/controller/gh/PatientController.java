@@ -192,12 +192,12 @@ public class PatientController extends BaseController {
 		}
 		
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "add")){
-			pd.put("patientName", patientName);
-			pd.put("hosNumber", hosNumber);
-			pd.put("patientSex", patientSex);	
-			pd.put("patientCardNo", patientCardNo);						
-			pd.put("patientPhoneNumber", patientPhoneNumber);						   
-			pd.put("patientBirth", patientBirth);								
+			pd.put("patientName", patientName.trim());
+			pd.put("hosNumber", hosNumber.trim());
+			pd.put("patientSex", patientSex.trim());	
+			pd.put("patientCardNo", patientCardNo.trim());						
+			pd.put("patientPhoneNumber", patientPhoneNumber.trim());						   
+			pd.put("patientBirth", patientBirth.trim());								
 			pd.put("lastYDate", new Date());
 			pd.put("createTime", new Date());
 			patientService.save(pd);

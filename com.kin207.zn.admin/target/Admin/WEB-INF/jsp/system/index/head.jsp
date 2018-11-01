@@ -21,11 +21,7 @@
 					<a class="navbar-brand">
 						<small> 
 						<img src="static/login/wbzy.png" /> 
-<<<<<<< Updated upstream
-						<span class="yt-stroke">人力资源管理系统</span> </small><!-- ${pd.SYSNAME} -->
-=======
-						<span class="yt-stroke"></span> </small><!-- ${pd.SYSNAME} -->
->>>>>>> Stashed changes
+						<span class="yt-stroke">维修登记管理系统</span> </small><!-- ${pd.SYSNAME} -->
 					</a>
 
 					<!-- /section:basics/navbar.layout.brand -->
@@ -66,7 +62,7 @@
 							<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
 								<li class="dropdown-header">
 									<i class="ace-icon fa fa-bell-o"></i>
-									GH Aadmin 即时通讯
+										即时通讯
 								</li>
 							</ul>
 						</li>

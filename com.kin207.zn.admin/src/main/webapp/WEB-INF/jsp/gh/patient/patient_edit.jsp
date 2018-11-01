@@ -34,29 +34,29 @@
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 								<tr>
 									<td style="width:79px;text-align: right;padding-top: 13px;">病人姓名</td>
-									<td><input type="text" name="patientName" id="patientName" value="${pd.patientName }" placeholder="这里输入姓名" title="姓名" style="width:98%;" onblur="hasN('${pd.patientName }')"/></td>
+									<td><input type="text" name="patientName" id="patientName" value="${pd.patientName }" placeholder="这里输入姓名" title="姓名" style="width:98%;" /></td>
 								</tr>
 								<tr>
 								<tr>
 									<td style="width:79px;text-align: right;padding-top: 13px;">病人性别</td>
 									<td>
-										<label style="float:left;padding-left: 8px;"><input name="patientSex" id="patientSex" <c:if test="${pd.patientSex == '1' }">checked="checked"</c:if>   type="radio" class="ace" value="1"><span class="lbl">男</span></label>
-										<label style="float:left;padding-left: 5px;"><input name="patientSex" id="patientSex"  <c:if test="${pd.patientSex == '2' }">checked="checked"</c:if>   type="radio" class="ace" value="2"><span class="lbl">女</span></label>
+										<label style="float:left;padding-left: 2px;"><input name="patientSex" id="patientSex" <c:if test="${pd.patientSex == '1' }">checked="checked"</c:if>   type="radio" class="ace" value="1"><span class="lbl">男</span></label>
+										<label style="float:left;padding-left: 8px;"><input name="patientSex" id="patientSex"  <c:if test="${pd.patientSex == '2' }">checked="checked"</c:if>   type="radio" class="ace" value="2"><span class="lbl">女</span></label>
 									</td>
 								</tr>
 								<tr>
 								<tr>
 									<td style="width:79px;text-align: right;padding-top: 13px;">身份证号</td>
-									<td><input type="text" name="patientCardNo" id="patientCardNo" value="${pd.patientCardNo }" placeholder="这里输入身份证号" title="身份证号" style="width:98%;" onblur="hasN('${pd.patientCardNo }')"/></td>
+									<td><input type="text" name="patientCardNo" id="patientCardNo" value="${pd.patientCardNo }" placeholder="这里输入身份证号" title="身份证号" style="width:98%;" /></td>
 								</tr>
 								
 								<tr>
 									<td style="width:90px;text-align: right;padding-top: 13px;">联系电话</td>
-									<td><input type="text" name="patientPhoneNumber" id="patientPhoneNumber" value="${pd.patientPhoneNumber }" placeholder="这里输入联系电话" title="联系电话" style="width:98%;" onblur="hasN('${pd.patientPhoneNumber }')"/></td>
+									<td><input type="text" name="patientPhoneNumber" id="patientPhoneNumber" value="${pd.patientPhoneNumber }" placeholder="这里输入联系电话" title="联系电话" style="width:98%;" /></td>
 								</tr>
 								<tr>
 									<td style="width:90px;text-align: right;padding-top: 13px;">出生时间</td>
-									<td style="padding-left:8px;"><input class="span10 date-picker" name="patientBirth" id="patientBirth"  value="${pd.patientBirth}" type="text" onblur="hasN('${pd.patientBirth}')" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:110px;" placeholder="请选择出生日期" title="出生日期"/></td>			
+									<td style="padding-left:8px;"><input class="span10 date-picker" name="patientBirth" id="patientBirth"  value="${pd.patientBirth}" type="text"  date-format="yyyy-mm-dd" readonly="readonly" style="width:85px;" placeholder="出生日期" title="出生日期"/></td>			
 								</tr>
 								<tr>
 									<td class="center" colspan="6">
@@ -89,6 +89,7 @@
 	<script src="static/ace/js/chosen.jquery.js"></script>
 	<!-- 日期框 -->
 	<script src="static/ace/js/date-time/bootstrap-datepicker.js"></script>
+	<script src="static/ace/js/date-time/jquery-ui-sliderAccess.js"></script>
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 		<script src="static/js/upload/uploadFile.js"></script>
@@ -173,7 +174,7 @@
 		}
 	}
 	$(function(){
-		$('.date-picker').datepicker({autoclose: true,todayHighlight: true});
+		$('.date-picker').datepicker({autoclose: true,todayHighlight: true,format: 'yyyy-mm-dd'});
 	    $("#image").change(function (){
 	    	 $('#image-show').remove();
 	    });

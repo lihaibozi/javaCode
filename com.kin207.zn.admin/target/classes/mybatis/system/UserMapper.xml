@@ -55,7 +55,8 @@
 		SKIN,
 		EMAIL,
 		NUMBER,
-		PHONE
+		PHONE,
+		department
 	</sql>
 	
 	<!-- 字段值 -->
@@ -73,7 +74,8 @@
 		#{SKIN},
 		#{EMAIL},
 		#{NUMBER},
-		#{PHONE}
+		#{PHONE},
+		#{department}
 	</sql>
 	
 	<!-- 判断用户名和密码 -->
@@ -159,11 +161,15 @@
 				u.NUMBER,
 				u.PHONE,
 				r.ROLE_ID,
-				r.ROLE_NAME
-		from <include refid="tableName"></include> u, <include refid="roleTableName"></include> r 
+				r.ROLE_NAME,
+				u.department,
+				d.depName
+		from <include refid="tableName"></include> u, <include refid="roleTableName"></include> r ,
+		t_department_info d
 		where u.ROLE_ID = r.ROLE_ID 
 		and u.USERNAME != 'admin'
 		and r.PARENT_ID = '1'
+		and u.department = d.id
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
@@ -219,10 +225,26 @@
 	<!-- 通过user_id获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd" >
 		select 
-			<include refid="Field"></include>
+		a.USER_ID,
+		a.USERNAME,
+		a.PASSWORD,
+		a.NAME,
+		a.RIGHTS,
+		a.ROLE_ID,
+		a.LAST_LOGIN,
+		a.IP,
+		a.STATUS,
+		a.BZ,
+		a.SKIN,
+		a.EMAIL,
+		a.NUMBER,
+		a.PHONE,
+		a.department,b.depName
 		from 
-			<include refid="tableName"></include>
-		where 
+			<include refid="tableName"></include> a
+		join t_department_info b
+		on a.department = b.id
+		and 
 			USER_ID = #{USER_ID}
 	</select>
 	
@@ -243,7 +265,8 @@
 				BZ						= #{BZ},
 				EMAIL					= #{EMAIL},
 				NUMBER					= #{NUMBER},
-				PHONE					= #{PHONE}
+				PHONE					= #{PHONE},
+				department				=#{department}
 			<if test="PASSWORD != null and PASSWORD != ''">
 				,PASSWORD				= #{PASSWORD}
 			</if>

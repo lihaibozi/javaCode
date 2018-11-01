@@ -42,6 +42,20 @@
 											</select>
 											</td>
 										</tr>
+										<tr>
+											<td style="width:79px;text-align: right;padding-top: 13px;">科室:</td>
+											<td>
+											<select id="department" name="department" onchange="getMemberAndPhone()" style="width:98%">
+											<option value=''>请选择科室</option>	
+											 <c:forEach items="${listDepartments}" var="cate" varStatus="st">
+										        <option value="${cate.id}" 
+										      		<c:if test='${pd.department == cate.id}'> selected='selected'</c:if>>
+										            ${cate.depName}
+									        	</option>
+								    	 	</c:forEach>
+										</select>
+											</td>
+										</tr>
 										</c:if>
 										<c:if test="${fx == 'head'}">
 											<input name="ROLE_ID" id="role_id" value="${pd.ROLE_ID }" type="hidden" />
@@ -128,6 +142,16 @@
 	            time:2
 	        });
 			$("#role_id").focus();
+			return false;
+		}
+		if($("#department").val()==""){
+			$("#department").tips({
+				side:3,
+	            msg:'选择科室',
+	            bg:'#AE81FF',
+	            time:2
+	        });
+			$("#department").focus();
 			return false;
 		}
 		if($("#loginname").val()=="" || $("#loginname").val()=="此用户名已存在!"){

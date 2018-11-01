@@ -1,16 +1,11 @@
 package com.hd.service.gh.impl;
 
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
-
 import com.hd.dao.DaoSupport;
 import com.hd.entity.Page;
-import com.hd.service.gh.DoctorManager;
 import com.hd.service.gh.PatientManager;
-import com.hd.service.gh.ShopManager;
 import com.hd.util.PageData;
 
 
