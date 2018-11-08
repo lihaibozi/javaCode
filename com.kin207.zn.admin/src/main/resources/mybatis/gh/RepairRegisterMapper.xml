@@ -74,14 +74,14 @@
 	
 	<!-- 列表 -->
 	<select id="getMemberAndPhone" parameterType="pd" resultType="pd">
-		select a.depPhone,b.name,b.id from  
+		select a.depPhone,b.name,b.id,b.number from  
 		t_department_info a,t_member_info b 
 		where a.id = b.depId 
         and a.id = #{id}
 	</select>
 	
 	<select id="getMembersByDepId" parameterType="pd" resultType="pd">
-		select a.id,a.name
+		select a.id,a.name,a.number
 		from
 			t_member_info a
 		where a.depId = (select b.department FROM t_repair_register b
@@ -104,12 +104,12 @@
 	
 	<!-- 列表 -->
 	<select id="getTypes" parameterType="pd" resultType="pd">
-		select b.id,b.type from t_repair_type b;
+		select b.id,b.type from t_repair_type b where b.disable=0;
 	</select>
 	
 	<!-- 列表 -->
 	<select id="getStatus" parameterType="pd" resultType="pd">
-		select c.id,c.status from t_repair_status c;
+		select c.id,c.status from t_repair_status c where c.disable=0;
 	</select>
 	
 	<!-- 列表 -->
@@ -127,7 +127,7 @@
  	<delete id="deleteById" parameterType="pd">
 		delete from <include refid="table"></include> 
 		where 
-			id = #{id}
+		id = #{id}
 	</delete> 
 	
 	<!-- 批量删除 -->

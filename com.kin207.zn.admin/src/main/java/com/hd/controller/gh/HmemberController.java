@@ -159,6 +159,7 @@ public class HmemberController extends BaseController {
 	public Object save(
 			@RequestParam(value="name",required=false)String name,
 			@RequestParam(value="telePhone",required=false)String telePhone ,
+			@RequestParam(value="number",required=false)String number ,
 			@RequestParam(value="depId",required=false)  String  depId
 			) throws Exception{
 		ModelAndView mv = this.getModelAndView();
@@ -168,7 +169,8 @@ public class HmemberController extends BaseController {
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "add")){
 			pd.put("name", name.trim());
 			pd.put("telePhone", telePhone.trim());
-			pd.put("depId", depId.trim());
+			pd.put("number", number.trim());
+			pd.put("depId", depId);
 			hMemberService.save(pd);
 		}
 		map.put("result", "ok");
@@ -194,6 +196,7 @@ public class HmemberController extends BaseController {
 			HttpServletRequest request,
 			@RequestParam(value="id",required=false)  String  id ,
 			@RequestParam(value="name",required=false)  String  name ,
+			@RequestParam(value="number",required=false)  String  number ,
 			@RequestParam(value="telePhone",required=false)String telePhone,
 			@RequestParam(value="depId",required=false)String depId
 			) throws Exception{
@@ -204,9 +207,10 @@ public class HmemberController extends BaseController {
 		pd = this.getPageData();
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "edit")){
 			pd.put("id", id);
-			pd.put("name", name.trim());								
+			pd.put("name", name.trim());	
+			pd.put("number", number.trim());
 			pd.put("telePhone", telePhone.trim());	
-			pd.put("depId", depId.trim());	
+			pd.put("depId", depId);	
 			hMemberService.edit(pd);				//执行修改数据库
 		}
 		mv.addObject("msg","success");

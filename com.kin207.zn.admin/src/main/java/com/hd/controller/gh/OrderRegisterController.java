@@ -7,18 +7,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.ObjectUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.hd.controller.base.BaseController;
 import com.hd.entity.Page;
 import com.hd.service.gh.HdepartmentManager;
@@ -27,8 +22,6 @@ import com.hd.service.gh.OrderRegisterManager;
 import com.hd.util.AppUtil;
 import com.hd.util.Jurisdiction;
 import com.hd.util.PageData;
-
-import jodd.util.ObjectUtil;
 import net.sf.json.JSONArray;
 
 /** 
@@ -170,73 +163,6 @@ public class OrderRegisterController extends BaseController {
 		return mv;
 	}
 	
-	
-	/**
-	 * 新增
-	 * @param file
-	 * @param name
-	 * @param typeCode
-	 * @param remark
-	 * @param pric
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value="/save")
-	@ResponseBody
-	public Object save(
-			@RequestParam(value="department",required=false) String department,
-			@RequestParam(value="repairStaff",required=false) String repairStaff,
-			@RequestParam(value="cellPhone",required=false) String  cellPhone ,
-			@RequestParam(value="assetNumber",required=false) String assetNumber,
-			@RequestParam(value="assetSn",required=false) String  assetSn ,
-			@RequestParam(value="content",required=false) String content,
-			@RequestParam(value="orderPeople",required=false) String  orderPeople ,
-			@RequestParam(value="assistants",required=false) String  assistants ,
-			@RequestParam(value="type",required=false) String type,
-			@RequestParam(value="status",required=false) String  status 
-			) throws Exception{
-		ModelAndView mv = this.getModelAndView();
-		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
-		Map<String,String> map = new HashMap<String,String>();
-		PageData pd = new PageData();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddSSS");
-		String serialNumber = sdf.format(new Date())+new Random().nextInt(10);
-		String userName = Jurisdiction.getUsername();
-		if(Jurisdiction.buttonJurisdiction(menuUrl, "add")){
-			pd.put("registerPeople", userName.trim());
-			pd.put("registerDate", new Date());
-			pd.put("modifyPeople", userName.trim());
-			pd.put("modifyDate", new Date());
-			pd.put("serialNumber", serialNumber.trim());
-			pd.put("department", department.trim());
-			pd.put("repairStaff",repairStaff.trim());
-			pd.put("cellPhone",cellPhone.trim());
-			pd.put("assetNumber",assetNumber.trim());
-			pd.put("assetSn",assetSn.trim());
-			pd.put("content",content.trim());
-			pd.put("orderPeople",orderPeople.trim());
-			pd.put("assistants",assistants.trim());
-			pd.put("type",type.trim());
-			pd.put("status",status.trim());
-			orderRegisterService.save(pd);
-			//保存成功后插入数据到t_order_register表
-			pd = new PageData();
-			pd.put("serialNumber", serialNumber);
-			pd.put("status", status);
-			pd.put("isToRepair", 0);
-			pd.put("isReplace", 0);
-			pd.put("isStartBack", 0);
-			pd.put("modifyPeople", userName);
-			pd.put("modifyDate", new Date());
-			orderRegisterService.save(pd);
-		}
-		map.put("result", "ok");
-		mv.addObject("msg","success");
-		mv.setViewName("save_result");
-		return mv;
-	}
-	
-	
 	/**
 	 * 修改
 	 * @param request
@@ -268,16 +194,16 @@ public class OrderRegisterController extends BaseController {
 		pd = this.getPageData();
 		String userName = Jurisdiction.getUsername();
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "edit")){
-			pd.put("id", id.trim());
-			pd.put("status", status.trim());
-			pd.put("repairContent", repairContent.trim());
-			pd.put("repairProcess", repairProcess.trim());
-			pd.put("isToRepair",isToRepair.trim());
-			pd.put("isReplace",isReplace.trim());
-			pd.put("isStartBack",isStartBack.trim());
+			pd.put("id", id);
+			pd.put("status", status);
+			pd.put("repairContent", "".equals(repairContent)?"":repairContent.trim());
+			pd.put("repairProcess", "".equals(repairProcess)?"":repairProcess.trim());
+			pd.put("isToRepair",isToRepair);
+			pd.put("isReplace",isReplace);
+			pd.put("isStartBack",isStartBack);
 			pd.put("arriveDate",arriveDate);
 			pd.put("finishDate",finishDate);	
-			pd.put("modifyPeople", userName.trim());
+			pd.put("modifyPeople", userName);
 			pd.put("modifyDate", new Date());
 			orderRegisterService.edit(pd);				//执行修改数据库
 		}

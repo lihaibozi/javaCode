@@ -21,7 +21,7 @@
 					<a class="navbar-brand">
 						<small> 
 						<img src="static/login/wbzy.png" /> 
-						<span class="yt-stroke">维修登记管理系统</span> </small><!-- ${pd.SYSNAME} -->
+						<span class="yt-stroke"></span> </small><!-- ${pd.SYSNAME} -->
 					</a>
 
 					<!-- /section:basics/navbar.layout.brand -->

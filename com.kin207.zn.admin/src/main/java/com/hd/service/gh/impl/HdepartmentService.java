@@ -47,12 +47,10 @@ public class HdepartmentService implements HdepartmentManager{
 		dao.update("HdepartmentMapper.edit", pd);
 	}
 
-	@Override
 	public void save(PageData pd) throws Exception {
 		dao.save("HdepartmentMapper.save", pd);
 	}
 
-	@Override
 	public void delete(PageData pd) throws Exception {
 		dao.delete("HdepartmentMapper.deleteById", pd);
 	}
@@ -65,7 +63,6 @@ public class HdepartmentService implements HdepartmentManager{
 		dao.delete("HdepartmentMapper.deleteAll", ids);
 	}
 
-	@Override
 	public List<PageData> departments(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("HdepartmentMapper.departments",pd);
 	}

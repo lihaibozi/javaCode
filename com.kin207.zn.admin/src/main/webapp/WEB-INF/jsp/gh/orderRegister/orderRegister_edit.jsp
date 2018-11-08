@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="static/ace/css/jquery-ui-timepicker-addon.css" />
 <link rel="stylesheet" href="static/ace/css/bootstrap-multiselect.css" />
 <link rel="stylesheet" href="static/ace/css/jquery-ui.css"/>
+<link rel="stylesheet" href="static/ace/css/select2.css" />
 </head>
 <body class="no-skin">
 	<!-- /section:basics/navbar.layout -->
@@ -64,7 +65,7 @@
 								<tr>
 									<td style="width:110px;text-align: right;padding-top: 13px;">是否送修</td>
 									<td>
-									<label style="float:left;padding-left: 2px;"><input name="isToRepair" id="isToRepair" <c:if test="${pd.isToRepair == '0' }">checked="checked"</c:if>  type="radio" class="ace" value="0"><span class="lbl">未送修</span></label>
+									<label style="float:left;padding-left: 2px;"><input name="isToRepair" id="isToRepair" <c:if test="${pd.isToRepair == '0' }">checked="checked"</c:if> type="radio" class="ace" value="0"><span class="lbl">未送修</span></label>
 									<label style="float:left;padding-left: 8px;"><input name="isToRepair" id="isToRepair"  <c:if test="${pd.isToRepair == '1' }">checked="checked"</c:if>  type="radio" class="ace" value="1"><span class="lbl">已送修</span></label>
 									</td>
 								</tr>
@@ -126,51 +127,39 @@
 	<!-- 下拉框 -->
 	<script src="static/ace/js/chosen.jquery.js"></script>
 	
-	<script src="static/html_UI/dist/js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="static/ace/js/bootstrap-multiselect.js"></script>
 	<!-- 日期框 -->
+	<script src="static/html_UI/dist/js/jquery-ui.min.js"></script>
 	<script src="static/ace/js/date-time/jquery-ui-timepicker-addon.js"></script>
 	<script src="static/ace/js/date-time/jquery-ui-timepicker-zh-CN.js"></script>
 	<script src="static/ace/js/date-time/jedate.js"></script>
 	
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
-		<script src="static/js/upload/uploadFile.js"></script>
+	<script src="static/js/upload/uploadFile.js"></script>
+	<script src="static/js/common/common.js"></script>
+	<script type="text/javascript" src="static/ace/js/select2.js"></script>
+	<script type="text/javascript" src="static/ace/js/pinyin.js"></script>
 </body>						
 <script type="text/javascript">
 	$(top.hangge());
 	//保存
 	function save(){
 		
-		if(!checkNull("status","维修状态不能为空")){
+		if(checkNull("status","请选择维修状态","s2id_status")){
 			return ;
 		};
-		if(!checkNull("repairContent","维修内容不能为空")){
+		if(checkNull("repairContent","请输入维修内容","repairContent")){
 			return;
 		};
-		if(!checkNull("repairProcess","维修过程描述不能为空")){
+		if(checkNull("repairProcess","请输入维修过程描述","repairProcess")){
 			return;
 		};
-		if(!checkNull("arriveDate","到达时间不能为空")){
+		if(checkNull("arriveDate","请选择达时间","arriveDate")){
 			return;
 		};
 		
 		$("#orderRegisterForm").submit();
-	}
-	
-	function checkNull(name,title){
-		var value = $("#"+name).val();
-		if(value==""){
-			$("#"+name).tips({
-				side:3,
-	            msg:title,
-	            bg:'#AE81FF',
-	            time:2
-	        });
-			return false;
-		}else{
-			return true;
-		}
 	}
 	
 	function getMemberAndPhone(){
@@ -206,6 +195,7 @@
             changeMonth: true,
             changeYear: true
 		});
+		$("#status").select2();
 		/* $('.date-picker').datepicker({autoclose: true,todayHighlight: true,format: 'yyyy-mm-dd'}); */
 	    $("#image").change(function (){
 	    	 $('#image-show').remove();

@@ -28,7 +28,7 @@
 							<td>
 								<div class="nav-search">
 								<span class="input-icon">
-									<input autocomplete="off" class="nav-search-input"  id="nav-search-input" type="text" name="keyword"  value="${pd.keyword}" placeholder="这里输入部门名称" />
+									<input autocomplete="off" class="nav-search-input"  id="nav-search-input" type="text" name="keyword"  value="${pd.keyword}" placeholder="这里输入科室名称" />
 								</span>
 								</div>
 							</td>
@@ -215,9 +215,12 @@
 			 diag.Width = 469;
 			 diag.Height = 250;
 			 diag.CancelEvent = function(){ //关闭事件
-				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 nextPage(1);
-				}
+				 if('${page.currentPage}' == '0'){
+					 top.jzts();
+					 setTimeout("self.location=self.location",100);
+				 }else{
+					 nextPage('${page.currentPage}');
+				 }
 				diag.close();
 			 };
 			 diag.show();

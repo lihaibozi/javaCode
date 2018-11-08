@@ -105,12 +105,12 @@
 												<i class="ace-icon fa fa-pencil bigger-130"></i>
 											</a>
 											</c:if>
-											&nbsp;
+											<%-- &nbsp;
 											<c:if test="${QX.del == 1 }">
 											<a style="cursor:pointer;" class="red" onclick="del('${var.id}');" title="删除">
 												<i class="ace-icon fa fa-trash-o bigger-130"></i>
 											</a>
-											</c:if>
+											</c:if> --%>
 										</td>
 									</tr>
 								
@@ -138,9 +138,9 @@
 							<%-- <c:if test="${QX.add == 1 }">
 							<a class="btn btn-sm btn-success" onclick="add();">新增</a>
 							</c:if> --%>
-							<c:if test="${QX.del == 1 }">
+							<%-- <c:if test="${QX.del == 1 }">
 							<a title="批量删除" class="btn btn-sm btn-danger" onclick="deleteAll('确定要删除选中的数据吗?');" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
-							</c:if>
+							</c:if> --%>
 						</td>
 						<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 					</tr>
@@ -246,9 +246,12 @@
 			 diag.Width = 600;
 			 diag.Height = 450;
 			 diag.CancelEvent = function(){ //关闭事件
-				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 nextPage(1);
-				}
+				 if('${page.currentPage}' == '0'){
+					 top.jzts();
+					 setTimeout("self.location=self.location",100);
+				 }else{
+					 nextPage('${page.currentPage}');
+				 }
 				diag.close();
 			 };
 			 diag.show();

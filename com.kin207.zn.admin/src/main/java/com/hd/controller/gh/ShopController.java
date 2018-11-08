@@ -8,10 +8,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -21,11 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.hd.controller.base.BaseController;
 import com.hd.entity.Page;
 import com.hd.service.gh.ShopManager;
-import com.hd.service.gh.TypeManager;
 import com.hd.util.AppUtil;
 import com.hd.util.FileUtil;
 import com.hd.util.Jurisdiction;

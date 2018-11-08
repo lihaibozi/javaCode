@@ -107,6 +107,7 @@ public class RepairRegisterController extends BaseController {
 		PageData pd = new PageData();
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "del")){
 			pd = this.getPageData();
+			orderRegisterService.delete(pd);
 			repairRegisterService.delete(pd);
 		}
 		out.write("success");
@@ -128,6 +129,7 @@ public class RepairRegisterController extends BaseController {
 			String DATA_IDS = pd.getString("DATA_IDS");
 			if(null != DATA_IDS && !"".equals(DATA_IDS)){
 				String ArrayDATA_IDS[] = DATA_IDS.split(",");
+				orderRegisterService.deleteAll(ArrayDATA_IDS);
 				repairRegisterService.deleteAll(ArrayDATA_IDS);
 				pd.put("msg", "ok");
 			}else{
@@ -246,21 +248,21 @@ public class RepairRegisterController extends BaseController {
 		String serialNumber = sdf.format(new Date())+new Random().nextInt(10);
 		String userName = Jurisdiction.getUsername();
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "add")){
-			pd.put("registerPeople", userName.trim());
+			pd.put("registerPeople", userName);
 			pd.put("registerDate", new Date());
-			pd.put("modifyPeople", userName.trim());
+			pd.put("modifyPeople", userName);
 			pd.put("modifyDate", new Date());
-			pd.put("serialNumber", serialNumber.trim());
-			pd.put("department", department.trim());
-			pd.put("repairStaff",repairStaff.trim());
-			pd.put("cellPhone",cellPhone.trim());
-			pd.put("assetNumber",assetNumber.trim());
-			pd.put("assetSn",assetSn.trim());
-			pd.put("content",content.trim());
-			pd.put("orderPeople",orderPeople.trim());
-			pd.put("assistants",assistants.trim());
-			pd.put("type",type.trim());
-			pd.put("status",status.trim());
+			pd.put("serialNumber", serialNumber);
+			pd.put("department", department);
+			pd.put("repairStaff",repairStaff);
+			pd.put("cellPhone","".equals(cellPhone)?"":cellPhone.trim());
+			pd.put("assetNumber","".equals(assetNumber)?"":assetNumber.trim());
+			pd.put("assetSn","".equals(assetSn)?"":assetSn.trim());
+			pd.put("content","".equals(content)?"":content.trim());
+			pd.put("orderPeople",orderPeople);
+			pd.put("assistants",assistants);
+			pd.put("type",type);
+			pd.put("status",status);
 			repairRegisterService.save(pd);
 			//保存成功后插入数据到
 			pd = new PageData();
@@ -313,19 +315,19 @@ public class RepairRegisterController extends BaseController {
 		pd = this.getPageData();
 		String userName = Jurisdiction.getUsername();
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "edit")){
-			pd.put("id", id.trim());
-			pd.put("modifyPeople", userName.trim());
+			pd.put("id", id);
+			pd.put("modifyPeople", userName);
 			pd.put("modifyDate", new Date());
-			pd.put("department", department.trim());
-			pd.put("repairStaff",repairStaff.trim());
-			pd.put("cellPhone",cellPhone.trim());
-			pd.put("assetNumber",assetNumber.trim());
-			pd.put("assetSn",assetSn.trim());
-			pd.put("content",content.trim());
-			pd.put("orderPeople",orderPeople.trim());
-			pd.put("assistants",assistants.trim());
-			pd.put("type",type.trim());
-			pd.put("status",status.trim());					   		
+			pd.put("department", department);
+			pd.put("repairStaff",repairStaff);
+			pd.put("cellPhone","".equals(cellPhone)?"":cellPhone.trim());
+			pd.put("assetNumber","".equals(assetNumber)?"":assetNumber.trim());
+			pd.put("assetSn","".equals(assetSn)?"":assetSn.trim());
+			pd.put("content","".equals(content)?"":content.trim());
+			pd.put("orderPeople",orderPeople);
+			pd.put("assistants",assistants);
+			pd.put("type",type);
+			pd.put("status",status);					   		
 			repairRegisterService.edit(pd);				//执行修改数据库
 		}
 		mv.addObject("msg","success");

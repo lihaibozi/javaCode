@@ -28,7 +28,7 @@
 							<td>
 								<div class="nav-search">
 								<span class="input-icon">
-									<input autocomplete="off" class="nav-search-input"  id="nav-search-input" type="text" name="keyword"  value="${pd.keyword}" placeholder="这里输入人员姓名" />
+									<input autocomplete="off" class="nav-search-input"  id="nav-search-input" type="text" name="keyword"  value="${pd.keyword}" placeholder="输入人员姓名或科室" />
 								</span>
 								</div>
 							</td>
@@ -46,6 +46,7 @@
 								</th>
 								<th class="center" style="width:50px;">序号</th>
 								<th class="center" >人员姓名</th>
+								<th class="center" >工号</th>
 								<th class="center" >手机号码</th>
 								<th class="center" >所属科室</th>
 								<th class="center">操作</th>
@@ -63,6 +64,7 @@
 										</td>
 										<td class='center' style="width: 30px;">${vs.index+1}</td>
 										<td class="center">${var.name}</td>
+										<td class="center">${var.number}</td>
 										<td class="center">${var.telePhone}</td>
 										<td class="center">${var.depName}</td>
 										<td class="center" hidden="true">${var.depId}</td>
@@ -216,9 +218,12 @@
 			 diag.Width = 469;
 			 diag.Height = 350;
 			 diag.CancelEvent = function(){ //关闭事件
-				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 nextPage(1);
-				}
+				 if('${page.currentPage}' == '0'){
+					 top.jzts();
+					 setTimeout("self.location=self.location",100);
+				 }else{
+					 nextPage('${page.currentPage}');
+				 }
 				diag.close();
 			 };
 			 diag.show();

@@ -74,7 +74,8 @@
 	<script src="static/ace/js/date-time/bootstrap-datepicker.js"></script>
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
-		<script src="static/js/upload/uploadFile.js"></script>
+	<script src="static/js/upload/uploadFile.js"></script>
+	<script src="static/js/common/common.js"></script>
 </body>						
 <script type="text/javascript">
 	$(top.hangge());
@@ -83,24 +84,12 @@
 	function save(){
 		var depName = $('#depName').val();
 		var depPhone = $('#depPhone').val();
-		if(depName==null||depName==""){
-			$("#depName").tips({
-				side:3,
-	            msg:'科室不能为空',
-	            bg:'#AE81FF',
-	            time:3
-	        });
-		 return;
-		}
-		if(depPhone==null||depPhone==""){
-			$("#depPhone").tips({
-				side:3,
-	            msg:'科室电话不能为空',
-	            bg:'#AE81FF',
-	            time:3
-	        });
-		 return;
-		}
+		if(checkNull("depName","请输入科室名称","depName")){
+			return ;
+		};
+		if(checkNull("depPhone","请输入科室电话","depPhone")){
+			return ;
+		};
 		$("#departmentForm").submit();
 	}
 	

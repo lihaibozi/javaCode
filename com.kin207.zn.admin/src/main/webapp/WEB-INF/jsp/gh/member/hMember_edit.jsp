@@ -18,6 +18,7 @@
 <%@ include file="../../system/index/top.jsp"%>
 <!-- 日期框 -->
 <link rel="stylesheet" href="static/ace/css/datepicker.css" />
+<link rel="stylesheet" href="static/ace/css/select2.css" />
 </head>
 <body class="no-skin">
 	<!-- /section:basics/navbar.layout -->
@@ -34,7 +35,11 @@
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 								<tr>
 									<td style="width:79px;text-align: right;padding-top: 13px;">人员姓名</td>
-									<td><input type="text" name="name" id="name" value="${pd.name }" placeholder="这里输入人员姓名" title="人员姓名" style="width:98%;" /></td>
+									<td><input type="text" name="name" id="name" value="${pd.name}" placeholder="这里输入人员姓名" title="人员姓名" style="width:98%;" /></td>
+								</tr>
+								<tr>
+									<td style="width:79px;text-align: right;padding-top: 13px;">职员工号</td>
+									<td><input type="text" name="number" id="number" value="${pd.number}" placeholder="这里输入工号" title="工号" style="width:98%;" /></td>
 								</tr>
 								<tr>
 									<td style="width:79px;text-align: right;padding-top: 13px;">手机号码</td>
@@ -43,7 +48,7 @@
 								<tr>
 									<td style="width:79px;text-align: right;padding-top: 13px;">所属科室</td>
 									<td>
-									<select name="depId" id="depId"  style="width:130px">
+									<select name="depId" id="depId"  style="width:260px">
 										<option value=''>----请选择科室----</option>	
 										 <c:forEach items="${listDeparts}" var="cate" varStatus="st">
 									        <option value="${cate.id}" 
@@ -87,25 +92,23 @@
 	<script src="static/ace/js/date-time/bootstrap-datepicker.js"></script>
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
-		<script src="static/js/upload/uploadFile.js"></script>
+	<script type="text/javascript" src="static/ace/js/select2.js"></script>
+	<script type="text/javascript" src="static/ace/js/pinyin.js"></script>
+	<script src="static/js/upload/uploadFile.js"></script>
+	<script src="static/js/common/common.js"></script>
 </body>						
 <script type="text/javascript">
 	$(top.hangge());
 	
 	//保存
 	function save(){
-		var depSelect = $("#depSelect").val();
-		var name =  $("#name").val();
 		var telePhone =  $("#telePhone").val();
-		if(name==null||name==""){
-			$("#name").tips({
-				side:3,
-	            msg:'人员姓名不能为空',
-	            bg:'#AE81FF',
-	            time:3
-	        });
-			return;
-		}
+		if(checkNull("name","请输入人员姓名","name")){
+			return ;
+		};
+		if(checkNull("number","请输入工号","number")){
+			return ;
+		};
 		var phoneRegx = /^[1][3,4,5,7,8][0-9]{9}$/;
 		if(!phoneRegx.test(telePhone)){
 			$("#telePhone").tips({
@@ -114,17 +117,12 @@
 	            bg:'#AE81FF',
 	            time:3
 	        });
+			$("#telePhone").focus();
 			return;
-		}
-		if(depSelect==null||depSelect==""){
-			$("#depSelect").tips({
-				side:3,
-	            msg:'请选择科室',
-	            bg:'#AE81FF',
-	            time:3
-	        });
-			return;
-		}
+		};
+		if(checkNull("depId","请选择科室","s2id_depId")){
+			return ;
+		};
 		
 		$("#memberForm").submit();
 	}
@@ -136,6 +134,7 @@
 		} */
 		
 		/* $('.date-picker').datepicker({autoclose: true,todayHighlight: true,format: 'yyyy-mm-dd'}); */
+		$("#depId").select2();
 	    $("#image").change(function (){
 	    	 $('#image-show').remove();
 	    });

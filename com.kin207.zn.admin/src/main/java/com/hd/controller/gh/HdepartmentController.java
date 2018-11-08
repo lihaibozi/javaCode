@@ -2,30 +2,20 @@ package com.hd.controller.gh;
 
 import javax.annotation.Resource;
 
-import java.io.File;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 import com.hd.controller.base.BaseController;
 import com.hd.entity.Page;
 import com.hd.service.gh.HdepartmentManager;
-import com.hd.service.gh.PatientManager;
 import com.hd.util.AppUtil;
 import com.hd.util.Jurisdiction;
 import com.hd.util.PageData;
@@ -102,7 +92,6 @@ public class HdepartmentController extends BaseController {
 		pd = this.getPageData();
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "del")){
 			List<PageData> pdList = new ArrayList<PageData>();
-			List<PageData> pathList = new ArrayList<PageData>();
 			String DATA_IDS = pd.getString("DATA_IDS");
 			if(null != DATA_IDS && !"".equals(DATA_IDS)){
 				String ArrayDATA_IDS[] = DATA_IDS.split(",");
@@ -204,7 +193,7 @@ public class HdepartmentController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "edit")){
-			pd.put("id", id.trim());
+			pd.put("id", id);
 			pd.put("depName", depName.trim());								
 			pd.put("depPhone", depPhone.trim());						   		
 			hDepartmentService.edit(pd);				//执行修改数据库

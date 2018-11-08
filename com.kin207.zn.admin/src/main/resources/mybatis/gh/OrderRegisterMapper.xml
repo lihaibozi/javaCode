@@ -106,19 +106,23 @@
 		
 	<!-- 删除-->
  	<delete id="deleteById" parameterType="pd">
-		delete from <include refid="table"></include> 
-		where 
-			id = #{id}
+		delete from <include refid="table"></include>  
+		where serialnumber = (select serialnumber  from t_repair_register where 
+		id= #{id}
+		)
 	</delete> 
 	
 	<!-- 批量删除 -->
  	<delete id="deleteAll" parameterType="String">
 		delete from <include refid="table"></include>
 		where 
+			serialNumber in (select serialnumber  from t_repair_register where 
 			id in
-  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
                   #{item}
              </foreach>
+		)
+  			
 	</delete>
 	
  	<!-- 修改 -->

@@ -3464,7 +3464,10 @@ the specific language governing permissions and limitations under the Apache Lic
           }
         },
         matcher: function(term, text) {
-            return stripDiacritics(''+text).toUpperCase().indexOf(stripDiacritics(''+term).toUpperCase()) >= 0;
+//            return stripDiacritics(''+text).toUpperCase().indexOf(stripDiacritics(''+term).toUpperCase()) >= 0;
+        	 if (text.toPinYin != undefined) 
+                 return text.toPinYin().indexOf(term.toUpperCase()) >= 0?true:text.toUpperCase().indexOf(term.toUpperCase()) >= 0;
+                 return text.toUpperCase().indexOf(term.toUpperCase()) >= 0;
         },
         separator: ",",
         tokenSeparators: [],

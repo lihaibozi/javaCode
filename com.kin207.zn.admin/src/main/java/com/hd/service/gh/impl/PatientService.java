@@ -46,17 +46,14 @@ public class PatientService implements PatientManager{
 		dao.update("PatientMapper.edit", pd);
 	}
 
-	@Override
 	public void save(PageData pd) throws Exception {
 		dao.save("PatientMapper.save", pd);
 	}
 
-	@Override
 	public List<PageData> patientList(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("PatientMapper.listPatient",pd);
 	}
 
-	@Override
 	public void delete(PageData pd) throws Exception {
 		dao.delete("PatientMapper.deleteById", pd);
 	}

@@ -46,12 +46,10 @@ public class RepairRegisterService implements RepairRegisterManager{
 		dao.update("RepairRegisterMapper.edit", pd);
 	}
 
-	@Override
 	public void save(PageData pd) throws Exception {
 		dao.save("RepairRegisterMapper.save", pd);
 	}
 
-	@Override
 	public void delete(PageData pd) throws Exception {
 		dao.delete("RepairRegisterMapper.deleteById", pd);
 	}
@@ -64,32 +62,26 @@ public class RepairRegisterService implements RepairRegisterManager{
 		dao.delete("RepairRegisterMapper.deleteAll", ids);
 	}
 
-	@Override
 	public List<PageData> repairRegisters(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("RepairRegisterMapper.repairRegisters",pd);
 	}
 
-	@Override
 	public List<PageData> getMemberAndPhone(PageData pd)  throws Exception{
 		return (List<PageData>) dao.findForList("RepairRegisterMapper.getMemberAndPhone",pd);
 	}
 
-	@Override
 	public List<PageData> getTypes(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("RepairRegisterMapper.getTypes",pd);
 	}
 
-	@Override
 	public List<PageData> getStatus(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("RepairRegisterMapper.getStatus",pd);
 	}
 
-	@Override
 	public List<PageData> getMembersByDepId(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("RepairRegisterMapper.getMembersByDepId",pd);
 	}
 
-	@Override
 	public String getMembersById(String id) throws Exception {
 		return  (String)dao.findForObject("RepairRegisterMapper.getMembersById",id);
 	}

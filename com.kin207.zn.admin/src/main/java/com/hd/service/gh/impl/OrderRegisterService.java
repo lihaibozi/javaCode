@@ -46,12 +46,10 @@ public class OrderRegisterService implements OrderRegisterManager{
 		dao.update("OrderRegisterMapper.edit", pd);
 	}
 
-	@Override
 	public void save(PageData pd) throws Exception {
 		dao.save("OrderRegisterMapper.save", pd);
 	}
 
-	@Override
 	public void delete(PageData pd) throws Exception {
 		dao.delete("OrderRegisterMapper.deleteById", pd);
 	}
@@ -64,27 +62,22 @@ public class OrderRegisterService implements OrderRegisterManager{
 		dao.delete("OrderRegisterMapper.deleteAll", ids);
 	}
 
-	@Override
 	public List<PageData> orderRegisters(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("OrderRegisterMapper.orderRegisters",pd);
 	}
 
-	@Override
 	public List<PageData> getMemberAndPhone(PageData pd)  throws Exception{
 		return (List<PageData>) dao.findForList("OrderRegisterMapper.getMemberAndPhone",pd);
 	}
 
-	@Override
 	public List<PageData> getTypes(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("OrderRegisterMapper.getTypes",pd);
 	}
 
-	@Override
 	public List<PageData> getStatus(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("OrderRegisterMapper.getStatus",pd);
 	}
 
-	@Override
 	public List<PageData> getMembersByDepId(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("OrderRegisterMapper.getMembersByDepId",pd);
 	}

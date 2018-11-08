@@ -5,9 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.hd.dao.DaoSupport;
 import com.hd.entity.Page;
-import com.hd.service.gh.HdepartmentManager;
 import com.hd.service.gh.HmemberManager;
-import com.hd.service.gh.PatientManager;
 import com.hd.util.PageData;
 
 
@@ -48,12 +46,10 @@ public class HmemberService implements HmemberManager{
 		dao.update("HmemberMapper.edit", pd);
 	}
 
-	@Override
 	public void save(PageData pd) throws Exception {
 		dao.save("HmemberMapper.save", pd);
 	}
 
-	@Override
 	public void delete(PageData pd) throws Exception {
 		dao.delete("HmemberMapper.deleteById", pd);
 	}
@@ -66,7 +62,6 @@ public class HmemberService implements HmemberManager{
 		dao.delete("HmemberMapper.deleteAll", ids);
 	}
 
-	@Override
 	public List<PageData> getOrders(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("HmemberMapper.getOrders",pd);
 	}

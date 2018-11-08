@@ -1,3 +1,5 @@
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\OrderRegisterManager.java
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\impl\RepairRegisterService.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\system\user\UserController.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\GetPinyin.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\system\onlinemanager\OnlineManagerController.java
@@ -8,8 +10,8 @@ E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\gh\Doct
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\system\buttonrights\ButtonrightsManager.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\base\BaseController.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\Logger.java
-E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\impl\OrderService.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\system\menu\MenuManager.java
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\impl\OrderService.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\system\login\LoginController.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\Watermark.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\entity\system\Dictionaries.java
@@ -35,6 +37,7 @@ E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\JPushClientUt
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\Tools.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\fhdb\brdb\BRdbManager.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\system\appuser\impl\AppuserService.java
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\gh\RepairRegisterController.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\GoodsManager.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\plugin\websocketOnline\OnlineChatServerPool.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\ytdb\timingbackup\TimingBackUpController.java
@@ -47,6 +50,8 @@ E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\ShopMan
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\mail\SimpleMailSender.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\SmsUtil.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\StringUtil.java
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\impl\HTypeService.java
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\RepairRegisterManager.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\fhdb\timingbackup\impl\TimingBackUpService.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\ObjectExcelView.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\AppConst.java
@@ -54,6 +59,7 @@ E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\app\app
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\DelAllFile.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\HmemberManager.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\mail\MailSenderInfo.java
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\HStatusManager.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\interceptor\shiro\ShiroRealm.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\RightsHelper.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\system\buttonrights\ButtonrightsController.java
@@ -74,7 +80,9 @@ E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\ObjectExcelRe
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\Const.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\TwoDimensionCode.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\gh\HmemberController.java
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\gh\OrderRegisterController.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\system\appuser\AppuserManager.java
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\gh\HTypeController.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\system\dictionaries\impl\DictionariesService.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\UuidUtil.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\ImageAnd64Binary.java
@@ -86,13 +94,13 @@ E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\FileDownload.
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\resolver\MyExceptionResolver.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\AddressManager.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\Uploader.java
-E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\impl\AdderssService.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\system\menu\MenuController.java
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\impl\AdderssService.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\TwoDimensionCodeImage.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\system\dictionaries\DictionariesManager.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\impl\TypeService.java
-E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\QuartzManager.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\DbFH.java
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\QuartzManager.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\system\buttonrights\impl\ButtonrightsService.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\system\fhbutton\impl\FhbuttonService.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\gh\OrderController.java
@@ -108,14 +116,17 @@ E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\GetWeb.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\plugin\websocketOnline\OnlineChatServer.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\gh\GoodsController.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\FileUpload.java
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\impl\HStatusService.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\filter\startFilter.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\system\fhsms\impl\FhsmsService.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\Jurisdiction.java
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\impl\OrderRegisterService.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\information\pictures\PicturesManager.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\interceptor\LoginHandlerInterceptor.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\plugin\websocketInstantMsg\ChatServer.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\impl\GhUserService.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\OrderMapper.java
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\gh\HStatusController.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\controller\gh\ShopController.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\RequestUtil.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\plugin\PagePlugin.java
@@ -126,6 +137,7 @@ E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\system\men
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\PathUtil.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\DateUtil.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\SortUtil.java
+E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\gh\HTypeManager.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\dao\DAO.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\service\system\user\impl\UserService.java
 E:\javaCode\javaCode\com.kin207.zn.admin\src\main\java\com\hd\util\FileZip.java

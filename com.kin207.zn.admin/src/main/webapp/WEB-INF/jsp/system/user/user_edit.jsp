@@ -14,6 +14,7 @@
 <base href="<%=basePath%>">
 <!-- 下拉框 -->
 <link rel="stylesheet" href="static/ace/css/chosen.css" />
+<link rel="stylesheet" href="static/ace/css/select2.css" />
 <!-- jsp文件头和头部 -->
 <%@ include file="../index/top.jsp"%>
 </head>
@@ -123,6 +124,8 @@
 	<script src="static/ace/js/chosen.jquery.js"></script>
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
+	<script type="text/javascript" src="static/ace/js/select2.js"></script>
+	<script type="text/javascript" src="static/ace/js/pinyin.js"></script>
 </body>
 <script type="text/javascript">
 	$(top.hangge());
@@ -145,7 +148,7 @@
 			return false;
 		}
 		if($("#department").val()==""){
-			$("#department").tips({
+			$("#s2id_department").tips({
 				side:3,
 	            msg:'选择科室',
 	            bg:'#AE81FF',
@@ -333,6 +336,7 @@
 		});
 	}
 	$(function() {
+		$("#department").select2();
 		//下拉框
 		if(!ace.vars['touch']) {
 			$('.chosen-select').chosen({allow_single_deselect:true}); 

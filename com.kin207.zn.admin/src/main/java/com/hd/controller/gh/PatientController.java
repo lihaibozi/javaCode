@@ -2,7 +2,6 @@ package com.hd.controller.gh;
 
 import javax.annotation.Resource;
 
-import java.io.File;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,8 +72,8 @@ public class PatientController extends BaseController {
 				}
 				for(PageData p :patientList){
 					String time = String.valueOf(p.get("createTime")).substring(0,10);
-					p.put("patientCount", multimap.get(time).size());
 					Collection<Integer> ages = multimap.get(time);
+					p.put("patientCount", ages.size());
 					int total = 0;
 					for(Integer age:ages){
 						total += age;
@@ -124,7 +123,6 @@ public class PatientController extends BaseController {
 		pd = this.getPageData();
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "del")){
 			List<PageData> pdList = new ArrayList<PageData>();
-			List<PageData> pathList = new ArrayList<PageData>();
 			String DATA_IDS = pd.getString("DATA_IDS");
 			if(null != DATA_IDS && !"".equals(DATA_IDS)){
 				String ArrayDATA_IDS[] = DATA_IDS.split(",");

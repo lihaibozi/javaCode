@@ -122,7 +122,6 @@ public class DoctorController extends BaseController {
 	public ModelAndView firstPage(Page page){
 
 		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
 		try{
 			mv.setViewName("gh/doctor/firstPage");
 		} catch(Exception e){

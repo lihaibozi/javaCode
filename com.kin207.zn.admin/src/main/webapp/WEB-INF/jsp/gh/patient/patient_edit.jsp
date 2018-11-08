@@ -17,7 +17,9 @@
 <!-- jsp文件头和头部 -->
 <%@ include file="../../system/index/top.jsp"%>
 <!-- 日期框 -->
-<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+<link rel="stylesheet" href="static/ace/css/jquery-ui-timepicker-addon.css" />
+<link rel="stylesheet" href="static/ace/css/bootstrap-multiselect.css" />
+<link rel="stylesheet" href="static/ace/css/jquery-ui.css"/>
 </head>
 <body class="no-skin">
 	<!-- /section:basics/navbar.layout -->
@@ -56,7 +58,9 @@
 								</tr>
 								<tr>
 									<td style="width:90px;text-align: right;padding-top: 13px;">出生时间</td>
-									<td style="padding-left:8px;"><input class="span10 date-picker" name="patientBirth" id="patientBirth"  value="${pd.patientBirth}" type="text"  date-format="yyyy-mm-dd" readonly="readonly" style="width:85px;" placeholder="出生日期" title="出生日期"/></td>			
+									<td style="padding-left:8px;">
+										<input name="patientBirth" id="patientBirth" value="${pd.patientBirth}" type="text" class="ui_timepicker" >
+									</td>			
 								</tr>
 								<tr>
 									<td class="center" colspan="6">
@@ -92,7 +96,10 @@
 	<script src="static/ace/js/date-time/jquery-ui-sliderAccess.js"></script>
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
-		<script src="static/js/upload/uploadFile.js"></script>
+	<script src="static/js/upload/uploadFile.js"></script>
+	<script src="static/html_UI/dist/js/jquery-ui.min.js"></script>
+	<script src="static/ace/js/date-time/jquery-ui-timepicker-addon.js"></script>
+	<script src="static/ace/js/date-time/jquery-ui-timepicker-zh-CN.js"></script>
 </body>						
 <script type="text/javascript">
 	$(top.hangge());
@@ -174,7 +181,15 @@
 		}
 	}
 	$(function(){
-		$('.date-picker').datepicker({autoclose: true,todayHighlight: true,format: 'yyyy-mm-dd'});
+		$('.ui_timepicker').datetimepicker({
+			lang: "ch",
+            timeFormat: "HH:mm:ss",
+            dateFormat: "yy-mm-dd",
+            dayNamesMin: ["七", "一", "二", "三", "四", "五", "六"],
+            monthNamesShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"],
+            changeMonth: true,
+            changeYear: true
+		});
 	    $("#image").change(function (){
 	    	 $('#image-show').remove();
 	    });

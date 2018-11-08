@@ -4,27 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.hd.controller.base.BaseController;
 import com.hd.entity.Page;
 import com.hd.service.gh.AddressManager;
 import com.hd.service.gh.OrderMapper;
 import com.hd.util.AppUtil;
-import com.hd.util.DateUtil;
-import com.hd.util.DbFH;
-import com.hd.util.FileUtil;
 import com.hd.util.Jurisdiction;
 import com.hd.util.PageData;
 
