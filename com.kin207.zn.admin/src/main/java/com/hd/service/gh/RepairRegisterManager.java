@@ -50,5 +50,15 @@ public interface RepairRegisterManager {
 	public List<PageData> getMembersByDepId(PageData pd) throws Exception;
 
 	public String getMembersById(String id) throws Exception;
+
+	public List<PageData> getDepartment(PageData pd) throws Exception;
+
+	public void deleteFilePath(PageData pd) throws Exception;
+
+	public List<PageData> repairRegisterLists(PageData pd) throws Exception;
+
+	public PageData getDataBySerial(String serialNumber) throws Exception;
+
+	public void editStatus(PageData pd) throws Exception;
 	
 }

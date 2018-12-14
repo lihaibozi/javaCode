@@ -22,7 +22,7 @@ public class PatientEntity extends Model<PatientEntity>{
 			String sql = "SELECT a.doctorArea,a.doctorName,a.doctorNickName,"
 					+ " a.doctorWxId,a.dotorHos,b.patientAddress,b.patientAge,"
 					+ " b.patientCardNo,b.patientName,b.patientPhoneNumber,"
-					+ " b.patientSex,b.transferId FROM t_doctor_info a "
+					+ " b.patientSex,b.transferId FROM t_doctor a "
 					+ " JOIN t_patient_info b ON a.openId = b.openId WHERE "
 					+ " b.createTime >= '"+begin+"'"
 					+ " AND b.createTime <= '"+ end+"'";

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="HStatusMapper">
+	
+	<!--表名 -->
+
+	<sql id="table">
+		t_repair_status
+	</sql>
+	
+	<sql id="Field">
+		status,
+ 		disable
+	</sql>
+
+	<sql id="FieldValue">
+		#{status},
+		#{disable}
+	</sql> 
+	
+	
+	<!-- 列表 -->
+	<select id="statuslistPage" parameterType="page" resultType="pd">
+		select  *
+		from  <include refid="table"></include>a
+		where 1=1 
+		<if test="pd.keyword != null and pd.keyword != ''"><!-- 关键词检索 -->
+			and (
+				a.status = #{pd.keyword}
+				or
+				a.status LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
+				)
+		</if>
+	</select>
+	
+	<!-- 列表 -->
+	<select id="departments" parameterType="pd" resultType="pd">
+		select  *
+		from  <include refid="table"></include>a
+	</select>
+	
+	<!-- 列出所有分类 -->
+	<select id="listShop"  parameterType="pd" resultType="pd" >
+		select *  from 
+		<include refid="table"></include>
+	</select>
+		
+	<!-- 删除-->
+ 	<delete id="deleteById" parameterType="pd">
+		update <include refid="table"></include> a
+		set a.disable = 1 
+		where 
+			id = #{id}
+	</delete> 
+	
+	<!-- 批量删除 -->
+ 	<delete id="deleteAll" parameterType="String">
+		update <include refid="table"></include> a
+		set a.disable = 1 
+		where 
+			id in
+  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+	</delete>
+	
+ 	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  <include refid="table"></include>
+		set 
+		    <if test="status != null and status != ''">
+		    status					= #{status},
+		    </if>
+		    <if test="disable != null and disable != ''">
+		    disable					= #{disable},
+		    </if>
+		    id = #{id}
+		where 
+			id = #{id}		
+		</update>
+		
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select *
+		from 
+		<include refid="table"></include>
+		where 
+		id = #{id}		
+	</select>
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="table"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 通过名称获取数据 -->
+	<select id="findByName" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="table"></include>
+		where 
+			name = #{name} LIMIT 1
+	</select>
+	
+		
+		
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="GhUserMapper">
+	
+	<!--表名 -->
+
+	<sql id="table">
+		t_gh_user
+	</sql>
+	
+	<sql id="Field">
+		id,
+		openId,
+		nickName,
+		phone,
+		photo,		
+		gender,
+		createTime
+	</sql>
+	
+	
+	<!-- 会员列表 -->
+	<select id="userlistPage" parameterType="page" resultType="pd">
+		select  
+          <include refid="Field"></include>
+		from  <include refid="table"></include>
+		where 1=1 
+		<if test="pd.keywords != null and pd.keywords!= ''"><!-- 关键词检索 -->
+			and (
+				a.phone  id = #{pd.phone}	
+				or
+				a.nickName LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				)
+		</if>
+	</select>
+	
+	
+		
+	
+	
+</mapper>

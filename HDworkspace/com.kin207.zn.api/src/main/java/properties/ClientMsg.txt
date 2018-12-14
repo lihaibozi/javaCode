@@ -1,0 +1,59 @@
+10001 = 账号不存在
+10001_En = account does not exist
+
+10002 = 密码错误
+10002_En = Wrong password
+
+10003 = 账号为空
+10003_En = Empty account
+
+10004 = 账号格式不正确
+10004_En = Wrong account format
+
+10005 = 账号已存在
+10005_En = Account already exists
+
+10006 = 注册成功
+10006_En = Registration success
+
+10007 = 新密码设置成功
+10007_En = New password set successfully
+
+10008 = 用户信息保存成功
+10008_En = User information saved successfully
+
+10038 = 用户信息保存失败
+10038_En = User information saved fail
+
+10009 = 登录成功
+10009_En = Login success
+
+10010 = 注册环信失败
+10010_En = Failed to register Easemob
+
+10011 = 第三方登录没有密码
+10011_En = Third party login does not require a password
+
+10012 = 旧密码不正确
+10012_En = Old password is wrong
+
+10016 = 手机号格式不正确
+10016_En = Wrong mobile number
+
+10017 = 用户名已存在
+10017_En = Nickname exist
+
+
+10018 = 您好，您的验证码是
+10018_En = Hello  your verification code is
+
+10030 = 数据上传成功
+10030_En = Data upload success
+10031= 数据上传失败
+10031_En= Data upload failed
+
+10025 = 无数据
+10025_En = No data
+
+10019 = 解绑成功
+10019_En = Relieve bind success

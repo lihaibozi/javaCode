@@ -81,4 +81,8 @@ public class OrderRegisterService implements OrderRegisterManager{
 	public List<PageData> getMembersByDepId(PageData pd) throws Exception {
 		return (List<PageData>) dao.findForList("OrderRegisterMapper.getMembersByDepId",pd);
 	}
+
+	public void editStatus(PageData pd) throws Exception {
+		dao.update("OrderRegisterMapper.editStatus", pd);
+	}
 }

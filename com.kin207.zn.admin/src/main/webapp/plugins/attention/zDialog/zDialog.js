@@ -233,16 +233,17 @@ Dialog.prototype.attachBehaviors = function () {
 };
 Dialog.prototype.displacePath = function () {
     if (this.URL.substr(0, 7) == "http://" || this.URL.substr(0, 1) == "/" || this.URL.substr(0, 11) == "javascript:") {
-        return this.URL
+    	return this.URL
     } else {
-        var a = this.URL;
+        /*var a = this.URL;
         var b = window.location.href;
         b = b.substring(0, b.lastIndexOf("/"));
         while (a.indexOf("../") >= 0) {
             a = a.substring(3);
             b = b.substring(0, b.lastIndexOf("/"))
         }
-        return b + "/" + a
+        return b + "/" + a*/
+    	return this.URL
     }
 };
 Dialog.prototype.setPosition = function () {

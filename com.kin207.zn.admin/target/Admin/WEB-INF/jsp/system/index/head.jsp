@@ -21,7 +21,7 @@
 					<a class="navbar-brand">
 						<small> 
 						<img src="static/login/wbzy.png" /> 
-						<span class="yt-stroke"></span> </small><!-- ${pd.SYSNAME} -->
+						<span class="yt-stroke">维修登记管理系统</span> </small><!-- ${pd.SYSNAME} -->
 					</a>
 
 					<!-- /section:basics/navbar.layout.brand -->
@@ -77,7 +77,7 @@
 						<!-- #section:basics/navbar.user_menu -->
 						<li class="light-blue">
 							<a data-toggle="dropdown"  class="dropdown-toggle" href="#">
-								<img class="nav-user-photo" src="static/ace/avatars/user1.png" alt="Jason's Photo" />
+								<img class="nav-user-photo" src="static/ace/avatars/user1.png" alt="doctor" />
 								<span class="user-info" id="user_info">
 								</span>
 								<i class="ace-icon fa fa-caret-down"></i>

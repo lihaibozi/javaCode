@@ -3,8 +3,10 @@ package com.hd.util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /** 
  * 说明：日期处理
@@ -181,9 +183,32 @@ public class DateUtil {
         return dateStr;
     }
     
+    /**
+     * 获取日期之间中的每一天
+     * */
+    public static List<String> getDays(String startTime,String endTime){
+        List<String> listDays = new ArrayList<String>();
+        try{
+            Date dateOne = sdfDay.parse(startTime);
+            Date dateTwo = sdfDay.parse(endTime);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateOne);  
+            while(calendar.getTime().before(dateTwo)){               
+                listDays.add(sdfDay.format(calendar.getTime()));
+                calendar.add(Calendar.DAY_OF_MONTH, 1);               
+            }
+            calendar.setTime(dateTwo);
+            listDays.add(sdfDay.format(calendar.getTime()));
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        return listDays;
+    }
+    
     public static void main(String[] args) {
-    	System.out.println(getDays());
-    	System.out.println(getAfterDayWeek("3"));
+    	System.out.println(getDays("2018-10-21","2018-11-28"));
     }
 
 }

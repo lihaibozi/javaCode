@@ -35,9 +35,10 @@
 	</select>
 	
 	<!-- 列表 -->
-	<select id="departments" parameterType="pd" resultType="pd">
+	<select id="types" parameterType="pd" resultType="pd">
 		select  *
 		from  <include refid="table"></include>a
+		order by a.id
 	</select>
 	
 	<!-- 列出所有分类 -->

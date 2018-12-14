@@ -1,0 +1,53 @@
+#员工默认头像
+EMPLOYEE_PHOTO_DEFAULT=http://image.ubc-tech.com/assets/images/head_male_big.png
+
+#员工上传头像路径
+EMPLOYEE_PHOTO_PATH=/assets/pictures/
+
+#项目部署URL
+APP_URL =https://www.ikin207.com/wechat/
+
+#官方运营号
+PUBLIC_ACCOUNT_ID = 488
+PUBLIC_ACCOUNT = info@ikin207-tech.com
+
+#信鸽推送用户名前缀，环境：1：生产环境；2：开发环境
+XINGE_ID_PREFIX=test_ikin207_xinge_pushid_
+
+Xinge_access_id_android=2100138335
+Xinge_secret_key_android=394411f0ba553a4355edfdf6fba68e0f
+
+Xinge_access_id_ios=2200138336
+Xinge_secret_key_ios=8f0ac153a739e8ede231f94efcbdbb12
+
+Xinge_env_ios=2
+
+#环信聊天用户名前缀
+HUANXIN_ID_PREFIX=test_usense_huanxin_id_
+
+#选择语言版本/En/default
+CHOOSE_SYSTEM_LANGUAGE = default
+
+#短信－发送验证码内容
+SMS_SEND_CAPTCHA = 您好，您的验证码是
+
+#网球等级评定系数
+TENNIS_RATING_RATIO =1
+#系统归属地0：国内版
+APP_FOR_LOCAL=0
+
+
+# LA 公众号appId根据实际修改
+#APPID=wx7edecd106001eae0
+#LA微信公众号secret  根据实际修改
+#SECRET=5af215e1720a8aba2770c94a989f50ed
+#ikin207公众号appId根据实际修改
+APPID=wx7edecd106001eae0
+#ikin207微信公众号secret  根据实际修改
+SECRET=5af215e1720a8aba2770c94a989f50ed
+#ikin207微信公众号partner商户号
+PARTNER=1452559802
+#ikin207 partnerkey 商户key
+PARTNERKEY=ikin207201703271qa2ws3ed4rf5tg6yh7uj8i
+#SSL路径
+SSLFILEPATH=/opt/apache-tomcat-7.0.68/cert

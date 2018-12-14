@@ -19911,8 +19911,8 @@ input.typeahead.scrollable ~ .tt-dropdown-menu {
   }
 }
 .yt-stroke{
-color: transparent;
--webkit-text-stroke: 1px #ffffff;
+color: #d14747;
+/* -webkit-text-stroke: 1px #ffffff; */
 letter-spacing: 0.04em;
 }
 

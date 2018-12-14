@@ -20,6 +20,7 @@ com\hd\plugin\websocketInstantMsg\ChatServerPool.class
 com\hd\entity\system\Dictionaries.class
 com\hd\util\DbFH$DbBackUpCallable.class
 com\hd\service\gh\impl\AdderssService.class
+com\hd\controller\gh\HTypeController.class
 com\hd\controller\system\menu\MenuController.class
 com\hd\dao\DAO.class
 com\hd\service\system\fhbutton\impl\FhbuttonService.class
@@ -28,6 +29,7 @@ com\hd\service\gh\OrderMapper.class
 com\hd\util\StringUtil.class
 com\hd\service\system\buttonrights\ButtonrightsManager.class
 com\hd\listener\WebAppContextListener.class
+com\hd\service\gh\impl\HTypeService.class
 com\hd\service\system\role\impl\RoleService.class
 com\hd\util\JPushClientUtil.class
 com\hd\util\ImageCompressUtil$2.class
@@ -44,10 +46,13 @@ com\hd\util\mail\MailSenderInfo.class
 com\hd\service\system\menu\MenuManager.class
 com\hd\service\system\role\RoleManager.class
 com\hd\util\Freemarker.class
+com\hd\controller\gh\HStatusController.class
 com\hd\service\fhdb\brdb\BRdbManager.class
 com\hd\service\gh\OrderRegisterManager.class
+com\hd\service\gh\HTypeManager.class
 com\hd\service\system\appuser\impl\AppuserService.class
 com\hd\util\Constants.class
+com\hd\service\gh\impl\HStatusService.class
 com\hd\util\DateUtil.class
 com\hd\service\gh\GoodsManager.class
 com\hd\util\DbFH$DbRecoverCallable.class
@@ -125,6 +130,7 @@ com\hd\service\gh\impl\GoodsService.class
 com\hd\service\gh\impl\ShopService.class
 com\hd\util\Jurisdiction.class
 com\hd\filter\startFilter.class
+com\hd\controller\gh\Test.class
 com\hd\controller\system\onlinemanager\OnlineManagerController.class
 com\hd\util\AppUtil.class
 com\hd\service\gh\impl\RepairRegisterService.class
@@ -132,6 +138,7 @@ com\hd\util\ImageAnd64Binary.class
 com\hd\service\fhoa\department\DepartmentManager.class
 com\hd\controller\system\fhbutton\FhbuttonController.class
 com\hd\service\gh\impl\HmemberService.class
+com\hd\service\gh\HStatusManager.class
 com\hd\service\gh\DoctorManager.class
 com\hd\util\mail\MyAuthenticator.class
 com\hd\controller\gh\GoodsController.class

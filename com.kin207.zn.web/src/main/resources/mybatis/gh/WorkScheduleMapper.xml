@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WorkScheduleMapper">
+	
+	<!--表名 -->
+	<sql id="table">
+		t_work_schedule
+	</sql>
+	
+	<sql id="Field">
+		workTime,
+		depId,
+		doctorID,
+		hosId,
+		workId,
+		checkStatus,
+		createTime,
+		creator,
+		modifyPeople,
+		modifyDate,
+		rejectReason,
+		isFinish,
+		isNotify
+	</sql>
+
+	<sql id="FieldValue">
+		#{workTime},
+		#{depId},
+		#{doctorID},
+		#{hosId},
+		#{workId},
+		#{checkStatus},
+		#{createTime},
+		#{creator},
+		#{modifyPeople},
+		#{modifyDate},
+		#{rejectReason},
+		#{isFinish},
+		#{isNotify}
+	</sql> 
+	
+	<!-- 列表 -->
+	<select id="workschedulelistPage" parameterType="page" resultType="pd">
+			SELECT
+				a.id,
+				a.isFinish,
+				a.rejectReason,
+				a.workTime,
+				a.depId,
+				a.doctorID,
+				a.hosId,
+				a.workId,
+				a.checkStatus,
+				a.createTime,
+				a.creator,
+				a.modifyPeople,
+				a.modifyDate,
+				b.depName,
+				c.name AS hosName,
+				d.doctorName,
+				e.workName
+			FROM
+				<include refid="table"></include> a
+			JOIN t_department_info b ON a.depId = b.id
+			JOIN t_hospital c ON a.hosId = c.id
+			JOIN t_doctor_info d ON a.doctorID = d.id
+			join t_work_type e on a.workId = e.id
+		<if test="pd.keyword != null and pd.keyword != ''"><!-- 关键词检索 -->
+			and (
+				d.doctorName = #{pd.keyword}
+				or
+				d.doctorName LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
+				)
+		</if>
+		order by a.isFinish,a.createTime desc
+	</select>
+	
+	<!-- 列表 -->
+	<select id="departments" parameterType="pd" resultType="pd">
+		select  *
+		from  <include refid="table"></include>a
+	</select>
+	
+	<select id="findFinished" parameterType="pd" resultType="pd">
+		select
+		t.isNotify,
+		t.id,
+		d.doctorName,d.cellhone,
+		h.name as hosName,h.contactPhone,
+		w.workName,
+		de.depName,
+		t.workTime
+		from t_work_schedule t 
+		join t_doctor_info d on t.doctorID = d.id
+		join t_hospital h on t.hosId = h.id
+		join t_work_type w on t.workId = w.id
+		join t_department_info de on t.depId = de.id
+		where t.isFinish=1 and t.isNotify =0
+		and  t.workTime &gt;= #{today}
+		and  t.workTime &lt;= #{tomorrow}
+	</select>
+	
+	<!-- 修改 -->
+	<update id="setNotify" parameterType="pd">
+		update  <include refid="table"></include>
+		set isNotify = 1
+		where 
+			id = #{id}		
+	</update>
+	
+	<select id="getDepartmentBydepHos" parameterType="pd" resultType="pd">
+		select * from t_department_info where depHos=(
+			select depHos from t_department_info 
+			where id = #{id}
+		) and id!=#{id}
+	</select>
+	
+	<select id="getDepartments" parameterType="pd" resultType="pd">
+		select * from t_department_info 
+		<if test="id != null and id != ''">
+			where depHos = #{hospitalId}
+		</if>
+	</select>
+	
+	<!-- 列出所有分类 -->
+	<select id="listShop"  parameterType="pd" resultType="pd" >
+		select *  from 
+		<include refid="table"></include>
+	</select>
+		
+	<!-- 删除-->
+ 	<delete id="deleteById" parameterType="pd">
+		delete from <include refid="table"></include> 
+		where 
+			id = #{id}
+	</delete> 
+	
+	<!-- 批量删除 -->
+ 	<delete id="deleteAll" parameterType="String">
+		delete from <include refid="table"></include>
+		where 
+			id in
+  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+	</delete>
+	
+ 	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  <include refid="table"></include>
+		set 
+			checkStatus				= #{checkStatus},
+		    depId					= #{depId},
+		    hosId					= #{hosId},
+		    doctorID				= #{doctorID},
+		    workId					= #{workId},
+		    workTime				= #{workTime},
+		    modifyPeople			= #{modifyPeople},
+		    modifyDate				= #{modifyDate},
+		    rejectReason			= #{reason}
+		where 
+			id = #{id}		
+	</update>
+		
+	<update id="setFinish" parameterType="pd">
+		update  <include refid="table"></include>
+		set 
+			isFinish = 1
+		where 
+			id = #{wSchId}		
+	</update>
+		
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		SELECT
+				a.id,
+				a.rejectReason,
+				a.workTime,
+				a.depId,
+				a.doctorID,
+				a.hosId,
+				a.workId,
+				a.checkStatus,
+				a.createTime,
+				a.creator,
+				a.modifyPeople,
+				a.modifyDate,
+				b.depName,
+				c. name AS hosName,
+				d.doctorName
+			FROM
+				<include refid="table"></include> a
+			JOIN t_department_info b ON a.depId = b.id
+			JOIN t_hospital c ON a.hosId = c.id
+			JOIN t_doctor_info d ON a.doctorID = d.id
+		and  
+		a.id = #{id}		
+	</select>
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="table"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 通过名称获取数据 -->
+	<select id="findByName" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="table"></include>
+		where 
+			name = #{name} LIMIT 1
+	</select>
+	
+	<!-- 列表 -->
+	<select id="getDeps" parameterType="pd" resultType="pd">
+		select * from t_department_info a where 
+        a.depHos = #{id}
+	</select>	
+		
+</mapper>

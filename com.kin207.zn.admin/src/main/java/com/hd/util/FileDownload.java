@@ -1,9 +1,11 @@
 package com.hd.util;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -35,5 +37,20 @@ public class FileDownload {
 	    response.flushBuffer();
 	    
 	} 
+	
+	 /**
+     * 删除文件
+     */
+    public static boolean deleteFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            if (file.isFile() && file.exists()) {
+                file.delete();
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 
 }

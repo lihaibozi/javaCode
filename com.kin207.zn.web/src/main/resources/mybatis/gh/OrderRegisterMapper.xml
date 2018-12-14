@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderRegisterMapper">
+	
+	<!--表名 -->
+
+	<sql id="table">
+		t_order_register
+	</sql>
+	
+	<sql id="Field">
+		serialNumber,
+ 		repairProcess,
+ 		status,
+ 		isToRepair,
+ 		isReplace,
+ 		isStartBack,
+ 		finishDate,
+ 		repairContent,
+ 		arriveDate,
+ 		modifyPeople,
+ 		modifyDate
+	</sql>
+
+	<sql id="FieldValue">
+		#{serialNumber},
+ 		#{repairProcess},
+ 		#{status},
+ 		#{isToRepair},
+ 		#{isReplace},
+ 		#{isStartBack},
+ 		#{finishDate},
+ 		#{repairContent},
+ 		#{arriveDate},
+ 		#{modifyPeople},
+ 		#{modifyDate}
+	</sql> 
+	
+	
+	<!-- 列表 -->
+	<select id="orderRegisterlistPage" parameterType="page" resultType="pd">
+		select a.id,a.serialNumber,
+ 		a.repairProcess,
+ 		a.status as statusId,
+ 		a.isToRepair,
+ 		a.isReplace,
+ 		a.isStartBack,
+ 		a.finishDate,
+ 		a.repairContent,
+ 		a.arriveDate,
+ 		a.modifyPeople,
+ 		a.modifyDate,b.status 
+ 		from t_order_register a,t_repair_status b,t_repair_register c
+ 		<if test="pd.username != null and pd.username != ''"><!-- 关键词检索 -->
+			,sys_user d
+		</if>
+		where a.status = b.id and a.serialNumber = c.serialNumber 
+		<if test="pd.username != null and pd.username != ''"><!-- 关键词检索 -->
+			and c.orderPeople = d.NUMBER
+			and d.USERNAME = #{pd.username}
+		</if>	
+		<if test="pd.keyword != null and pd.keyword != ''"><!-- 关键词检索 -->
+			and (
+				a.serialNumber = #{pd.keyword}
+				)
+		</if>	
+		order by a.modifyDate desc
+	</select>
+	
+	<!-- 列表 -->
+	<select id="getMemberAndPhone" parameterType="pd" resultType="pd">
+		select a.depPhone,b.name,b.id from  
+		t_department_info a,t_member_info b 
+		where a.id = b.depId 
+        and a.id = #{id}
+	</select>
+	
+	<select id="getMembersByDepId" parameterType="pd" resultType="pd">
+		select a.id,a.name
+		from
+			t_member_info a
+		where a.depId = (select b.department FROM t_repair_register b
+		where
+			b.id =#{id}
+		)
+	</select>
+	
+	<!-- 列表 -->
+	<select id="orderRegisters" parameterType="pd" resultType="pd">
+		select  *
+		from  <include refid="table"></include>a
+	</select>
+	
+	<!-- 列表 -->
+	<select id="getTypes" parameterType="pd" resultType="pd">
+		select b.id,b.type from t_repair_type b;
+	</select>
+	
+	<!-- 列表 -->
+	<select id="getStatus" parameterType="pd" resultType="pd">
+		select c.id,c.status from t_repair_status c;
+	</select>
+	
+	<!-- 列表 -->
+	<select id="getOrders" parameterType="pd" resultType="pd">
+		select * from t_member_info t where t.flag=1;
+	</select>
+	
+	<!-- 列出所有分类 -->
+	<select id="listShop"  parameterType="pd" resultType="pd" >
+		select *  from 
+		<include refid="table"></include>
+	</select>
+		
+	<!-- 删除-->
+ 	<delete id="deleteById" parameterType="pd">
+		delete from <include refid="table"></include>  
+		where serialnumber = (select serialnumber  from t_repair_register where 
+		id= #{id}
+		)
+	</delete> 
+	
+	<!-- 批量删除 -->
+ 	<delete id="deleteAll" parameterType="String">
+		delete from <include refid="table"></include>
+		where 
+			serialNumber in (select serialnumber  from t_repair_register where 
+			id in
+			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+		)
+  			
+	</delete>
+	
+ 	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  <include refid="table"></include>
+		set 
+		    <if test="status != null and status != ''">
+		    status	= #{status},
+		    </if>
+		    <if test="isToRepair != null and isToRepair != ''">
+		    isToRepair	= #{isToRepair},
+		    </if>
+		     <if test="isReplace != null and isReplace != ''">
+		    isReplace	= #{isReplace},
+		    </if>
+		     <if test="isStartBack != null and isStartBack != ''">
+		    isStartBack	= #{isStartBack},
+		    </if>
+		     <if test="finishDate != null and finishDate != ''">
+		    finishDate	= #{finishDate},
+		    </if>
+		     <if test="repairContent != null and repairContent != ''">
+		    repairContent	= #{repairContent},
+		    </if>
+		     <if test="repairProcess != null and repairProcess != ''">
+		    repairProcess	= #{repairProcess},
+		    </if>
+		     <if test="arriveDate != null and arriveDate != ''">
+		    arriveDate	= #{arriveDate},
+		    </if>
+		     <if test="modifyPeople != null and modifyPeople != ''">
+		    modifyPeople	= #{modifyPeople},
+		    </if>
+		     <if test="modifyDate != null and modifyDate != ''">
+		    modifyDate	= #{modifyDate},
+		    </if>
+		    id = #{id}
+		where 
+			id = #{id}		
+		</update>
+		
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select a.id,a.serialNumber,
+ 		a.repairProcess,
+ 		a.status as statusId,
+ 		a.isToRepair,
+ 		a.isReplace,
+ 		a.isStartBack,
+ 		a.finishDate,
+ 		a.repairContent,
+ 		a.arriveDate,
+ 		a.modifyPeople,
+ 		a.modifyDate,b.status 
+ 		from t_order_register a join t_repair_status  b on a.status = b.id
+		and a.id = #{id}		
+	</select>
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="table"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 通过名称获取数据 -->
+	<select id="findByName" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="table"></include>
+		where 
+			name = #{name} LIMIT 1
+	</select>
+	
+</mapper>

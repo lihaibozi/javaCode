@@ -17,8 +17,8 @@
 <link rel="stylesheet" href="static/login/bootstrap-responsive.min.css" />
 <link rel="stylesheet" href="static/login/matrix-login.css" />
 <link href="static/login/font-awesome.css" rel="stylesheet" />
-<link rel="bookmark" type="image/x-icon" href="static/login/browser-icon.png"/>
-<link rel="shortcut icon" href="static/login/browser-icon.png"> 
+<link rel="bookmark" type="image/x-icon" href="static/login/yiyuan.jpg"/>
+<link rel="shortcut icon" href="static/login/yiyuan.jpg"> 
 <script type="text/javascript" src="static/login/js/jquery-1.5.1.min.js"></script>
  <style type="text/css">
     /*
@@ -126,9 +126,9 @@
 	</div>
 	<div id="templatemo_banner_slide" class="container_wapper">
 		<div class="camera_wrap camera_emboss" id="camera_slide">
-			<div data-src="static/login/images/banner_slide_01.jpg"></div>
-			<div data-src="static/login/images/banner_slide_02.jpg"></div>
-			<div data-src="static/login/images/banner_slide_03.jpg"></div>
+			<div data-src="static/login/images/banner_slide_04.jpg"></div>
+			<div data-src="static/login/images/banner_slide_06.jpg"></div>
+			<div data-src="static/login/images/banner_slide_05.jpg"></div>
 		</div>
 		<!-- #camera_wrap_3 -->
 	</div>

@@ -87,9 +87,9 @@
 		if(checkNull("depName","请输入科室名称","depName")){
 			return ;
 		};
-		if(checkNull("depPhone","请输入科室电话","depPhone")){
+		/* if(checkNull("depPhone","请输入科室电话","depPhone")){
 			return ;
-		};
+		}; */
 		$("#departmentForm").submit();
 	}
 	

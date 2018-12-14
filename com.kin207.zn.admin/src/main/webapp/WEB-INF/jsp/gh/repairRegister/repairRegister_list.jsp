@@ -7,13 +7,17 @@
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
+	request.setCharacterEncoding("utf-8");
+	response.setCharacterEncoding("utf-8");
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <base href="<%=basePath%>">
 <!-- jsp文件头和头部 -->
 <%@ include file="../../system/index/top.jsp"%>
+<link rel="stylesheet" href="static/ace/css/datepicker.css" />
 </head>
 <body class="no-skin">
 	<div class="main-container" id="main-container">
@@ -28,15 +32,54 @@
 							<td>
 								<div class="nav-search">
 								<span class="input-icon">
-									<input autocomplete="off" class="nav-search-input"  id="nav-search-input" type="text" name="keyword"  value="${pd.keyword}" placeholder="输入姓名或者单号" />
+									<input autocomplete="off" class="nav-search-input"  id="nav-search-input" 
+									type="text" name="keyword"  value="${pd.keyword}" placeholder="输入单号或科室" />
 								</span>
 								</div>
 							</td>
+							<td style="padding-left:2px;">
+								<input class="span10 date-picker" name="startTime" id="startTime"  value="${pd.startTime}" 
+								type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;"
+								 placeholder="开始日期" title="开始日期"/>
+							</td>
+							<td style="padding-left:2px;">
+								<input class="span10 date-picker" name="endTime" id="endTime"  value="${pd.endTime}" 
+								type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;"
+								 placeholder="结束日期" title="结束日期"/>
+							</td>
+							 <td style="padding-left:2px;">
+							 	<select id="orderPeople" name="orderPeople" style="width: 98%">
+											<option value=''>请选择接单人</option>
+											<c:forEach items="${listOrders}" var="cate" varStatus="st">
+											 <option value="${cate.number}" 
+									            <c:if test='${pd.orderPeople == cate.number}'> selected='selected'</c:if>>
+									            ${cate.name}
+									       	 </option>
+										</c:forEach>
+								</select>
+							 </td>
 							<c:if test="${QX.cha == 1 }">
-							<td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="searchs();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
+							<td style="vertical-align:top;padding-left:22px;"><a class="btn btn-light btn-xs" onclick="searchs();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
 							</c:if>
+							<c:if test="${QX.toExcel == 1 }"><td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>
+							<td  style="padding-left:32px;">
+							 <button  type="button" onclick="clean()">清空筛选条件</button>
+							 </td>
 						</tr>
 					</table>
+				<table style="width:100%;">
+					<tr>
+						<td style="vertical-align:top;">
+							<c:if test="${QX.add == 1 }">
+							<a class="btn btn-sm btn-success" onclick="add();">新增</a>
+							</c:if>
+							<c:if test="${QX.del == 1 }">
+							<a title="批量删除" class="btn btn-sm btn-danger" onclick="deleteAll('确定要删除选中的数据吗?');" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
+							</c:if>
+						</td>
+						<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
+					</tr>
+				</table>
 					<!-- 检索  -->
 					<table id="simple-table" class="table table-striped table-bordered table-hover" style="margin-top:5px;">
 						<thead>
@@ -61,6 +104,8 @@
 								<th class="center">登记日期</th>
 								<th class="center">修改人</th>
 								<th class="center">修改时间</th>
+								<th class="center">完成时间</th>
+								<th class="center">报修图片</th>
 								<th class="center">操作</th>
 							</tr>
 						</thead>
@@ -91,12 +136,23 @@
 										<td class="center"><fmt:formatDate value="${var.registerDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 										<td class="center">${var.modifyPeople}</td>
 										<td class="center"><fmt:formatDate value="${var.modifyDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+										<td class="center"><fmt:formatDate value="${var.finishDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+										<td class="center">
+										<c:if test="${var.image != null && var.image!=''}">
+										<%-- <a href="${var.image}" target="_blank"><img src="${var.image}" width="30" /></a> --%>
+										<%-- <a style="cursor:pointer " onclick="href='<%=basePath%>/user/downFile.do?filePath=${var.image}'">${var.fileName}</a> --%>
+										<a id="loadFile" style="cursor:pointer" onclick="loadFile('${var.fileName}');">${var.fileName}</a>
+										<a id="delFile" style="cursor:pointer;margin-left: 10px" class="red" onclick="delFile('${var.id}','${var.fileName}');" title="删除文件">
+											<i class="ace-icon fa fa-trash-o bigger-130"></i>
+										</a>
+										</c:if>
+										</td>
 										<td class="center" style="width:60px;">
 										<c:if test="${QX.edit != 1 && QX.del != 1 }">
 										<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 										</c:if>
 											<c:if test="${QX.edit == 1 }">
-											<a style="cursor:pointer;" class="green" onclick="edit('${var.id}');" title="编辑">
+											<a  style="cursor:pointer;" class="green" onclick="edit('${var.id}');" title="编辑">
 												<i class="ace-icon fa fa-pencil bigger-130"></i>
 											</a>
 											</c:if>
@@ -125,22 +181,6 @@
 						</c:choose>
 						</tbody>
 					</table>
-			
-				<div class="page-header position-relative">
-				<table style="width:100%;">
-					<tr>
-						<td style="vertical-align:top;">
-							<c:if test="${QX.add == 1 }">
-							<a class="btn btn-sm btn-success" onclick="add();">新增</a>
-							</c:if>
-							<c:if test="${QX.del == 1 }">
-							<a title="批量删除" class="btn btn-sm btn-danger" onclick="deleteAll('确定要删除选中的数据吗?');" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
-							</c:if>
-						</td>
-						<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
-					</tr>
-				</table>
-				</div>
 				</div>
 				</form>
 				<!-- /.page-content -->
@@ -159,6 +199,8 @@
 	<%@ include file="../../system/index/foot.jsp"%>
 	<!-- ace scripts -->
 	<script src="static/ace/js/ace/ace.js"></script>
+	<script src="static/js/common/common.js"></script>
+	<script src="static/ace/js/date-time/bootstrap-datepicker.js"></script>
 	</body>
 	<script type="text/javascript">
 		$(top.hangge());
@@ -231,6 +273,22 @@
 					}
 			}
 		}
+	
+		function loadFile(fileName){
+			var url = "<%=basePath%>/user/downFile.do?fileName="+fileName;
+			url = encodeURI(url,"UTF-8");
+			$("#loadFile").attr("href",url);
+		}
+		
+		function delFile(id,fileName){
+				top.jzts();
+				var url = "<%=basePath%>repairRegister/delFile.do?id="+id+"&fileName="+fileName;
+				url = encodeURI(url,"UTF-8");
+				$.get(url,function(data){
+					nextPage('${page.currentPage}');
+				});
+			
+		}
 		
 		function addOrEdit(url,title){
 			 top.jzts();
@@ -256,7 +314,26 @@
 		function edit(Id){
 			addOrEdit('<%=basePath%>repairRegister/goEdit.do?id='+Id,'编辑');
 		}
-
+		
+		function toExcel(){
+			var keywords = $("#nav-search-input").val();
+			var startTime = $("#startTime").val();
+			var endTime = $("#endTime").val();
+			var orderPeople = $("#orderPeople").val();
+			window.location.href='<%=basePath%>repairRegister/excel.do?keywords='+keywords+'&startTime='+startTime+'&endTime='+endTime+'&orderPeople='+orderPeople;
+		}
+	
+		function clean(){
+			$("#nav-search-input").val("");
+			$("#startTime").val("");
+			$("#endTime").val("");
+			$("#orderPeople").val("");
+			
+		}
+		$(function() {
+			//日期框
+			$('.date-picker').datepicker({autoclose: true,todayHighlight: true});
+		})
 	</script>
 	<style type="text/css">
 	li {list-style-type:none;}

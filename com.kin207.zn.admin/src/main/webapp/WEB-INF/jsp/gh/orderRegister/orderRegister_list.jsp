@@ -28,13 +28,20 @@
 							<td>
 								<div class="nav-search">
 								<span class="input-icon">
-									<input autocomplete="off" class="nav-search-input"  id="nav-search-input" type="text" name="keyword"  value="${pd.keyword}" placeholder="输入单号" />
+									<input autocomplete="off" class="nav-search-input"  id="nav-search-input" type="text" name="keyword"  value="${pd.keyword}" placeholder="输入单号或状态" />
 								</span>
 								</div>
 							</td>
 							<c:if test="${QX.cha == 1 }">
-							<td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="searchs();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
+							<td  style="vertical-align:top;padding-left:2px;">
+								<a class="btn btn-light btn-xs" onclick="searchs();"  title="检索">
+									<i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue">
+									</i>
+								</a>
+							</td>
 							</c:if>
+							<div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}
+							</div>
 						</tr>
 					</table>
 					<!-- 检索  -->
@@ -52,6 +59,7 @@
 								<th class="center">是否送修</th>
 								<th class="center">是否更换配件</th>
 								<th class="center">是否启用备用机</th>
+								<th class="center">所属科室</th>
 								<th class="center">到达时间</th>
 								<th class="center">完成时间</th>
 								<th class="center">修改人</th>
@@ -92,6 +100,7 @@
 										<c:if test="${var.isStartBack == 1 }">
 											<td class="center">已启用</td>
 										</c:if>
+										<td class="center">${var.depName}</td>
 										<td class="center"><fmt:formatDate value="${var.arriveDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 										<td class="center"><fmt:formatDate value="${var.finishDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 										<td class="center">${var.modifyPeople}</td>
@@ -130,22 +139,6 @@
 						</c:choose>
 						</tbody>
 					</table>
-			
-				<div class="page-header position-relative">
-				<table style="width:100%;">
-					<tr>
-						<td style="vertical-align:top;">
-							<%-- <c:if test="${QX.add == 1 }">
-							<a class="btn btn-sm btn-success" onclick="add();">新增</a>
-							</c:if> --%>
-							<%-- <c:if test="${QX.del == 1 }">
-							<a title="批量删除" class="btn btn-sm btn-danger" onclick="deleteAll('确定要删除选中的数据吗?');" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
-							</c:if> --%>
-						</td>
-						<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
-					</tr>
-				</table>
-				</div>
 				</div>
 				</form>
 				<!-- /.page-content -->

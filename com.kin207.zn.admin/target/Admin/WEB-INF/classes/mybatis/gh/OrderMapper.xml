@@ -11,7 +11,7 @@
 	
 	<!-- 订单列表 -->
 	<select id="orderlistPage" parameterType="page" resultType="pd"><!-- LEFT JOIN t_booklovers_talkypen t ON o.penCode = t.talkyPenCode  -->
-	   SELECT u.nickName,o.orderNo,o.id,o.createTime,o.remark,o.price,o.`status`,o.type,h.goodNames,o.addressId,a.address,a.detailedAddress,
+	   SELECT u.nickName,o.orderNo,o.id,o.createTime,o.remark,o.price,o.status,o.type,h.goodNames,o.addressId,a.address,a.detailedAddress,
 	   a.phone,o.userId,a.recipients  FROM t_gh_user u ,(SELECT GROUP_CONCAT(g.name) AS goodNames, GROUP_CONCAT(d.orderNo) AS orderIds FROM 
 	   t_gh_order_detail d, t_gh_goods g WHERE  d.goodsId = g.id) h ,t_gh_order o LEFT JOIN t_gh_address a ON o.addressId = a.id 
 	   WHERE  FIND_IN_SET(o.id,h.orderIds) AND o.userId = u.id 

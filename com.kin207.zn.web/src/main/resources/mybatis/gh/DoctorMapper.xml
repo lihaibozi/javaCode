@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DoctorMapper">
+	
+	<!--表名 -->
+
+	<sql id="table">
+		t_doctor_info
+	</sql>
+	
+	<sql id="Field">
+		age,
+		cardNo,
+		cellhone,
+		departmentId,
+		duty,
+		hospitalId,
+		proTitle,
+		sex,
+		workId,
+		doctorName
+	</sql>
+
+	<sql id="FieldValue">
+		#{age},
+		#{cardNo},
+		#{cellhone},
+		#{departmentId},
+		#{duty},
+		#{hospitalId},
+		#{proTitle},
+		#{sex},
+		#{workId},
+		#{doctorName}
+	</sql> 
+	
+	
+	<!-- 列表 -->
+	<select id="doctorlistPage" parameterType="page" resultType="pd">
+		select a.id,a.age,a.cardNo,a.cellhone,a.departmentId,
+			   a.duty,a.hospitalId,a.proTitle,a.sex,
+			   a.workId,a.doctorName,
+			   (select b.depName from t_department_info b where a.departmentId = b.id) depName,
+			   (select c.name from t_hospital c where a.hospitalId = c.id) hosName
+		from  <include refid="table"></include>a
+		where 1=1 
+		<if test="pd.keyword != null and pd.keyword != ''"><!-- 关键词检索 -->
+			and (
+				a.doctorName = #{pd.keyword}
+				or
+				a.doctorName LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
+				)
+		</if>
+	</select>
+	
+	<!-- 列出所有分类 -->
+	<select id="listShop"  parameterType="pd" resultType="pd" >
+		select *  from 
+		<include refid="table"></include>
+	</select>
+		
+	<!-- 删除用户 -->
+ 	<delete id="delete" parameterType="pd">
+		delete from <include refid="table"></include> 
+		where 
+			id = #{id}
+	</delete> 
+	
+	<!-- 批量删除 -->
+ 	<delete id="deleteAll" parameterType="String">
+		delete from <include refid="table"></include>
+		where 
+			id in
+  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+	</delete>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
+			insert into 
+		<include refid="table"></include>
+			(
+		<include refid="Field"></include>
+			) values (
+		<include refid="FieldValue"></include>
+			)
+	</insert>
+	
+ 	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  <include refid="table"></include>
+		set 
+		    doctorName					= #{doctorName},
+		   	age  = #{age},
+			cardNo   = #{cardNo},
+			cellhone = #{cellhone},
+			departmentId = #{departmentId},
+			duty = #{duty},
+			hospitalId = #{hospitalId},
+			proTitle = #{proTitle},
+			sex = #{sex},
+			workId = #{workId}
+		where 
+			id = #{id}		
+		</update>
+		
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select *
+		from 
+		<include refid="table"></include>
+		where 
+		id = #{id}		
+	</select>
+	
+	<!-- 通过名称获取数据 -->
+	<select id="findByName" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="table"></include>
+		where 
+			name = #{name} LIMIT 1
+	</select>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="getDoctorByDep" parameterType="pd" resultType="pd">
+		select *
+		from 
+		<include refid="table"></include>
+		where 
+		departmentId = #{id}		
+	</select>
+		
+		
+</mapper>

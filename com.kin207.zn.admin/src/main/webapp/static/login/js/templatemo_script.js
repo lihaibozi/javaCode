@@ -11,6 +11,7 @@ jQuery(function()
         thumbnails: false,
         hover: false,
         opacityOnGrid: false,
+        time:1,
         imagePath: 'images/'
     });
     //banner slider height window height 

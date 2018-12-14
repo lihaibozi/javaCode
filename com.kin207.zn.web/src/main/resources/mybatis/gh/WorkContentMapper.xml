@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WorkContentMapper">
+	
+	<!--表名 -->
+	<sql id="table">
+		t_workcontent
+	</sql>
+	
+	<sql id="Field">
+		id,
+		wSchId,
+		patientName,
+		patientSex,
+		patientAge,
+		patientCardNo,
+		patientCellPhone,
+		medicalResult,
+		medicalDate,
+		operationLevel,
+		fillPeople,
+		fillDate,
+		modifyPeople,
+		modifyDate,
+		apprise,
+		content,
+		joinNumber,
+		conferenceTime,
+		courseware,
+		type
+	</sql>
+
+	<sql id="FieldValue">
+		#{id},
+		#{wSchId},
+		#{patientName},
+		#{patientSex},
+		#{patientAge},
+		#{patientCardNo},
+		#{patientCellPhone},
+		#{medicalResult},
+		#{medicalDate},
+		#{operationLevel},
+		#{fillPeople},
+		#{fillDate},
+		#{modifyPeople},
+		#{modifyDate},
+		#{apprise},
+		#{content},
+		#{joinNumber},
+		#{conferenceTime},
+		#{courseware},
+		#{type}
+	</sql> 
+	
+	<!-- 列表 -->
+	<select id="workcontentlistPage" parameterType="page" resultType="pd">
+			SELECT
+				a.id,
+				a.rejectReason,
+				a.workTime,
+				a.depId,
+				a.doctorID,
+				a.hosId,
+				a.workId,
+				a.checkStatus,
+				a.createTime,
+				a.creator,
+				a.modifyPeople,
+				a.modifyDate,
+				a.isFinish,
+				b.depName,
+				c.name AS hosName,
+				d.doctorName,
+				e.workName
+			FROM
+				 t_work_schedule a
+			JOIN t_department_info b ON a.depId = b.id
+			JOIN t_hospital c ON a.hosId = c.id
+			JOIN t_doctor_info d ON a.doctorID = d.id
+			join t_work_type e on a.workId = e.id
+		<if test="pd.keyword != null and pd.keyword != ''"><!-- 关键词检索 -->
+			and (
+				d.doctorName = #{pd.keyword}
+				or
+				d.doctorName LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
+				)
+		</if>
+		and a.checkStatus = 5
+		order by a.isFinish,a.createTime desc
+	</select>
+	
+	<!-- 列表 -->
+	<select id="departments" parameterType="pd" resultType="pd">
+		select  *
+		from  <include refid="table"></include>a
+	</select>
+	
+	<select id="getDepartmentBydepHos" parameterType="pd" resultType="pd">
+		select * from t_department_info where depHos=(
+			select depHos from t_department_info 
+			where id = #{id}
+		) and id!=#{id}
+	</select>
+	
+	<select id="getDepartments" parameterType="pd" resultType="pd">
+		select * from t_department_info 
+		<if test="id != null and id != ''">
+			where depHos = #{hospitalId}
+		</if>
+	</select>
+	
+	<!-- 删除-->
+ 	<delete id="deleteById" parameterType="pd">
+		delete from <include refid="table"></include> 
+		where 
+			id = #{id}
+	</delete> 
+	
+	<!-- 批量删除 -->
+ 	<delete id="deleteAll" parameterType="String">
+		delete from <include refid="table"></include>
+		where 
+			id in
+  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+	</delete>
+	
+ 	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  <include refid="table"></include>
+		set 
+			<if test="patientName != null and patientName != ''">
+			patientName = #{patientName},
+			</if>
+			<if test="patientSex != null and patientSex != ''">
+			patientSex = #{patientSex},
+			</if>
+			<if test="patientAge != null and patientAge != ''">
+			patientAge = #{patientAge},
+			</if>
+			<if test="patientCardNo != null and patientCardNo != ''">
+			patientCardNo = #{patientCardNo},
+			</if>
+			<if test="patientCellPhone != null and patientCellPhone != ''">
+			patientCellPhone = #{patientCellPhone},
+			</if>
+			<if test="medicalResult != null and medicalResult != ''">
+			medicalResult = #{medicalResult},
+			</if>
+			<if test="medicalDate != null and medicalDate != ''">
+			medicalDate = #{medicalDate},
+			</if>
+			<if test="operationLevel != null and operationLevel != ''">
+			operationLevel = #{operationLevel},
+			</if>
+			<if test="modifyPeople != null and modifyPeople != ''">
+			modifyPeople = #{modifyPeople},
+			</if>
+			<if test="modifyDate != null and modifyDate != ''">
+			modifyDate = #{modifyDate},
+			</if>
+			<if test="apprise != null and apprise != ''">
+			apprise = #{apprise},
+			</if>
+			<if test="content != null and content != ''">
+			content = #{content},
+			</if>
+			<if test="joinNumber != null and joinNumber != ''">
+			joinNumber = #{joinNumber},
+			</if>
+			<if test="conferenceTime != null and conferenceTime != ''">
+			conferenceTime = #{conferenceTime},
+			</if>
+			<if test="courseware != null and courseware != ''">
+			courseware = #{courseware},
+			</if>
+			<if test="wSchId != null and wSchId != ''">
+			wSchId = #{wSchId},
+			</if>
+			<if test="type != null and type != ''">
+			type = #{type},
+			</if>
+			id = #{id}
+		where 
+			id = #{id}		
+		</update>
+		
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		SELECT * FROM
+				<include refid="table"></include> a
+		where
+		id = #{id}		
+	</select>
+	
+	<select id="findByScheduleId" parameterType="pd" resultType="pd">
+		select <include refid="Field"></include>
+		from <include refid="table"></include>
+		where wSchId = #{id}
+	</select>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="table"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 通过名称获取数据 -->
+	<select id="findByName" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="table"></include>
+		where 
+			name = #{name} LIMIT 1
+	</select>
+	
+	<!-- 列表 -->
+	<select id="getDeps" parameterType="pd" resultType="pd">
+		select * from t_department_info a where 
+        a.depHos = #{id}
+	</select>	
+	
+	<update id="delFilePath" parameterType="pd">
+		update <include refid="table"></include>
+		set courseware = "" where id=#{id}
+	</update>
+		
+</mapper>

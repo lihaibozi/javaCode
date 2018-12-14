@@ -96,7 +96,7 @@ public class ShopController extends BaseController {
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "add")){
 			try {
 				//上传图片
-				String imgurl = FileUtil.upload(file/*, param.getPara("file")*/);
+				String imgurl = FileUtil.upload(file,this.getRequest()/*, param.getPara("file")*/);
 				if(imgurl == null || "1".equals(imgurl)){
 					logger.error("ShopController: image upload fail");
 				}else if( "2".equals(imgurl)){
@@ -169,7 +169,7 @@ public class ShopController extends BaseController {
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "edit")){
 			try {
 				//上传图片
-				String imgurl = FileUtil.upload(file/*, param.getPara("file")*/);
+				String imgurl = FileUtil.upload(file,this.getRequest()/*, param.getPara("file")*/);
 				if(imgurl == null || "1".equals(imgurl)){
 					logger.error("ShopController: image upload fail");
 				}else if( "2".equals(imgurl)){

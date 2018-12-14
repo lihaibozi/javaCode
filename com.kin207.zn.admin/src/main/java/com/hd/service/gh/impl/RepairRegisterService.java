@@ -85,4 +85,24 @@ public class RepairRegisterService implements RepairRegisterManager{
 	public String getMembersById(String id) throws Exception {
 		return  (String)dao.findForObject("RepairRegisterMapper.getMembersById",id);
 	}
+
+	public List<PageData> getDepartment(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("RepairRegisterMapper.getDepartment",pd);
+	}
+
+	public void deleteFilePath(PageData pd) throws Exception {
+		dao.update("RepairRegisterMapper.delFilePath", pd);
+	}
+
+	public List<PageData> repairRegisterLists(PageData pd) throws Exception {
+		return (List<PageData>) dao.findForList("RepairRegisterMapper.repairRegisterLists",pd);
+	}
+
+	public PageData getDataBySerial(String serialNumber) throws Exception {
+		return (PageData)dao.findForObject("RepairRegisterMapper.getDataBySerial", serialNumber);
+	}
+
+	public void editStatus(PageData pd) throws Exception {
+		dao.update("RepairRegisterMapper.editStatus", pd);
+	}
 }

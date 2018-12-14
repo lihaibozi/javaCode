@@ -1,0 +1,39 @@
+
+#信鸽推送用户名前缀，环境：1：生产环境；2：开发环境
+XINGE_ID_PREFIX=test_usense_xinge_pushid_
+
+Xinge_access_id_android=2100138335
+Xinge_secret_key_android=394411f0ba553a4355edfdf6fba68e0f
+
+Xinge_access_id_ios=2200138336
+Xinge_secret_key_ios=8f0ac153a739e8ede231f94efcbdbb12
+
+Xinge_env_ios=2
+
+
+#文件上传
+fileServerHostAndPort=http://localhost:8080
+webAppsAbsolutePath=/Users/leigl/work/java/server/apache-tomcat-7.0.57/webapps
+fileAppName=IwunuImg
+
+#阿里云文件存储服务
+ACCESS_KEY_ID = I8rL6osaDrPTH6jb  
+SECRET_ACCESS_KEY = tktJWBrSjyhZqzgsoUTL87yqSsIcz1 
+ENDPOINT = http://iwunu.oss-cn-shenzhen.aliyuncs.com
+BUCKET_NAME = iwunu
+BUCKET_DOMAIN =  http://iwunu.oss-cn-shenzhen.aliyuncs.com
+IMG_DOMAIN =  http://iwunu.oss-cn-shenzhen.aliyuncs.com
+
+#代理
+ORDER_AGENCY_TYPE=0
+#导游
+ORDER_DAOYOU_TYPE=1
+#翻译
+ORDER_FANYI_TYPE=2
+#美食
+ORDER_FOOD_TYPE=3
+#接机
+ORDER_JIEJI_TYPE=4
+#VIP
+ORDER_VIP_TYPE=5
+	

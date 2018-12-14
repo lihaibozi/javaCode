@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLEncoder"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
@@ -7,7 +8,10 @@
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
+	request.setCharacterEncoding("utf-8");
+	response.setCharacterEncoding("utf-8");
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,8 +44,7 @@
 										<tr>
 											<td
 												style="width: 79px; text-align: right; padding-top: 13px;">所属科室</td>
-											<td><select id="department" name="department"
-												onchange="getMemberAndPhone()" style="width: 98%">
+											<td><select id="department" name="department" onchange="getMemberAndPhone()" style="width: 98%">
 													<option value=''>请选择科室</option>
 													<c:forEach items="${listDeparts}" var="cate" varStatus="st">
 														<option value="${cate.id}"
@@ -60,12 +63,11 @@
 										<tr>
 											<td
 												style="width: 79px; text-align: right; padding-top: 13px;">报修人员</td>
-											<td><select id="repairStaff" name="repairStaff"
-												style="width: 98%">
+											<td><select id="repairStaff" name="repairStaff" onchange="getDepartment()" style="width: 98%">
 													<option value=''>请选择报修人</option>
 													<c:forEach items="${members}" var="cate" varStatus="st">
-														<option value="${cate.id}"
-															<c:if test='${pd.repairStaff == cate.id}'> selected='selected'</c:if>>
+														<option value="${cate.number}"
+															<c:if test='${pd.repairStaff == cate.number}'> selected='selected'</c:if>>
 															${cate.name}(${cate.number})</option>
 													</c:forEach>
 											</select></td>
@@ -105,8 +107,8 @@
 												id="orderPeople" style="width: 98%">
 													<option value=''>请选择接单人</option>
 													<c:forEach items="${listOrders}" var="cate" varStatus="st">
-														<option value="${cate.id}"
-															<c:if test='${pd.orderPeople == cate.id}'> selected='selected'</c:if>>
+														<option value="${cate.number}"
+															<c:if test='${pd.orderPeople == cate.number}'> selected='selected'</c:if>>
 															${cate.name}</option>
 													</c:forEach>
 											</select></td>
@@ -115,9 +117,9 @@
 											<td id="idAss"><select id="assistants" name="assistants"
 												multiple="multiple">
 													<c:forEach items="${listOrders}" var="cate">
-														<option value="${cate.id}"
+														<option value="${cate.number}"
 															<c:forEach items="${assistants}" var="ass" >
-											            		<c:if test='${ass.id == cate.id}'> selected='selected'</c:if>
+											            		<c:if test='${ass.id == cate.number}'> selected='selected'</c:if>
 										        			</c:forEach>>
 															${cate.name}
 														</option>
@@ -145,6 +147,26 @@
 															${cate.status}</option>
 													</c:forEach>
 											</select></td>
+										</tr>
+										<tr>
+											<td style="width:20%;text-align: right;padding-top: 15px;">报修图片:</td>
+												<td colspan="6">
+													<!-- <input type="file" id="tp" name="tp" onchange="fileType(this)"/> -->
+													
+													<c:if test="${pd != null && pd.image != '' && pd.image != null }">
+														<input type="file" name="image" id="image"  onchange="fileType(this)"/>
+														<%-- <a href="${pd.image}" target="_blank"><img src="${pd.image}" id = "image-show" width="79px"/></a> --%>
+														<a id="loadFile" style="cursor:pointer" onclick="loadFile('${pd.fileName}');">${pd.fileName}</a>
+													</c:if>
+													<c:if test="${empty pd.image }">
+														<input type="file" id="image" name="image" onchange="fileType(this)"/>
+													</c:if>
+												  <div id="preview">
+													    <img id="imghead" width=100% height=auto border=0 >
+													</div>
+													
+												</td>
+											
 										</tr>
 
 										<tr>
@@ -193,13 +215,12 @@
 	$(top.hangge());
 	//保存
 	function save(){
-		
 		if(checkNull("department","请选择科室","s2id_department")){
 			return ;
 		};
-		if(checkNull("repairStaff","请选择报修人","s2id_repairStaff")){
+		/* if(checkNull("repairStaff","请选择报修人","s2id_repairStaff")){
 			return;
-		};
+		}; */
 		if(checkNull("content","请输入报修内容","content")){
 			return;
 		};
@@ -231,9 +252,23 @@
 		$("#departmentForm").submit();
 	}
 	
+	//过滤类型
+	function fileType(obj){
+		var fileType=obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();//获得文件后缀名
+	    if(fileType != '.gif' && fileType != '.png' && fileType != '.jpg' && fileType != '.jpeg'){
+	    	$("#image").tips({
+				side:3,
+	            msg:'请上传图片格式的文件',
+	            bg:'#AE81FF',
+	            time:3
+	        });
+	    	$("#image").val('');
+	    	document.getElementById("image").files[0] = '请选择图片';
+	    }
+	}
+	
 	function getMemberAndPhone(){
-		 var id = $('#department option:selected') .val(); 
-		 $("#depPhone").val("");
+		 var id = $('#department option:selected').val(); 
 		 $("#select2-chosen-2").empty();
 		 $("#repairStaff").empty();
 		 $.ajax({
@@ -249,12 +284,39 @@
 					}
 					 $.each(data, function(index, item){
 							$("#depPhone").val(item.depPhone);
-							$("#repairStaff").append("<option value='"+item.id+"'>"+item.name+"("+item.number+")</option>");
+							$("#repairStaff").append("<option value='"+item.number+"'>"+item.name+"("+item.number+")</option>");
 					 });
 				}
-			});
+			})
+	}
+	function getDepartment(){
+		 var id = $('#repairStaff option:selected').val(); 
+		 $("#select2-chosen-1").empty();
+		/*  $("#department").empty();  */
+		 $.ajax({
+				type: "POST",
+				url: '<%=basePath%>repairRegister/getDepartment.do',
+		    	data: {"id":id},
+				dataType:'json',
+				//beforeSend: validateData,
+				cache: false,
+				success: function(data){
+					 $.each(data, function(index, item){
+							$("#depPhone").val(item.depPhone);
+							$("#department").val(item.id);
+							/* $("#department").append("<option selected='selected' value='"+item.id+"'>"+item.depName+"</option>"); */
+							$("#select2-chosen-1").text(item.depName);
+					 });
+				}
+			})
 	}
 
+	function loadFile(fileName){
+		var url = "<%=basePath%>/user/downFile.do?fileName="+fileName;
+		url = encodeURI(url,"UTF-8");
+		$("#loadFile").attr("href",url);
+	}
+	
 	$(function(){
 		$('#assistants').multiselect({
 			nonSelectedText:'请选择协助人员',

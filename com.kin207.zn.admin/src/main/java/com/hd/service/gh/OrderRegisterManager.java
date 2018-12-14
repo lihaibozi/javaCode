@@ -48,5 +48,7 @@ public interface OrderRegisterManager {
 	public List<PageData> getStatus(PageData pd) throws Exception;
 
 	public List<PageData> getMembersByDepId(PageData pd) throws Exception;
+
+	public void editStatus(PageData pd)throws Exception;
 	
 }

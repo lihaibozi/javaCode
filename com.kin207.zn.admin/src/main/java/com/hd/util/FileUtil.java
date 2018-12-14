@@ -135,14 +135,15 @@ public class FileUtil {
      * @param fileName 文件名
      * @return 数据库中的路径(null 上传失败 ，1没有上传文件，2上传不是图片类型)
      */
-    public static String upload( MultipartFile file/*, String fileName*/) {
+    public static String upload( MultipartFile file,HttpServletRequest request/*, String fileName*/) {
+
         try {
             if (file == null || file.getSize() == 0) {
                 return "1";
             }
             // 取得根目录
-            String root = AppConst.EMPLOYEE_PHOTO_PATH;//request.getSession().getServletContext().getRealPath(AppConst.EMPLOYEE_PHOTO_PATH);
-            System.out.println(root);
+//            String root = AppConst.EMPLOYEE_PHOTO_PATH;//request.getSession().getServletContext().getRealPath(AppConst.EMPLOYEE_PHOTO_PATH);
+            String root = request.getSession().getServletContext().getRealPath(AppConst.EMPLOYEE_PHOTO_PATH);
             if(!createFolder(root)){
                 return null;
             }
@@ -152,23 +153,24 @@ public class FileUtil {
             // 取得后缀
             String postfix = name.substring(name.indexOf("."));
             // 如果不是图片格式
-            if (!arrPicType.contains(postfix)) {
-                return "2";
-            }
+//            if (!arrPicType.contains(postfix)) {
+//                return "2";
+//            }
             // 保存图片名称
-            String str = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + postfix;
-            String filename = root + File.separator + str;
+            name = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + name;
+            String filename = root + File.separator +name;
             File files = new File(filename);
             mf.getFileItem().write(files);
-     /*       String imgurl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()  
-                    + (request.getContextPath() + AppConst.EMPLOYEE_PHOTO_PATH + str).replace("//", "/");*/
-            String imgurl = AppConst.EMPLOYEE_PHOTO_DEFAULT+str;
-            ImageCompressUtil.saveMinPhoto(files.getAbsolutePath(), files.getAbsolutePath(), 8000, 0.5d);//文件缩小
+            String imgurl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()  
+                    + (request.getContextPath() + AppConst.EMPLOYEE_PHOTO_PATH + name).replace("//", "/");
+//            String imgurl = AppConst.EMPLOYEE_PHOTO_DEFAULT+str;
+//            ImageCompressUtil.saveMinPhoto(files.getAbsolutePath(), files.getAbsolutePath(), 8000, 0.5d);//文件缩小
             return imgurl;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    
     }
     public static String upload(HttpServletRequest request/*, String fileName*/) {
         try {

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WorkTypeMapper">
+	
+	<!--表名 -->
+	<sql id="table">
+		t_work_type
+	</sql>
+	
+	<sql id="Field">
+		depId,
+		workName
+	</sql>
+
+	<sql id="FieldValue">
+		#{depId},
+		#{workName}
+	</sql> 
+	
+	<!-- 列表 -->
+	<select id="worktypelistPage" parameterType="page" resultType="pd">
+		select a.id,a.depId,a.workName
+		<!-- ,c.depName -->
+		from  <include refid="table"></include> a
+			<!-- join t_department_info c
+			on a.depId = c.id -->
+		<if test="pd.keyword != null and pd.keyword != ''"><!-- 关键词检索 -->
+			and (
+				<!-- c.depName = #{pd.keyword}
+				or
+				c.depName LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
+				or -->
+				a.workName = #{pd.keyword}
+				or
+				a.workName LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
+				)
+		</if>
+	</select>
+	
+	<!-- 列表 -->
+	<select id="departments" parameterType="pd" resultType="pd">
+		select  *
+		from  <include refid="table"></include>a
+	</select>
+	
+	<select id="getDepartmentBydepHos" parameterType="pd" resultType="pd">
+		select * from t_department_info where depHos=(
+			select depHos from t_department_info 
+			where id = #{id}
+		) and id!=#{id}
+	</select>
+	
+	<select id="getDepartments" parameterType="pd" resultType="pd">
+		select * from t_department_info 
+		<if test="id != null and id != ''">
+			where depHos = #{hospitalId}
+		</if>
+	</select>
+	
+	<!-- 列出所有分类 -->
+	<select id="listShop"  parameterType="pd" resultType="pd" >
+		select *  from 
+		<include refid="table"></include>
+	</select>
+		
+	<!-- 删除-->
+ 	<delete id="deleteById" parameterType="pd">
+		delete from <include refid="table"></include> 
+		where 
+			id = #{id}
+	</delete> 
+	
+	<!-- 批量删除 -->
+ 	<delete id="deleteAll" parameterType="String">
+		delete from <include refid="table"></include>
+		where 
+			id in
+  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+	</delete>
+	
+ 	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  <include refid="table"></include>
+		set 
+		    workName					= #{workName},
+		    depId					= #{depId} 
+		where 
+			id = #{id}		
+		</update>
+		
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select *
+		from 
+		<include refid="table"></include>
+		where 
+		id = #{id}		
+	</select>
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="table"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 通过名称获取数据 -->
+	<select id="findByName" parameterType="pd" resultType="pd">
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="table"></include>
+		where 
+			name = #{name} LIMIT 1
+	</select>
+	
+	<!-- 列表 -->
+	<select id="getDeps" parameterType="pd" resultType="pd">
+		select * from t_department_info a where 
+        a.depHos = #{id}
+	</select>	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="getWorkTypeByDep" parameterType="pd" resultType="pd">
+		select *
+		from 
+		<include refid="table"></include>
+	<!-- 	where 
+		depId = #{id}	 -->	
+	</select>
+		
+</mapper>

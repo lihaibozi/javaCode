@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CheckMapper">
+	
+	<!--表名 -->
+	<sql id="table">
+		t_work_schedule
+	</sql>
+	
+	<sql id="Field">
+		workTime,
+		depId,
+		doctorID,
+		hosId,
+		workId,
+		checkStatus,
+		createTime,
+		creator,
+		modifyPeople,
+		modifyDate,
+		rejectReason
+	</sql>
+
+	<sql id="FieldValue">
+		#{workTime},
+		#{depId},
+		#{doctorID},
+		#{hosId},
+		#{workId},
+		#{checkStatus},
+		#{createTime},
+		#{creator},
+		#{modifyPeople},
+		#{modifyDate},
+		#{rejectReason}
+	</sql> 
+	
+	<!-- 列表 -->
+	<select id="checklistPage" parameterType="page" resultType="pd">
+			SELECT
+				a.id,
+				a.rejectReason,
+				a.workTime,
+				a.depId,
+				a.doctorID,
+				a.hosId,
+				a.workId,
+				a.checkStatus,
+				a.createTime,
+				a.creator,
+				a.modifyPeople,
+				a.modifyDate,
+				b.depName,
+				c.name AS hosName,
+				d.doctorName,
+				e.workName
+			FROM
+				<include refid="table"></include> a
+			JOIN t_department_info b ON a.depId = b.id
+			JOIN t_hospital c ON a.hosId = c.id
+			JOIN t_doctor_info d ON a.doctorID = d.id
+			join t_work_type e on a.workId = e.id
+		<if test="pd.type == 1 "><!-- 关键词检索 -->
+			and a.checkStatus in(1,4)
+		</if>
+		<if test="pd.type == 2 "><!-- 关键词检索 -->
+			and a.checkStatus=3
+		</if>
+		order by a.createTime desc,a.depId desc
+	</select>
+	
+	<!-- 批量删除 -->
+ 	<update id="passAll" parameterType="pd">
+ 		<if test="type == 1 "><!-- 关键词检索 -->
+			update <include refid="table"></include> set checkStatus = 3,rejectReason = #{reason}
+			where 
+			id in
+  			 <foreach collection="ids" item="item" index="index"  open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+		</if>
+		<if test="type == 2 "><!-- 关键词检索 -->
+			update <include refid="table"></include> set checkStatus = 5,rejectReason = #{reason}
+			where 
+			id in
+  			 <foreach collection="ids" item="item" index="index"  open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+		</if>
+	</update>	
+	
+
+ 	<update id="disPassAll" parameterType="pd">
+ 		<if test="type == 1 "><!-- 关键词检索 -->
+			update <include refid="table"></include> set checkStatus = 2,rejectReason = #{reason}
+			where 
+			id in
+  			 <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+		</if>
+		<if test="type == 2 "><!-- 关键词检索 -->
+			update <include refid="table"></include> set checkStatus = 4,rejectReason = #{reason}
+			where 
+			id in
+  			 <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+		</if>
+	</update>	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select *
+		from 
+		<include refid="table"></include>
+		where 
+		id = #{id}		
+	</select>
+		
+</mapper>

@@ -33,17 +33,17 @@
 							<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 								<tr>
-									<td style="width:79px;text-align: right;padding-top: 13px;">昵称</td>
+									<td style="width:100px;text-align: right;padding-top: 13px;">昵称</td>
 									<td><input type="text" name="doctorNickName" id="doctorNickName" value="${pd.doctorNickName }" placeholder="这里输入昵称" title="昵称" style="width:98%;" onblur="hasN('${pd.doctorNickName }')"/></td>
 								</tr>
 								<tr>
 								<tr>
-									<td style="width:79px;text-align: right;padding-top: 13px;">医生姓名:</td>
+									<td style="width:100px;text-align: right;padding-top: 13px;">医生姓名:</td>
 									<td><input type="text" name="doctorName" id="doctorName" value="${pd.doctorName }" placeholder="这里输入医生姓名" title="医生姓名" style="width:98%;" onblur="hasN('${pd.doctorName }')"/></td>
 								</tr>
 								<tr>
 								<tr>
-									<td style="width:79px;text-align: right;padding-top: 13px;">医生微信号:</td>
+									<td style="width:100px;text-align: right;padding-top: 13px;">医生微信号:</td>
 									<td><input type="text" name="doctorWxId" id="doctorWxId" value="${pd.doctorWxId }" placeholder="这里输入医生微信号" title="医生微信号" style="width:98%;" onblur="hasN('${pd.doctorWxId }')"/></td>
 								</tr>
 								
@@ -52,11 +52,11 @@
 									<td><input type="text" name="dotorHos" id=dotorHos value="${pd.dotorHos }" placeholder="这里输入医生所属医院" title="医生所属医院" style="width:98%;" onblur="hasN('${pd.dotorHos }')"/></td>
 								</tr>
 								<tr>
-									<td style="width:79px;text-align: right;padding-top: 13px;">医生区域:</td>
+									<td style="width:100px;text-align: right;padding-top: 13px;">医生区域:</td>
 									<td><input type="text" name="doctorArea" id="doctorArea" value="${pd.doctorArea }" placeholder="这里输入医生区域" title="医生区域" style="width:98%;" onblur="hasN('${pd.doctorArea }')"/></td>
 								</tr>
 								<tr>
-									<td style="width:79px;text-align: right;padding-top: 13px;">是否禁用:</td>
+									<td style="width:100px;text-align: right;padding-top: 13px;">是否禁用:</td>
 									<td>
 									<label style="float:left;padding-left: 2px;"><input name="isInUse" id="isInUse" <c:if test="${pd.isInUse == '1' }">checked="checked"</c:if>   type="radio" class="ace" value="1"><span class="lbl">是</span></label>
 									<label style="float:left;padding-left: 8px;"><input name="isInUse" id="isInUse"  <c:if test="${pd.isInUse == '0' }">checked="checked"</c:if>   type="radio" class="ace" value="0"><span class="lbl">否</span></label>

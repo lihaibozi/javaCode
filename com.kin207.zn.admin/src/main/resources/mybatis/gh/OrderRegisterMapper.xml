@@ -50,13 +50,29 @@
  		a.repairContent,
  		a.arriveDate,
  		a.modifyPeople,
- 		a.modifyDate,b.status 
- 		from t_order_register a join t_repair_status  b on a.status = b.id
+ 		a.modifyDate,b.status ,
+ 		(select dep.depName from t_department_info dep where dep.id = c.department) depName
+ 		from t_order_register a,t_repair_status b,t_repair_register c
+ 		<if test="pd.username != null and pd.username != ''"><!-- 关键词检索 -->
+			,sys_user d
+		</if>
+		where a.status = b.id and a.serialNumber = c.serialNumber 
+		<if test="pd.username != null and pd.username != ''"><!-- 关键词检索 -->
+			and c.orderPeople = d.NUMBER
+			and d.USERNAME = #{pd.username}
+		</if>	
 		<if test="pd.keyword != null and pd.keyword != ''"><!-- 关键词检索 -->
 			and (
 				a.serialNumber = #{pd.keyword}
+				or
+				a.serialNumber LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
+				or
+				b.status = #{pd.keyword}
+				or 
+				b.status LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
 				)
 		</if>	
+		order by a.modifyDate desc
 	</select>
 	
 	<!-- 列表 -->
@@ -163,6 +179,14 @@
 		where 
 			id = #{id}		
 		</update>
+		<!-- 修改 -->
+	<update id="editStatus" parameterType="pd">
+		update  <include refid="table"></include>
+		set 
+		    status = #{status}
+		where 
+			serialNumber = #{serialNumber}		
+	</update>
 		
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
@@ -201,6 +225,4 @@
 			name = #{name} LIMIT 1
 	</select>
 	
-		
-		
 </mapper>

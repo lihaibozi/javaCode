@@ -19,6 +19,7 @@ import com.hd.entity.Page;
 import com.hd.service.gh.HdepartmentManager;
 import com.hd.service.gh.HmemberManager;
 import com.hd.service.gh.OrderRegisterManager;
+import com.hd.service.gh.RepairRegisterManager;
 import com.hd.util.AppUtil;
 import com.hd.util.Jurisdiction;
 import com.hd.util.PageData;
@@ -41,6 +42,8 @@ public class OrderRegisterController extends BaseController {
 	private HmemberManager hMemberService;
 	@Resource(name="orderRegisterService")
 	private OrderRegisterManager orderRegisterService;
+	@Resource(name="repairRegisterService")
+	private RepairRegisterManager repairRegisterService;
 	
 	/**显示科室信息列表
 	 * @param page
@@ -48,7 +51,7 @@ public class OrderRegisterController extends BaseController {
 	 */
 	@RequestMapping(value="/orderRegister")
 	public ModelAndView orderRegisterList(Page page){
-
+		//接单人查询自己的单子列表
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		try{
@@ -56,6 +59,9 @@ public class OrderRegisterController extends BaseController {
 			String keyword = pd.getString("keyword");							//检索条件 关键词
 			if(null != keyword && !"".equals(keyword)){
 				pd.put("keyword", keyword.trim());
+			}
+			if(!"admin".equals(Jurisdiction.getUsername())){
+				pd.put("username", Jurisdiction.getUsername());
 			}
 			page.setPd(pd);
 			List<PageData>	orderRegisterList = orderRegisterService.orderRegisterList(page);		//分页列出接单人登记信息列表
@@ -179,7 +185,6 @@ public class OrderRegisterController extends BaseController {
 			HttpServletRequest request,
 			@RequestParam(value="id",required=false) String id,
 			@RequestParam(value="status",required=false) String status,
-			@RequestParam(value="repairContent",required=false) String repairContent,
 			@RequestParam(value="repairProcess",required=false) String  repairProcess ,
 			@RequestParam(value="isToRepair",required=false) String isToRepair,
 			@RequestParam(value="isReplace",required=false) String  isReplace ,
@@ -196,7 +201,6 @@ public class OrderRegisterController extends BaseController {
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "edit")){
 			pd.put("id", id);
 			pd.put("status", status);
-			pd.put("repairContent", "".equals(repairContent)?"":repairContent.trim());
 			pd.put("repairProcess", "".equals(repairProcess)?"":repairProcess.trim());
 			pd.put("isToRepair",isToRepair);
 			pd.put("isReplace",isReplace);
@@ -206,7 +210,14 @@ public class OrderRegisterController extends BaseController {
 			pd.put("modifyPeople", userName);
 			pd.put("modifyDate", new Date());
 			orderRegisterService.edit(pd);				//执行修改数据库
+			PageData pageData = orderRegisterService.findById(pd);
+			String serialNumber = pageData.getString("serialNumber");
+			pd = new PageData();
+			pd.put("serialNumber", serialNumber);
+			pd.put("status", status);
+			repairRegisterService.editStatus(pd);
 		}
+		
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;

@@ -24,7 +24,8 @@
  		registerPeople,
  		registerDate,
  		modifyPeople,
- 		modifyDate
+ 		modifyDate,
+ 		image
 	</sql>
 
 	<sql id="FieldValue">
@@ -42,34 +43,76 @@
  		#{registerPeople},
  		#{registerDate},
  		#{modifyPeople},
- 		#{modifyDate}
+ 		#{modifyDate},
+ 		#{image}
 	</sql> 
 	
 	
 	<!-- 列表 -->
 	<select id="repairRegisterlistPage" parameterType="page" resultType="pd">
-		SELECT a.id,a.serialNumber,a.department,a.repairStaff,a.content,
+		SELECT a.id,a.image,a.serialNumber,a.department,a.repairStaff,a.content,
  		a.cellPhone,a.assetNumber,a.assetSn,a.orderPeople,a.assistants,
  		a.type as typeId,a.status as statusId,a.registerPeople,a.registerDate,
  		a.modifyPeople,a.modifyDate,b.type,c.status,d.depName,d.depPhone,
- 		e.name as jiedan,f.name as baoxiu
+ 		e.name as jiedan,f.name as baoxiu,g.finishDate
  		FROM
-			t_repair_register a,
-			t_repair_type b,
-			t_repair_status c,
-			t_department_info d,
-			t_member_info e,
-			t_member_info f
-		WHERE
-			a.department = d.id and a.type = b.id and a. status = c.id and
-			a.orderPeople = e.id and a.repairStaff = f.id
+			t_repair_register a
+			join t_repair_type b on a.type = b.id
+			join t_repair_status c on a.status = c.id
+			join t_department_info d on a.department = d.id
+			left join t_member_info e on a.orderPeople = e.number
+			left join t_member_info f on a.repairStaff = f.number
+			join t_order_register g on a.serialNumber = g.serialNumber
 		<if test="pd.keyword != null and pd.keyword != ''"><!-- 关键词检索 -->
-			and (
-				e.name LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
-				or a.serialNumber = #{pd.keyword}
-				or f.name LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
-				)
+			and  (a.serialNumber = #{pd.keyword}
+				  or
+				  d.depName LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
+			)
 		</if>	
+		<if test="pd.startTime != null and pd.startTime != ''"><!-- 关键词检索 -->
+			and 	 a.registerDate &gt;= #{pd.startTime}
+		</if>	
+		<if test="pd.endTime != null and pd.endTime != ''"><!-- 关键词检索 -->
+			and  a.registerDate &lt;= #{pd.endTime}
+		</if>	
+		<if test="pd.orderPeople != null and pd.orderPeople != ''"><!-- 关键词检索 -->
+			and  a.orderPeople = #{pd.orderPeople}
+		</if>	
+		order by a.registerDate desc
+	</select>
+	
+	<!-- 列表 -->
+	<select id="repairRegisterLists" parameterType="pd" resultType="pd">
+		SELECT a.id,a.image,a.serialNumber,a.department,a.repairStaff,a.content,
+ 		a.cellPhone,a.assetNumber,a.assetSn,a.orderPeople,a.assistants,
+ 		a.type as typeId,a.status as statusId,a.registerPeople,a.registerDate,
+ 		a.modifyPeople,a.modifyDate,b.type,c.status,d.depName,d.depPhone,
+ 		e.name as jiedan,f.name as baoxiu,g.finishDate
+ 		FROM
+			t_repair_register a
+			join t_repair_type b on a.type = b.id
+			join t_repair_status c on a.status = c.id
+			join t_department_info d on a.department = d.id
+			left join t_member_info e on a.orderPeople = e.number
+			left join t_member_info f on a.repairStaff = f.number
+			join t_order_register g on a.serialNumber = g.serialNumber
+		<if test="keyword != null and keyword != ''"><!-- 关键词检索 -->
+			and  (
+				  a.serialNumber = #{keyword}
+				  or
+				  d.depName LIKE CONCAT(CONCAT('%', #{pd.keyword}),'%')
+				 )
+		</if>	
+		<if test="startTime != null and startTime != ''"><!-- 关键词检索 -->
+			and 	 a.registerDate &gt;= #{startTime}
+		</if>	
+		<if test="endTime != null and endTime != ''"><!-- 关键词检索 -->
+			and  a.registerDate &lt;= #{endTime}
+		</if>	
+		<if test="orderPeople != null and orderPeople != ''"><!-- 关键词检索 -->
+			and  a.orderPeople = #{orderPeople}
+		</if>	
+		order by a.registerDate desc
 	</select>
 	
 	<!-- 列表 -->
@@ -78,6 +121,14 @@
 		t_department_info a,t_member_info b 
 		where a.id = b.depId 
         and a.id = #{id}
+	</select>
+		
+	<!-- 列表 -->
+	<select id="getDepartment" parameterType="pd" resultType="pd">
+		select a.depPhone,a.depName,a.id from  
+		t_department_info a,t_member_info b 
+		where a.id = b.depId 
+        and b.number  = #{id}
 	</select>
 	
 	<select id="getMembersByDepId" parameterType="pd" resultType="pd">
@@ -93,7 +144,7 @@
 	<select id="getMembersById" parameterType="java.lang.String" resultType="String">
 		select a.name
 		from t_member_info a
-		where a.id =#{id}
+		where a.number =#{id}
 	</select>
 	
 	<!-- 列表 -->
@@ -140,6 +191,19 @@
              </foreach>
 	</delete>
 	
+	<update id="delFilePath" parameterType="pd">
+		update <include refid="table"></include>
+		set image = "" where id=#{id}
+	</update>
+	
+	<update id="editStatus" parameterType="pd">
+		update  <include refid="table"></include>
+		set 
+		    status = #{status}
+		where 
+			serialNumber = #{serialNumber}		
+	</update>
+	
  	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
 		update  <include refid="table"></include>
@@ -180,6 +244,9 @@
 		    <if test="modifyDate != null and modifyDate != ''">
 		    modifyDate	= #{modifyDate},
 		    </if>
+		     <if test="image != null and image != ''">
+		    image	= #{image},
+		    </if>
 		    id = #{id}
 		where 
 			id = #{id}		
@@ -187,22 +254,26 @@
 		
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
-			SELECT a.id,a.serialNumber,a.department,a.repairStaff,a.content,
+			select * from (SELECT a.id,a.image,a.serialNumber,a.department,a.repairStaff,a.content,
  		a.cellPhone,a.assetNumber,a.assetSn,a.orderPeople,a.assistants,
  		a.type as typeId,a.status as statusId,a.registerPeople,a.registerDate,
  		a.modifyPeople,a.modifyDate,b.type,c.status,d.depName,d.depPhone,
- 		(select e.name from t_member_info e where e.id = a.repairStaff) as baoxiu,
-		(select f.name from t_member_info f where f.id = a.orderPeople) as jiedan
+ 		e.name as jiedan,f.name as baoxiu
  		FROM
-			t_repair_register a,
-			t_repair_type b,
-			t_repair_status c,
-			t_department_info d,
-			t_member_info e
-		WHERE
-			a.department = d.id and a.type = b.id and a. status = c.id and
-			a.orderPeople = e.id and a.id = #{id}		
+			t_repair_register a
+			join t_repair_type b on a.type = b.id
+			join t_repair_status c on a.status = c.id
+			join t_department_info d on a.department = d.id
+			left join t_member_info e on a.orderPeople = e.number
+			left join t_member_info f on a.repairStaff = f.number) as t
+			where  t.id = #{id}		
 	</select>
+	
+	<select id="getDataBySerial" parameterType="pd" resultType="pd">
+			select id from <include refid="table"></include>
+			where serialNumber=#{serialNumber}
+	</select>
+	
 	<!-- 新增-->
 	<insert id="save" parameterType="pd">
 		insert into 
