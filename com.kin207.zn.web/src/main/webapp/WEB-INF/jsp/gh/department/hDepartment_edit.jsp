@@ -37,7 +37,7 @@
 								<tr>
 									<td style="width:130px;text-align: right;padding-top: 13px;">所属医院<label style="color:#ff0000">*</label></td>
 									<td>
-										<select id="depHos" name="depHos" onchange="getDeps()" style="width: 98%">
+										<select id="depHos" name="depHos" onchange="getDeps();" style="width: 98%">
 													<option value=''>请选择医院</option>
 													<c:forEach items="${listHospital}" var="cate" varStatus="st">
 														<option value="${cate.id}"
@@ -135,9 +135,18 @@
 		if(checkNull("depName","请输入科室名称","depName")){
 			return ;
 		};
-		
-		if(hasN("depHos","depName")){
-			return;
+		if($("#id").val()!=""){
+			var oldDepName = "${pd.depName}";
+			var newDepName = $("#depName").val();
+			if(oldDepName!=newDepName){
+				if(hasN("depHos","depName")){
+					return;
+				}	
+			}
+		}else{
+			if(hasN("depHos","depName")){
+				return;
+			}
 		}
 		
 		$("#departmentForm").submit();
@@ -147,7 +156,9 @@
 	function hasN(depHos,depName){
 		var depHos = $("#depHos").val();
 		var depName = $("#depName").val();
+		var result = false;
 		$.ajax({
+			async:false,
 			type: "POST",
 			url: '<%=basePath%>hDepartment/hasN.do',
 	    	data: {depName:depName,depHos:depHos},
@@ -157,16 +168,15 @@
 				 if("success" != data.result){
 					 $("#depName").tips({
 							side:3,
-				            msg:'医院科室'+depName+'已维护',
+				            msg:depName+'已存在',
 				            bg:'#AE81FF',
 				            time:3
 				        });
-					 $('#depName').val('');
-					 return true;
+					 result = true;
 				 }
 			}
 		});
-		
+		return result;
 	}
 	
 	function getDeps(){

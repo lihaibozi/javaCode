@@ -34,6 +34,10 @@
 		</if>
 	</select>
 	
+	<select id="statuss" parameterType="page" resultType="pd"> 
+		select * from <include refid="table"></include>a
+	</select>
+	
 	<!-- 列表 -->
 	<select id="departments" parameterType="pd" resultType="pd">
 		select  *

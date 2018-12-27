@@ -69,7 +69,6 @@ public class WorkContentController extends BaseController {
 	 */
 	@RequestMapping(value="/workcontent")
 	public ModelAndView workcontentList(Page page){
-
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		try{
@@ -122,7 +121,16 @@ public class WorkContentController extends BaseController {
 		PageData pd = new PageData();
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "del")){
 			pd = this.getPageData();
+			PageData pData = workContentService.findById(pd);
+			String wSchId = pData.getString("wSchId");
 			workContentService.delete(pd);
+			pd.put("id", wSchId);
+			List<PageData> listData = workContentService.findByScheduleId(pd);
+			if(listData.isEmpty()){
+				pd.put("isFinish", "0");
+				pd.put("wSchId", wSchId);
+				workScheduleService.setFinish(pd);
+			}
 		}
 		out.write("success");
 		out.close();
@@ -143,7 +151,19 @@ public class WorkContentController extends BaseController {
 			String DATA_IDS = pd.getString("DATA_IDS");
 			if(null != DATA_IDS && !"".equals(DATA_IDS)){
 				String ArrayDATA_IDS[] = DATA_IDS.split(",");
+				String id = ArrayDATA_IDS[0];
+				PageData pdd = new PageData();
+				pdd.put("id", id);
+				PageData pData = workContentService.findById(pdd);
+				String wSchId = pData.getString("wSchId");
 				workContentService.deleteAll(ArrayDATA_IDS);
+				pdd.put("id", wSchId);
+				List<PageData> listData = workContentService.findByScheduleId(pd);
+				if(listData.isEmpty()){
+					pdd.put("isFinish", "0");
+					pdd.put("wSchId", wSchId);
+					workScheduleService.setFinish(pdd);
+				}
 				pd.put("msg", "ok");
 			}else{
 				pd.put("msg", "no");
@@ -163,6 +183,13 @@ public class WorkContentController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		String type = "";	
+		PageData pData = workScheduleService.findById(pd);
+		String workId =  pData.getString("workId");
+		if("1".equals(workId)||"2".equals(workId)||"3".equals(workId)){
+			type = "3";
+		}else{
+			type = "4";
+		}
 		mv.setViewName("gh/workcontent/workcontent_add");
 		mv.addObject("msg", "save");
 		mv.addObject("type",type);
@@ -210,6 +237,13 @@ public class WorkContentController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		PageData pData = workScheduleService.findById(pd);
+		String workId =  pData.getString("workId");
+		if("1".equals(workId)||"2".equals(workId)||"3".equals(workId)){
+			mv.setViewName("gh/workcontent/workcontent_view1");
+		}else{
+			mv.setViewName("gh/workcontent/workcontent_view2");
+		}
 		List<PageData> workContents = workContentService.findByScheduleId(pd);
 		if(workContents!=null){
 			for(PageData pageData:workContents){
@@ -223,7 +257,6 @@ public class WorkContentController extends BaseController {
 		}
 		
 		pd.put("SYSNAME", Tools.readTxtFile(Const.SYSNAME)); //读取系统名称
-		mv.setViewName("gh/workcontent/workcontent_view");
 		mv.addObject("pd", pd);
 		mv.addObject("workContents", workContents);
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
@@ -298,6 +331,7 @@ public class WorkContentController extends BaseController {
 			pd.put("fillDate", new Date());
 			workContentService.save(pd);
 			//保存完之后更改计划中完成情况
+			pd.put("isFinish", "1");
 			workScheduleService.setFinish(pd);
 		}
 		

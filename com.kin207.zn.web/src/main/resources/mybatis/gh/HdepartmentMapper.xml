@@ -47,8 +47,10 @@
 	
 	<!-- 列表 -->
 	<select id="departments" parameterType="pd" resultType="pd">
-		select  *
-		from  <include refid="table"></include>a where 1=1
+		select a.id,a.depParent,a.depName,a.depPhone,a.depHos,
+		a.principal,a.cellPhone,a.isWork,b.name
+		from  <include refid="table"></include>a 
+		join t_hospital b on a.depHos = b.id
 		<if test="depHos != null and depHos != ''">
 	    	and a.depHos = #{depHos}
 	    	and a.isWork = 1

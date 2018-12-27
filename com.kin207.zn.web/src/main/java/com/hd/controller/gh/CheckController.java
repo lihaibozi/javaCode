@@ -1,10 +1,14 @@
 package com.hd.controller.gh;
 
 import javax.annotation.Resource;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +19,7 @@ import com.hd.entity.Page;
 import com.hd.service.gh.CheckManager;
 import com.hd.service.gh.DoctorManager;
 import com.hd.service.gh.HdepartmentManager;
+import com.hd.service.gh.WorkContentManager;
 import com.hd.service.gh.WorkTypeManager;
 import com.hd.service.gh.impl.HospitalService;
 import com.hd.util.AppUtil;
@@ -43,15 +48,15 @@ public class CheckController extends BaseController {
 	private DoctorManager doctorService;
 	@Resource(name="worktypeService")
 	private WorkTypeManager worktypeService;
+	@Resource(name="workContentService")
+	private WorkContentManager workContentService;
 	
 	/**显示科室信息列表
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(value="/check")
-	public ModelAndView checkList(
-			Page page,@RequestParam(value="type",required=false) String type ){
-
+	@RequestMapping(value="/ywcheck")
+	public ModelAndView ywcheck(Page page){
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		try{
@@ -61,9 +66,122 @@ public class CheckController extends BaseController {
 				pd.put("keyword", keyword.trim());
 			}
 			page.setPd(pd);
+			String type = "1";
+			pd.put("type",type);
+			List<PageData>	checkList = null; 		//分页列出医生工作列表
+			checkList = checkService.checkList(page);
+			mv.setViewName("gh/check/ywcheck");
+			mv.addObject("type",type);
+			mv.addObject("checkList", checkList);
+			mv.addObject("pd", pd);
+			mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+	
+	/**显示科室信息列表
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value="/kfcheck")
+	public ModelAndView kfcheck(Page page){
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		try{
+			pd = this.getPageData();
+			String keyword = pd.getString("keyword");							//检索条件 关键词
+			if(null != keyword && !"".equals(keyword)){
+				pd.put("keyword", keyword.trim());
+			}
+			page.setPd(pd);
+			String type = "2";
+			pd.put("type",type);
+			List<PageData>	checkList = null; 		
+			checkList = checkService.checkList(page);
+			mv.setViewName("gh/check/kfcheck");
+			mv.addObject("type",type);
+			mv.addObject("checkList", checkList);
+			mv.addObject("pd", pd);
+			mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+	
+	/**显示科室信息列表
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value="/zkcheck")
+	public ModelAndView zkcheck(Page page){
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		try{
+			pd = this.getPageData();
+			String keyword = pd.getString("keyword");							//检索条件 关键词
+			if(null != keyword && !"".equals(keyword)){
+				pd.put("keyword", keyword.trim());
+			}
+			page.setPd(pd);
+			String type = "3";
 			pd.put("type", type);
-			List<PageData>	checkList = checkService.checkList(page);		//分页列出科室信息列表
-			mv.setViewName("gh/check/check_list");
+			List<PageData>	checkList = null; 		
+			checkList = workContentService.zkWrokContent(page);
+			if(checkList!=null){
+				for(PageData pageData:checkList){
+					String fileUrl = (String) pageData.get("courseware");
+					if(fileUrl!=null&&!StringUtils.isEmpty(fileUrl)){
+						String fileName = "";
+						fileName = fileUrl.substring(fileUrl.lastIndexOf("/")).replace("/", "");
+						pageData.put("fileName", fileName);
+					}
+				}
+			}
+			mv.setViewName("gh/check/zkcheck");
+			
+			mv.addObject("type",type);
+			mv.addObject("checkList", checkList);
+			mv.addObject("pd", pd);
+			mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		} catch(Exception e){
+			logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+	
+	/**显示科室信息列表
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value="/kycheck")
+	public ModelAndView kycheck(Page page){
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		try{
+			pd = this.getPageData();
+			String keyword = pd.getString("keyword");							//检索条件 关键词
+			if(null != keyword && !"".equals(keyword)){
+				pd.put("keyword", keyword.trim());
+			}
+			page.setPd(pd);
+			String type = "4";
+			pd.put("type", type);
+			List<PageData>	checkList = null; 		//分页列出医生工作列表
+			checkList = workContentService.researchWrokContent(page);
+			if(checkList!=null){
+				for(PageData pageData:checkList){
+					String fileUrl = (String) pageData.get("courseware");
+					if(fileUrl!=null&&!StringUtils.isEmpty(fileUrl)){
+						String fileName = "";
+						fileName = fileUrl.substring(fileUrl.lastIndexOf("/")).replace("/", "");
+						pageData.put("fileName", fileName);
+					}
+				}
+			}
+			mv.setViewName("gh/check/kycheck");
 			mv.addObject("type",type);
 			mv.addObject("checkList", checkList);
 			mv.addObject("pd", pd);
@@ -84,7 +202,7 @@ public class CheckController extends BaseController {
 		PageData pd = new PageData();		
 		Map<String,Object> map = new HashMap<String,Object>();
 		pd = this.getPageData();
-		if(Jurisdiction.buttonJurisdiction(menuUrl, "del")){
+		if(Jurisdiction.buttonJurisdiction(menuUrl, "check")){
 			List<PageData> pdList = new ArrayList<PageData>();
 			String DATA_IDS = pd.getString("DATA_IDS");
 			String type = pd.getString("type");
@@ -104,7 +222,7 @@ public class CheckController extends BaseController {
 		return AppUtil.returnObject(pd, map);
 	}
 	
-	/**批量删除
+	/**批量驳回
 	 * @return
 	 * @throws Exception 
 	 */
@@ -114,7 +232,7 @@ public class CheckController extends BaseController {
 		PageData pd = new PageData();		
 		Map<String,Object> map = new HashMap<String,Object>();
 		pd = this.getPageData();
-		if(Jurisdiction.buttonJurisdiction(menuUrl, "del")){
+		if(Jurisdiction.buttonJurisdiction(menuUrl, "check")){
 			List<PageData> pdList = new ArrayList<PageData>();
 			String DATA_IDS = pd.getString("DATA_IDS");
 			String type = pd.getString("type");
@@ -134,5 +252,22 @@ public class CheckController extends BaseController {
 			}
 		return AppUtil.returnObject(pd, map);
 	}
-
+	
+	/**批量审核通过
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/addOpinion")
+	@ResponseBody
+	public Object addOpinion() throws Exception {
+		PageData pd = new PageData();		
+		Map<String,Object> map = new HashMap<String,Object>();
+		pd = this.getPageData();
+		if(Jurisdiction.buttonJurisdiction(menuUrl, "check")){
+			workContentService.addOpinion(pd);
+			pd.put("msg", "ok");
+		}
+		return AppUtil.returnObject(pd, map);
+	}
+	
 }

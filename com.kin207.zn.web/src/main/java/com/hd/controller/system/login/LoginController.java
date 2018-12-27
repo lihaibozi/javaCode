@@ -338,7 +338,7 @@ public class LoginController extends BaseController {
 			map.put("dels", pd.getString("DEL_QX"));	//删
 			map.put("edits", pd.getString("EDIT_QX"));	//改
 			map.put("chas", pd.getString("CHA_QX"));	//查
-			map.put("check", pd.getString("CHECK_QX"));	//审核
+			map.put("checks", pd.getString("CHECK_QX"));	//审核
 			List<PageData> buttonQXnamelist = new ArrayList<PageData>();
 			if("admin".equals(USERNAME)){
 				buttonQXnamelist = fhbuttonService.listAll(pd);					//admin用户拥有所有按钮权限

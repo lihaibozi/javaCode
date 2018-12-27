@@ -1125,7 +1125,7 @@ pre.prettyprint {
   -webkit-box-shadow: none;
   box-shadow: none;
   min-height: 50px;
-  background: rgba(174, 213, 236, 0.96);/* #438eb9; */
+  background: rgba(181, 174, 236, 0.96); /*rgba(174, 213, 236, 0.96); #438eb9; */
 }
 .navbar .navbar-text,
 .navbar .navbar-link {
@@ -19098,7 +19098,7 @@ input.typeahead.scrollable ~ .tt-dropdown-menu {
   border-color: #e5e5e5;
 }
 .no-skin .nav-list > li > a {
-  background-color: #E0F1EF;/* #f8f8f8; */
+  background-color: #e6f1e0;/*#E0F1EF; #f8f8f8; */
   color: #585858;
 }
 .no-skin .nav-list > li > a:focus {
@@ -19132,11 +19132,11 @@ input.typeahead.scrollable ~ .tt-dropdown-menu {
   color: #616161;
 }
 .no-skin .nav-list > li .submenu > li > a:hover {
-  color: #4b88b7;
+  color: red;
   background-color: #f1f5f9;
 }
 .no-skin .nav-list > li .submenu > li.active > a {
-  color: #2b7dbc;
+  color: #bc2b2b;
 }
 .no-skin .nav-list > li .submenu > li.active > a > .menu-icon {
   color: #c86139;

@@ -84,19 +84,19 @@
 										<c:if test="${var.checkStatus == 1 }">
 											<td class="center">未审核</td>
 										</c:if>
-										<c:if test="${var.checkStatus == 2 }">
+										<c:if test="${var.checkStatus == 4 }">
 											<td class="center"><label style="color:#ff0000">客服部驳回</label></td>
 										</c:if>
-										<c:if test="${var.checkStatus == 3 }">
+										<c:if test="${var.checkStatus == 5 }">
 											<td class="center"><label style="color:#0000FF">客服部审核通过</label></td>
 										</c:if>
-										<c:if test="${var.checkStatus == 4 }">
+										<c:if test="${var.checkStatus == 2 }">
 											<td class="center"><label style="color:#ff0000">医学事务部驳回</label></td>
 										</c:if>
-										<c:if test="${var.checkStatus == 5 }">
+										<c:if test="${var.checkStatus == 3 }">
 											<td class="center"><label style="color:#0000FF">医学事务部审核通过</label></td>
 										</c:if>
-										<td class="center">${var.rejectReason}</td>
+										<td class="center"><label style="color:#ff00d2">${var.rejectReason}</label></td>
 										<c:if test="${var.isFinish == 1 }">
 											<td class="center"><label style="color:#0000FF">已填报</label></td>
 										</c:if>

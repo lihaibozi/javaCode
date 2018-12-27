@@ -43,14 +43,18 @@ public interface WorkContentManager {
 
 	public List<PageData> getDeps(PageData pd) throws Exception;
 
-
 	public List<PageData> getworkcontentBydepHos(PageData pd) throws Exception;
 	
 	public List<PageData> getworkcontents(PageData pd)  throws Exception;
 
 	public List<PageData> findByScheduleId(PageData pd)throws Exception;
 
+	public void deleteFilePath(PageData pd) throws Exception;
 
-	public void deleteFilePath(PageData pd) throws Exception;;
+	public List<PageData> researchWrokContent(Page page)throws Exception;
+
+	public void addOpinion(PageData pd) throws Exception;
+
+	public List<PageData> zkWrokContent(Page page)throws Exception;
 	
 }

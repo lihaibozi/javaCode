@@ -48,6 +48,17 @@
 								 placeholder="结束日期" title="结束日期"/>
 							</td>
 							 <td style="padding-left:2px;">
+							 	<select id="status" name="status" style="width: 98%">
+											<option value=''>请选择处理状态</option>
+											<c:forEach items="${listStatus}" var="cate" varStatus="st">
+											 <option value="${cate.id}" 
+									            <c:if test='${pd.status == cate.id}'> selected='selected'</c:if>>
+									            ${cate.status}
+									       	 </option>
+										</c:forEach>
+								</select>
+							 </td>
+							  <td style="padding-left:2px;">
 							 	<select id="orderPeople" name="orderPeople" style="width: 98%">
 											<option value=''>请选择接单人</option>
 											<c:forEach items="${listOrders}" var="cate" varStatus="st">
@@ -320,7 +331,8 @@
 			var startTime = $("#startTime").val();
 			var endTime = $("#endTime").val();
 			var orderPeople = $("#orderPeople").val();
-			window.location.href='<%=basePath%>repairRegister/excel.do?keywords='+keywords+'&startTime='+startTime+'&endTime='+endTime+'&orderPeople='+orderPeople;
+			var status = $("#status").val();
+			window.location.href='<%=basePath%>repairRegister/excel.do?keywords='+keywords+'&startTime='+startTime+'&endTime='+endTime+'&orderPeople='+orderPeople+'&status='+status;
 		}
 	
 		function clean(){
@@ -328,7 +340,7 @@
 			$("#startTime").val("");
 			$("#endTime").val("");
 			$("#orderPeople").val("");
-			
+			$("#status").val("");
 		}
 		$(function() {
 			//日期框

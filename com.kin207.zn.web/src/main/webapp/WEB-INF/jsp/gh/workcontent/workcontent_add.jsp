@@ -38,7 +38,7 @@
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 								<tr>
 									<td colspan="6" style="width:110px;text-align: left;padding-top: 13px;">
-									<input name="contentType" id="t3" type="radio" class="ace" value="3" ><span class="lbl" style="color:#ff0000">门诊/手术类工作填报</span>
+									<input name="contentType" id="t3" type="radio" class="ace" value="3" ><span class="lbl" style="color:#ff0000">门诊/手术/医生查房类工作填报</span>
 									</label>
 									</td>
 								</tr>
@@ -74,13 +74,13 @@
 									</td>
 								</tr>
 								<tr id="tr3">
-									<td style="width:110px;text-align: right;padding-top: 13px;">诊断/手术日期<label style="color:#ff0000">*</label></td>
+									<td style="width:140px;text-align: right;padding-top: 13px;">诊断/手术/查房日期<label style="color:#ff0000">*</label></td>
 									<td>
 										<input placeholder="选择日期" name="medicalDate" id="medicalDate" type="text" class="ui_timepicker" >
 									</td>
-									<td style="width:110px;text-align: right;padding-top: 13px;">诊断/手术结果<label style="color:#ff0000">*</label></td>
+									<td style="width:140px;text-align: right;padding-top: 13px;">诊断/手术/查房结果<label style="color:#ff0000">*</label></td>
 									<td colspan="6">
-									<textarea rows="5" cols="5" name="medicalResult" id="medicalResult" style="resize:none;width:99%" title="诊断/手术结果"></textarea>
+									<textarea rows="5" cols="5" name="medicalResult" id="medicalResult" style="resize:none;width:99%" title="诊断/手术/查房结果"></textarea>
 									<%-- <input type="text" name="medicalResult" id="medicalResult" value="${pd.medicalResult }" placeholder="输入诊断/手术结果" title="诊断/手术结果" style="width:99.5%;" /> --%>
 									</td>
 								</tr>
@@ -103,7 +103,7 @@
 								</tr>
 								<tr>
 									<td colspan="6" style="width:110px;text-align: left;padding-top: 13px;">
-									<input name="contentType" id="t4" type="radio" class="ace" value="4" ><span class="lbl" style="color:#ff0000">查房/健康讲座/疑难病例讨论类工作填报</span>
+									<input name="contentType" id="t4" type="radio" class="ace" value="4" ><span class="lbl" style="color:#ff0000">教学查房/健康讲座/疑难病例讨论类工作填报</span>
 									</label>
 									</td>
 								</tr>
@@ -127,7 +127,7 @@
 								</td>
 								</tr>
 								<tr id="tr7">
-								<td  style="width:110px;text-align: right;padding-top: 13px;">讨论/讲座评价</td>
+								<td  style="width:110px;text-align: right;padding-top: 13px;">讨论/讲座/查房评价</td>
 								<td colspan="6">
 									<input type="text" name="apprise" id="apprise"  placeholder="输入讨论/讲座评价" title="讨论/讲座/查房评价" style="width:99.5%;" />
 								</td>
@@ -227,7 +227,6 @@
 		
 		var patientSex = document.getElementsByName('patientSex');
 		var contentType = document.getElementsByName('contentType');
-		var ctype = "";
 		for(var i=0;i < contentType.length;i++)
 		{
 			  if(contentType[i].checked){
@@ -329,14 +328,22 @@
 	}
 
 	$(function(){
-		$("#tr1").hide();
-		$("#tr2").hide();
-		$("#tr3").hide();
-		$("#tr4").hide();
-		$("#tr5").hide();
-		$("#tr6").hide();
-		$("#tr7").hide();
-		$("#tr8").hide();
+		var type = ${type};
+		if(type==3){
+			$("#t4").attr("disabled","disabled");
+			$("#t3").attr("checked","checked");
+			$("#tr5").hide();
+			$("#tr6").hide();
+			$("#tr7").hide();
+			$("#tr8").hide();
+		}else if(type==4){
+			$("#t3").attr("disabled","disabled");
+			$("#t4").attr("checked","checked");
+			$("#tr1").hide();
+			$("#tr2").hide();
+			$("#tr3").hide();
+			$("#tr4").hide();
+		}
 		$('.ui_timepicker').datetimepicker({
 			lang: "ch",
             timeFormat: "HH:mm:ss",

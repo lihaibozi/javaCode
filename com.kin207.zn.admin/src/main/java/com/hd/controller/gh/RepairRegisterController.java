@@ -27,6 +27,7 @@ import com.google.common.collect.Multimap;
 import com.hd.controller.base.BaseController;
 import com.hd.controller.system.user.UserController;
 import com.hd.entity.Page;
+import com.hd.service.gh.HStatusManager;
 import com.hd.service.gh.HTypeManager;
 import com.hd.service.gh.HdepartmentManager;
 import com.hd.service.gh.HmemberManager;
@@ -65,6 +66,8 @@ public class RepairRegisterController extends BaseController {
 	private UserController userController;
 	@Resource(name="hTypeService")
 	private HTypeManager hTypeService;
+	@Resource(name="hStatusService")
+	private HStatusManager hStatusService;
 	
 	/**显示科室信息列表
 	 * @param page
@@ -81,6 +84,7 @@ public class RepairRegisterController extends BaseController {
 			String startTime = pd.getString("startTime");
 			String endTime = pd.getString("endTime");
 			String orderPeople = pd.getString("orderPeople");
+			String status = pd.getString("status");
 			//检索条件 关键词
 			if(StringUtils.isNotEmpty(keyword)){
 				pd.put("keyword", keyword.trim());
@@ -93,6 +97,9 @@ public class RepairRegisterController extends BaseController {
 			}
 			if(StringUtils.isNotEmpty(orderPeople)){
 				pd.put("orderPeople", orderPeople.trim());
+			}
+			if(StringUtils.isNotEmpty(status)){
+				pd.put("status", status);
 			}
 			page.setPd(pd);
 			List<PageData>	repairRegisterList = repairRegisterService.repairRegisterList(page);		//分页列出维修登记信息列表
@@ -120,10 +127,12 @@ public class RepairRegisterController extends BaseController {
 				pageData.put("assistants", assMembers);
 			}
 			List<PageData> listOrders = hMemberService.getOrders(pd);
+			List<PageData> listStatus = hStatusService.statuss(pd);
 			mv.setViewName("gh/repairRegister/repairRegister_list");
 			mv.addObject("repairRegisterList", repairRegisterList);
 			mv.addObject("pd", pd);
 			mv.addObject("listOrders",listOrders);
+			mv.addObject("listStatus",listStatus);
 			mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		} catch(Exception e){
 			logger.error(e.toString(), e);
@@ -311,7 +320,7 @@ public class RepairRegisterController extends BaseController {
 		logBefore(logger, Jurisdiction.getUsername()+"新增图片");
 		Map<String,String> map = new HashMap<String,String>();
 		PageData pd = new PageData();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddSSS");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyMMddssSSS");
 		String serialNumber = checkSerial(sdf);
 		String userName = Jurisdiction.getUsername();
 		if(Jurisdiction.buttonJurisdiction(menuUrl, "add")){
@@ -496,6 +505,7 @@ public class RepairRegisterController extends BaseController {
 				String startTime = pd.getString("startTime");
 				String endTime = pd.getString("endTime");
 				String orderPeople = pd.getString("orderPeople");
+				String status = pd.getString("status");
 				//检索条件 关键词
 				if(StringUtils.isNotEmpty(keyword)){
 					pd.put("keyword", keyword.trim());
@@ -508,6 +518,9 @@ public class RepairRegisterController extends BaseController {
 				}
 				if(StringUtils.isNotEmpty(orderPeople)){
 					pd.put("orderPeople", orderPeople.trim());
+				}
+				if(StringUtils.isNotEmpty(orderPeople)){
+					pd.put("status", status);
 				}
 				Map<String,Object> dataMap = new HashMap<String,Object>();
 				List<String> titles = new ArrayList<String>();

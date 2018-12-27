@@ -78,6 +78,9 @@
 		<if test="pd.orderPeople != null and pd.orderPeople != ''"><!-- 关键词检索 -->
 			and  a.orderPeople = #{pd.orderPeople}
 		</if>	
+		<if test="pd.status != null and pd.status != ''"><!-- 关键词检索 -->
+			and  a.status = #{pd.status}
+		</if>	
 		order by a.registerDate desc
 	</select>
 	
@@ -112,6 +115,9 @@
 		<if test="orderPeople != null and orderPeople != ''"><!-- 关键词检索 -->
 			and  a.orderPeople = #{orderPeople}
 		</if>	
+		<if test="status != null and status != ''"><!-- 关键词检索 -->
+			and  a.status = #{status}
+		</if>
 		order by a.registerDate desc
 	</select>
 	

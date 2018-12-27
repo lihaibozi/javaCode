@@ -166,7 +166,7 @@
 	<update id="setFinish" parameterType="pd">
 		update  <include refid="table"></include>
 		set 
-			isFinish = 1
+			isFinish = #{isFinish}
 		where 
 			id = #{wSchId}		
 	</update>

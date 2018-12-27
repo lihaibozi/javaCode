@@ -85,4 +85,19 @@ public class WorkContentService implements WorkContentManager{
 	public void deleteFilePath(PageData pd) throws Exception {
 		dao.update("WorkContentMapper.delFilePath", pd);
 	}
+
+	@Override
+	public List<PageData> researchWrokContent(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("WorkContentMapper.researchWrokContent", page);
+	}
+
+	@Override
+	public void addOpinion(PageData pd) throws Exception {
+		dao.update("WorkContentMapper.addOpinion", pd);
+	}
+
+	@Override
+	public List<PageData> zkWrokContent(Page page) throws Exception {
+		return (List<PageData>) dao.findForList("WorkContentMapper.zkWrokContent", page);
+	}
 }

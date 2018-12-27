@@ -28,7 +28,10 @@
 		joinNumber,
 		conferenceTime,
 		courseware,
-		type
+		type,
+		checkStatus,
+		opinion,
+		zkOpinion
 	</sql>
 
 	<sql id="FieldValue">
@@ -51,7 +54,10 @@
 		#{joinNumber},
 		#{conferenceTime},
 		#{courseware},
-		#{type}
+		#{type},
+		#{checkStatus},
+		#{opinion},
+		#{zkOpinion}
 	</sql> 
 	
 	<!-- 列表 -->
@@ -89,6 +95,45 @@
 		</if>
 		and a.checkStatus = 5
 		order by a.isFinish,a.createTime desc
+	</select>
+	
+	<select id="researchWrokContent" parameterType="page" resultType="pd">
+				SELECT
+				t.id,t.fillPeople,t.fillDate,
+				t.modifyPeople,t.modifyDate,t.apprise,
+				t.content,t.joinNumber,t.conferenceTime,
+				t.courseware,t.type,t.checkStatus,
+				t.opinion,d.doctorName,td.depName,
+				h. NAME AS hosName,wt.workName
+		FROM
+			t_workcontent t
+		JOIN t_work_schedule ts ON t.wSchId = ts.id
+		JOIN t_doctor_info d ON ts.doctorID = d.id
+		JOIN t_department_info td ON ts.depId = td.id
+		JOIN t_hospital h ON ts.hosId = h.id
+		join t_work_type wt on ts.workId = wt.id
+		where t.type = 4
+		order by t.fillDate desc
+	</select>
+	
+	<select id="zkWrokContent" parameterType="page" resultType="pd">
+				SELECT
+				t.id,t.fillPeople,t.fillDate,
+				t.medicalResult,t.zkOpinion,
+				t.modifyPeople,t.modifyDate,t.apprise,
+				t.content,t.joinNumber,t.conferenceTime,
+				t.courseware,t.type,t.checkStatus,
+				t.opinion,d.doctorName,td.depName,
+				h. NAME AS hosName,wt.workName
+		FROM
+			t_workcontent t
+		JOIN t_work_schedule ts ON t.wSchId = ts.id
+			 and ts.workId in(1,2,3,5)
+		JOIN t_doctor_info d ON ts.doctorID = d.id
+		JOIN t_department_info td ON ts.depId = td.id
+		JOIN t_hospital h ON ts.hosId = h.id
+		join t_work_type wt on ts.workId = wt.id
+		order by t.fillDate desc
 	</select>
 	
 	<!-- 列表 -->
@@ -232,6 +277,17 @@
 	<update id="delFilePath" parameterType="pd">
 		update <include refid="table"></include>
 		set courseware = "" where id=#{id}
+	</update>
+	
+	<update id="addOpinion" parameterType="pd">
+		update <include refid="table"></include>
+		<if test="type != null and type == 4">
+			set opinion = #{opinion}
+		</if>
+		<if test="type != null and type == 3">
+			set zkOpinion = #{opinion}
+		</if>
+		where id = #{id}
 	</update>
 		
 </mapper>
